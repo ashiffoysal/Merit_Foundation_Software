@@ -18,6 +18,25 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('/about', [FrontendController::class, 'about'])->name('about');
+Route::get('/donate', [FrontendController::class, 'donate'])->name('donate');
+Route::get('/book-lesson', [FrontendController::class, 'bookLesson'])->name('book.lesson');
+Route::get('/contact', [FrontendController::class, 'contactUs'])->name('contact');
+Route::get('/safeguarding-policy', [FrontendController::class, 'safeguard'])->name('safeguard');
+// privacy policy
+Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy.policy');
+// refund policy
+Route::get('/refund-policy', [FrontendController::class, 'refundPolicy'])->name('refund.policy');
+// terms and conditions
+Route::get('/terms-and-conditions', [FrontendController::class, 'termsAndCondition'])->name('terms.and.conditions');
+// news
+Route::get('/news', [FrontendController::class, 'news'])->name('news');
+// news details
+Route::get('/news/{slug}', [FrontendController::class, 'newsDetails'])->name('news.details');
+
+Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
+
+
 
 // Admin routes
 Route::prefix('admin')->group(function () {

@@ -18,20 +18,20 @@
       </div>
       <div class="col-lg-2 col-6">
         <div class="footer-col-title">Navigate</div>
-        <div class="footer-link" onclick="showPage('home')"><i class="fas fa-chevron-right"></i>Home</div>
-        <div class="footer-link" onclick="showPage('about')"><i class="fas fa-chevron-right"></i>About Us</div>
-        <div class="footer-link" onclick="showPage('book')"><i class="fas fa-chevron-right"></i>Book Lesson</div>
-        <div class="footer-link" onclick="showPage('donate')"><i class="fas fa-chevron-right"></i>Donate</div>
-        <div class="footer-link" onclick="showPage('safeguarding')"><i class="fas fa-chevron-right"></i>Safeguarding</div>
-        <div class="footer-link" onclick="showPage('contact')"><i class="fas fa-chevron-right"></i>Contact</div>
+        <a href="{{ route('home') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Home</a>
+        <a href="{{ route('about') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>About Us</a>
+        <a href="{{ route('book.lesson') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Book Lesson</a>
+        <a href="{{ route('donate') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Donate</a>
+        <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding</a>
+        <a href="{{ route('contact') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Contact</a>
       </div>
       <div class="col-lg-2 col-6">
         <div class="footer-col-title">Legal</div>
-        <div class="footer-link"><i class="fas fa-chevron-right"></i>Privacy Policy</div>
-        <div class="footer-link"><i class="fas fa-chevron-right"></i>Terms & Conditions</div>
-        <div class="footer-link" onclick="showPage('safeguarding')"><i class="fas fa-chevron-right"></i>Safeguarding Policy</div>
-        <div class="footer-link"><i class="fas fa-chevron-right"></i>Cookie Policy</div>
-        <div class="footer-link"><i class="fas fa-chevron-right"></i>Gift Aid Declaration</div>
+        <a href="{{ route('privacy.policy') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Privacy Policy</a>
+        <a href="{{ route('terms.and.conditions') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Terms & Conditions</a>
+        <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding Policy</a>
+        <a href="{{ route('cookie.policy') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Cookie Policy</a>
+        {{-- <div class="footer-link"><i class="fas fa-chevron-right"></i>Gift Aid Declaration</div> --}}
       </div>
       <div class="col-lg-4">
         <div class="footer-col-title">Contact & Newsletter</div>
@@ -54,8 +54,8 @@
   <div class="footer-bottom">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-md-6"><p class="footer-bot-txt">© 2025 Merit Education Foundation. Registered Charity. All Rights Reserved.</p></div>
-        <div class="col-md-6"><div class="footer-bot-links"><span>Privacy Policy</span><span>Terms</span><span>Safeguarding</span><span>Cookies</span></div></div>
+        <div class="col-md-6"><p class="footer-bot-txt">© {{ \Carbon\Carbon::now()->year }} Merit Education Foundation. Registered Charity. All Rights Reserved.</p></div>
+        {{-- <div class="col-md-6"><div class="footer-bot-links"><span><a href="{{ route('privacy.policy') }}" class="text-decoration-underline">Privacy Policy</a></span><span><a href="{{ route('terms.and.conditions') }}" class="text-decoration-underline">Terms</a></span><span><a href="{{ route('safeguard') }}" class="text-decoration-underline">Safeguarding</a></span><span><a href="{{ route('cookie.policy') }}" class="text-decoration-underline">Cookies</a></span></div></div> --}}
       </div>
     </div>
   </div>
