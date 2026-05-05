@@ -1,11 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
 
-<!-- ════════════════════════════════════════
-     NEWS PAGE
-════════════════════════════════════════ -->
-<div id="page-news" class="page active">
-
   <!-- Hero -->
   <div class="page-hero" style="background:linear-gradient(160deg,var(--dark) 0%,var(--navy2) 100%)">
     <div class="page-hero::after" style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px"></div>
@@ -268,6 +263,4 @@
     </div>
     <div class="sf-bottom"><div class="container"><div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><p class="sf-bot-txt">© 2025 Merit Education Foundation. Registered Charity. All Rights Reserved.</p><div class="d-flex gap-3"><span class="sf-bot-txt" style="cursor:pointer;transition:.3s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color=''">Privacy Policy</span><span class="sf-bot-txt" style="cursor:pointer;transition:.3s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color=''">Terms</span></div></div></div></div>
   </footer>
-</div><!-- end news -->
-
 @endsection
