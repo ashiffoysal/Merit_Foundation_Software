@@ -1,37 +1,41 @@
-@extends('layouts.app')
-@section('content')
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Admin Login
-            </h2>
-        </div>
-        <form class="mt-8 space-y-6" method="POST" action="{{ route('admin.login') }}">
-            @csrf
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input id="email" name="email" type="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input id="password" name="password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            @if ($errors->any())
-                <div class="text-red-600">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <div>
-                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Login
-                </button>
-            </div>
-        </form>
+<div id="login-screen" class="active">
+  <div class="login-bg-mesh"></div>
+  <div class="login-grid"></div>
+  <div class="login-orb login-orb-1"></div>
+  <div class="login-orb login-orb-2"></div>
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-ic"><i class="fas fa-book-open"></i></div>
+      <div>
+        <div class="login-logo-name">MERIT</div>
+        <span class="login-logo-sub">Admin Portal</span>
+      </div>
     </div>
+    <h2 class="login-title">Welcome Back</h2>
+    <p class="login-sub">Sign in to the Merit Education administration panel</p>
+
+    <div class="login-role-selector">
+      <button class="role-btn active" onclick="setRole(this,'Super Admin')"><i class="fas fa-crown me-1"></i>Super Admin</button>
+      <button class="role-btn" onclick="setRole(this,'Manager')"><i class="fas fa-user-tie me-1"></i>Manager</button>
+      <button class="role-btn" onclick="setRole(this,'Staff')"><i class="fas fa-user me-1"></i>Staff</button>
+    </div>
+
+    <div class="lf-group">
+      <label class="lf-label">Email Address</label>
+      <input type="email" class="lf-input" placeholder="admin@meriteducation.org" value="admin@meriteducation.org">
+    </div>
+    <div class="lf-group">
+      <label class="lf-label">Password</label>
+      <input type="password" class="lf-input" placeholder="••••••••••••" id="lpw" value="admin123">
+      <span class="lf-eye" onclick="toggleLPw()"><i class="fas fa-eye" id="lpe-icon"></i></span>
+    </div>
+    <div class="login-remember">
+      <label><input type="checkbox" checked>Remember this device</label>
+      <span class="login-forgot">Forgot password?</span>
+    </div>
+    <button class="btn-login" onclick="doLogin()">
+      <i class="fas fa-sign-in-alt"></i>Access Admin Panel
+    </button>
+    <div class="login-security"><i class="fas fa-shield-alt"></i>256-bit SSL encrypted · UK GDPR compliant</div>
+  </div>
 </div>
-@endsection

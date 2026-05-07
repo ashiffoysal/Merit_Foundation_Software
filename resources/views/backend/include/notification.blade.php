@@ -1,0 +1,13 @@
+<div class="notif-panel" id="notif-panel">
+    <div class="np-header">
+      <div class="np-title">Notifications <span style="font-size:.65rem;background:var(--gold);color:var(--s50);padding:2px 8px;border-radius:10px;margin-left:6px">5 New</span></div>
+      <button class="np-close" onclick="toggleNotif()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="notif-item unread"><div class="ni-ic" style="background:var(--grnp)"><i class="fas fa-user-plus" style="color:var(--grn)"></i></div><div style="flex:1"><div class="ni-txt"><strong>New Student Registered</strong> — Amina Yusuf has enrolled in Basic Quran</div><div class="ni-time">2 min ago</div></div><div class="ni-unread-dot"></div></div>
+    <div class="notif-item unread"><div class="ni-ic" style="background:var(--goldp)"><i class="fas fa-heart" style="color:var(--gold)"></i></div><div style="flex:1"><div class="ni-txt"><strong>New Donation £150</strong> — James Mitchell made a Champion donation</div><div class="ni-time">14 min ago</div></div><div class="ni-unread-dot"></div></div>
+    <div class="notif-item unread"><div class="ni-ic" style="background:var(--blup)"><i class="fas fa-calendar" style="color:var(--blu)"></i></div><div style="flex:1"><div class="ni-txt"><strong>Lesson Booking</strong> — 3 new lessons booked for this week</div><div class="ni-time">1 hr ago</div></div><div class="ni-unread-dot"></div></div>
+    <div class="notif-item unread"><div class="ni-ic" style="background:var(--redp)"><i class="fas fa-shield-alt" style="color:var(--red)"></i></div><div style="flex:1"><div class="ni-txt"><strong>Safeguarding Alert</strong> — Incident form submitted by Tutor #14</div><div class="ni-time">2 hr ago</div></div><div class="ni-unread-dot"></div></div>
+    <div class="notif-item unread"><div class="ni-ic" style="background:var(--ambp)"><i class="fas fa-exclamation" style="color:var(--amb)"></i></div><div style="flex:1"><div class="ni-txt"><strong>Tutor DBS Expiry</strong> — Ustadh Mohammed's DBS expires in 14 days</div><div class="ni-time">3 hr ago</div></div><div class="ni-unread-dot"></div></div>
+    <div class="notif-item"><div class="ni-ic" style="background:var(--grnp)"><i class="fas fa-check" style="color:var(--grn)"></i></div><div style="flex:1"><div class="ni-txt"><strong>Report Generated</strong> — October impact report is ready</div><div class="ni-time">Yesterday</div></div></div>
+    <div class="notif-item"><div class="ni-ic" style="background:var(--goldp)"><i class="fas fa-file-invoice" style="color:var(--gold)"></i></div><div style="flex:1"><div class="ni-txt"><strong>Gift Aid Submitted</strong> — Q3 Gift Aid claim sent to HMRC</div><div class="ni-time">2 days ago</div></div></div>
+  </div>

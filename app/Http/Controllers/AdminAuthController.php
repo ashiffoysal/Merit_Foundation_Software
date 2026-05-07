@@ -16,7 +16,7 @@ class AdminAuthController extends Controller
             }
             return back()->withErrors(['email' => 'Invalid credentials']);
         }
-        return view('admin.login');
+        return view('backend.admin.login');
     }
 
     public function logout()

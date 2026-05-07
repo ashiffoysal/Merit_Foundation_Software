@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -44,10 +45,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login']);
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
+        // Route::get('/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
     });
 });
 
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
 
 require __DIR__.'/auth.php';

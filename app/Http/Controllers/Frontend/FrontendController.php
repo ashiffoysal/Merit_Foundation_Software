@@ -66,7 +66,7 @@ class FrontendController extends Controller
         return view('frontend.news.index');
     }
 
-    // cookie policy page
+    // cookie_policy_page
     public function cookiePolicy()
     {
         return view('frontend.pages.cookiepolicy');
