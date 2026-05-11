@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\ContactMessageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +24,7 @@ Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/donate', [FrontendController::class, 'donate'])->name('donate');
 Route::get('/book-lesson', [FrontendController::class, 'bookLesson'])->name('book.lesson');
 Route::get('/contact', [FrontendController::class, 'contactUs'])->name('contact');
+Route::post('/contact', [FrontendController::class, 'contactSubmt'])->name('contact.submit');
 Route::get('/safeguarding-policy', [FrontendController::class, 'safeguard'])->name('safeguard');
 // privacy policy
 Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy.policy');
@@ -50,5 +52,6 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
+Route::get('admin/contact-messages', [ContactMessageController::class, 'index'])->name('admin.contact-messages.index');
 
 require __DIR__.'/auth.php';

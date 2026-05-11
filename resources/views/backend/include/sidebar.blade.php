@@ -1,3 +1,9 @@
+<style>
+a {
+    /* color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1)); */
+    text-decoration: none;
+}
+</style>
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <div class="sb-brand">
@@ -14,7 +20,12 @@
       <div class="sb-section">People</div>
       <div class="sb-item" onclick="showView('students',this)"><i class="fas fa-user-graduate"></i><span>Students</span><span class="sb-badge">124</span></div>
       <div class="sb-item" onclick="showView('tutors',this)"><i class="fas fa-chalkboard-teacher"></i><span>Tutors</span></div>
-      <div class="sb-item" onclick="showView('donors',this)"><i class="fas fa-hand-holding-heart"></i><span>Donors</span></div>
+      <a href="{{ route('admin.contact-messages.index') }}">
+        <div class="sb-item">
+          <i class="fas fa-hand-holding-heart"></i>
+          <span>Contact Message</span>
+        </div>
+      </a>
       <div class="sb-item" onclick="showView('users',this)"><i class="fas fa-users"></i><span>All Users</span></div>
       <div class="sb-section">Operations</div>
       <div class="sb-item" onclick="showView('lessons',this)"><i class="fas fa-graduation-cap"></i><span>Lessons</span><span class="sb-badge">8</span></div>
