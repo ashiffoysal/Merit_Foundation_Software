@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ContactMessageController;
+use App\Http\Controllers\Frontend\UserLoginController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -53,5 +54,11 @@ Route::prefix('admin')->group(function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
 Route::get('admin/contact-messages', [ContactMessageController::class, 'index'])->name('admin.contact-messages.index');
+
+
+
+Route::post('/ajax-login', [UserLoginController::class, 'login'])->name('ajax.login');
+Route::post('/ajax-register', [UserLoginController::class, 'register'])->name('ajax.register');
+Route::post('/ajax-resend-verification', [UserLoginController::class, 'resendVerification'])->name('ajax.resend-verification');
 
 require __DIR__.'/auth.php';
