@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ContactMessageController;
 use App\Http\Controllers\Frontend\UserLoginController;
+use App\Http\Controllers\Backend\CompanyInformationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,7 +38,6 @@ Route::get('/terms-and-conditions', [FrontendController::class, 'termsAndConditi
 Route::get('/news', [FrontendController::class, 'news'])->name('news');
 // news details
 Route::get('/news/{slug}', [FrontendController::class, 'newsDetails'])->name('news.details');
-
 Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
 
 
@@ -45,20 +45,40 @@ Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name(
 // Admin routes
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
-    Route::post('/login', [AdminAuthController::class, 'login']);
+    Route::post('admin/login', [AdminAuthController::class, 'login']);
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
     Route::middleware('auth:admin')->group(function () {
-        // Route::get('/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/dashboard',           [DashboardController::class, 'index'])->name('admin.dashboard.index');
+        Route::get('/company-information', [CompanyInformationController::class, 'index'])->name('admin.company-information.index');
+        Route::post('/company-information', [CompanyInformationController::class, 'Update'])->name('admin.company-information.index');
+    // Page
+    Route::get('/contact-messages', [ContactMessageController::class, 'index'])
+        ->name('contact-messages.index');
+ 
+    // AJAX DataTable
+    Route::get('/contact-messages/data', [ContactMessageController::class, 'data'])
+        ->name('contact-messages.data');
+ 
+    // AJAX Export (CSV / Excel)
+    Route::get('/contact-messages/export', [ContactMessageController::class, 'export'])
+        ->name('contact-messages.export');
+ 
+    // AJAX Bulk actions
+    Route::post('/contact-messages/bulk', [ContactMessageController::class, 'bulk'])
+        ->name('contact-messages.bulk');
+ 
+    // AJAX Single message
+    Route::get('/contact-messages/{contactMessage}',         [ContactMessageController::class, 'show']);
+    Route::patch('/contact-messages/{contactMessage}/status',[ContactMessageController::class, 'updateStatus']);
+    Route::delete('/contact-messages/{contactMessage}',      [ContactMessageController::class, 'destroy']);
+
+          Route::post('/settings/admin-profile', [CompanyInformationController::class, 'saveAdminProfile'])->name('settings.admin.save');
     });
+
 });
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
-Route::get('admin/contact-messages', [ContactMessageController::class, 'index'])->name('admin.contact-messages.index');
-
-
 
 Route::post('/ajax-login', [UserLoginController::class, 'login'])->name('ajax.login');
 Route::post('/ajax-register', [UserLoginController::class, 'register'])->name('ajax.register');
 Route::post('/ajax-resend-verification', [UserLoginController::class, 'resendVerification'])->name('ajax.resend-verification');
-
 require __DIR__.'/auth.php';

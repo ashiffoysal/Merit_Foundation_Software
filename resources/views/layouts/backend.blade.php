@@ -38,14 +38,30 @@
     </main>
 
   <!-- MODAL -->
-  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-    <div class="modal-box" id="modal-box">
-      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-      <div class="modal-title" id="modal-title">Add Student</div>
-      <div class="modal-sub" id="modal-sub">Fill in the details below</div>
-      <div id="modal-body"></div>
+<div id="modal-view-message" class="modal-backdrop" style="display:none" onclick="closeModalOutside(event,'modal-view-message')">
+    <div class="modal-box" style="max-width:560px">
+        <div class="modal-header-custom">
+            <div class="card-title"><i class="fas fa-envelope-open-text"></i> Message Detail</div>
+            <button class="modal-close-btn" onclick="closeModal('modal-view-message')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body-custom" id="messageDetailBody">
+            <div class="msg-detail-row"><span class="msg-label">Name</span><span id="md-name" class="msg-val"></span></div>
+            <div class="msg-detail-row"><span class="msg-label">Email</span><span id="md-email" class="msg-val"></span></div>
+            <div class="msg-detail-row"><span class="msg-label">Phone</span><span id="md-phone" class="msg-val"></span></div>
+            <div class="msg-detail-row"><span class="msg-label">Subject</span><span id="md-subject" class="msg-val"></span></div>
+            <div class="msg-detail-row"><span class="msg-label">Status</span><span id="md-status" class="msg-val"></span></div>
+            <div class="msg-detail-row"><span class="msg-label">Date</span><span id="md-date" class="msg-val"></span></div>
+            <div class="msg-detail-row msg-detail-msg"><span class="msg-label">Message</span><div id="md-message" class="msg-val msg-body-text"></div></div>
+        </div>
+        <div class="modal-footer-custom d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-2">
+                <button class="btn-prim btn-sm" id="md-mark-read" onclick="markStatus(currentMsgId,'read')"><i class="fas fa-check"></i> Mark Read</button>
+                <button class="btn-outline-sm btn-sm" id="md-mark-pending" onclick="markStatus(currentMsgId,'pending')"><i class="fas fa-clock"></i> Pending</button>
+            </div>
+            <button class="btn-danger-sm btn-sm" onclick="deleteMessage(currentMsgId)"><i class="fas fa-trash"></i> Delete</button>
+        </div>
     </div>
-  </div>
+</div>
 
 </div><!-- admin-shell -->
 
