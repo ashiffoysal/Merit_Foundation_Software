@@ -16,10 +16,10 @@ a {
     </div>
     <div class="sidebar-body">
       <div class="sb-section">Main</div>
-      <div class="sb-item active" onclick="showView('dashboard',this)"><i class="fas fa-th-large"></i><span>Dashboard</span></div>
+       <a href="{{ url('admin/dashboard') }}"><div class="sb-item active"><i class="fas fa-th-large"></i><span>Dashboard</span></div></a>
       <div class="sb-section">People</div>
-      <div class="sb-item" onclick="showView('students',this)"><i class="fas fa-user-graduate"></i><span>Students</span><span class="sb-badge">124</span></div>
-      <div class="sb-item" onclick="showView('tutors',this)"><i class="fas fa-chalkboard-teacher"></i><span>Tutors</span></div>
+      {{-- <div class="sb-item" onclick="showView('students',this)"><i class="fas fa-user-graduate"></i><span>Students</span><span class="sb-badge">124</span></div>
+      <div class="sb-item" onclick="showView('tutors',this)"><i class="fas fa-chalkboard-teacher"></i><span>Tutors</span></div> --}}
       <a href="{{ route('contact-messages.index') }}">
         <div class="sb-item">
           <i class="fas fa-envelope"></i>
@@ -28,15 +28,29 @@ a {
       </a>
       <div class="sb-item" onclick="showView('users',this)"><i class="fas fa-users"></i><span>All Users</span></div>
       <div class="sb-section">Operations</div>
-      <div class="sb-item" onclick="showView('lessons',this)"><i class="fas fa-graduation-cap"></i><span>Lessons</span><span class="sb-badge">8</span></div>
-      <div class="sb-item" onclick="showView('donations',this)"><i class="fas fa-heart"></i><span>Donations</span></div>
+      <a href="{{ route('admin.category.index') }}">
+        <div class="sb-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Category Index</span>
+
+        </div>
+      </a>
+         <a href="{{ route('admin.category.create') }}">
+        <div class="sb-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Category Create</span>
+         
+        </div>
+      </a>
+      {{-- <div class="sb-item" onclick="showView('donations',this)"><i class="fas fa-heart"></i><span>Donations</span></div>
       <div class="sb-item" onclick="showView('bookings',this)"><i class="fas fa-calendar-check"></i><span>Bookings</span><span class="sb-badge">3</span></div>
-      <div class="sb-item" onclick="showView('reports',this)"><i class="fas fa-chart-bar"></i><span>Reports</span></div>
+      <div class="sb-item" onclick="showView('reports',this)"><i class="fas fa-chart-bar"></i><span>Reports</span></div> --}}
       <div class="sb-section">Content</div>
-      <div class="sb-item" onclick="showView('news',this)"><i class="fas fa-newspaper"></i><span>News & Articles</span></div>
-      <div class="sb-item" onclick="showView('safeguarding',this)"><i class="fas fa-shield-alt"></i><span>Safeguarding</span></div>
+      <a href="{{ route('admin.blogs.index') }}"><div class="sb-item"><i class="fas fa-newspaper"></i><span>News & Articles</span></div></a>
+         <a href="{{ route('admin.blogs.create') }}"><div class="sb-item"><i class="fas fa-newspaper"></i><span>News & Articles Create</span></div></a>
+      {{-- <div class="sb-item" onclick="showView('safeguarding',this)"><i class="fas fa-shield-alt"></i><span>Safeguarding</span></div>
       
-      <div class="sb-item" onclick="showView('messages',this)"><i class="fas fa-envelope"></i><span>Messages</span><span class="sb-badge">5</span></div>
+      <div class="sb-item" onclick="showView('messages',this)"><i class="fas fa-envelope"></i><span>Messages</span><span class="sb-badge">5</span></div> --}}
       <div class="sb-section">System</div>
       <div class="sb-item" onclick="showView('admins',this)"><i class="fas fa-user-shield"></i><span>Admin Users</span></div>
       <a href="{{ route('admin.company-information.index') }}">

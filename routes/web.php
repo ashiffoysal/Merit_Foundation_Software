@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ContactMessageController;
 use App\Http\Controllers\Frontend\UserLoginController;
 use App\Http\Controllers\Backend\CompanyInformationController;
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\BlogsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -72,11 +74,40 @@ Route::prefix('admin')->group(function () {
     Route::get('/contact-messages/{contactMessage}',         [ContactMessageController::class, 'show']);
     Route::patch('/contact-messages/{contactMessage}/status',[ContactMessageController::class, 'updateStatus']);
     Route::delete('/contact-messages/{contactMessage}',      [ContactMessageController::class, 'destroy']);
-
-          Route::post('/settings/admin-profile', [CompanyInformationController::class, 'saveAdminProfile'])->name('settings.admin.save');
+    Route::post('/settings/admin-profile', [CompanyInformationController::class, 'saveAdminProfile'])->name('settings.admin.save');
     });
 
 });
+
+// 
+Route::prefix('admin')->group(function () {
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('category-create',         [CategoryController::class, 'create'])->name('admin.category.create');
+        Route::get('category-index',         [CategoryController::class, 'index'])->name('admin.category.index');
+        Route::post('category-store',         [CategoryController::class, 'store'])->name('admin.category.store');
+        Route::get('category-edit/{id}',         [CategoryController::class, 'edit'])->name('admin.category.edit');
+        Route::post('category-update/{id}',         [CategoryController::class, 'update'])->name('admin.category.update');
+        Route::delete('category-delete/{id}',         [CategoryController::class, 'destroy'])->name('admin.category.destroy');
+    });
+
+});
+
+// blogs
+Route::prefix('admin')->group(function () {
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('blogs-create',         [BlogsController::class, 'create'])->name('admin.blogs.create');
+        Route::get('blogs-index',         [BlogsController::class, 'index'])->name('admin.blogs.index');
+        Route::post('blogs-store',         [BlogsController::class, 'store'])->name('admin.blogs.store');
+        Route::get('blogs-edit/{id}',         [BlogsController::class, 'edit'])->name('admin.blogs.edit');
+        Route::post('blogs-update/{id}',         [BlogsController::class, 'update'])->name('admin.blogs.update');
+        Route::delete('blogs-delete/{id}',         [BlogsController::class, 'destroy'])->name('admin.blogs.destroy');
+    }); 
+});
+
+
+
+
+
 
 Route::post('/ajax-login', [UserLoginController::class, 'login'])->name('ajax.login');
 Route::post('/ajax-register', [UserLoginController::class, 'register'])->name('ajax.register');

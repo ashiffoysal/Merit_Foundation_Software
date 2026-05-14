@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="{{ asset('backend/backend.css') }}"/>
+@stack('styles')
 </head>
 <body>
 
@@ -17,27 +18,22 @@
   <div class="pl-track"><div class="pl-bar"></div></div>
 </div>
 
-<!-- ════════════ LOGIN SCREEN ════════════ -->
-
-
-<!-- ════════════ ADMIN SHELL ════════════ -->
 <div id="">
 
-  <!-- SIDEBAR -->
+ 
   @include('backend.include.sidebar')
 
-  <!-- TOPBAR -->
   @include('backend.include.topbar')
 
-  <!-- NOTIFICATION PANEL -->
+
   @include('backend.include.notification')
 
-  <!-- MAIN CONTENT -->
+ 
     <main id="main-content">
         @yield('content')
     </main>
 
-  <!-- MODAL -->
+
 <div id="modal-view-message" class="modal-backdrop" style="display:none" onclick="closeModalOutside(event,'modal-view-message')">
     <div class="modal-box" style="max-width:560px">
         <div class="modal-header-custom">
@@ -64,7 +60,7 @@
 </div>
 
 </div><!-- admin-shell -->
-
+@stack('scripts')
 <script>
 /* ── Loader */
 window.addEventListener('load',()=>setTimeout(()=>{document.getElementById('pg-loader').classList.add('done')},1200));
