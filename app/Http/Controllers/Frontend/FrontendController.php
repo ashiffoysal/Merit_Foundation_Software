@@ -72,7 +72,7 @@ class FrontendController extends Controller
     // cookie_policy_page
     public function cookiePolicy()
     {
-        return view('frontend.pages.cookiepolicy');
+        return view('frontend.pages.cookie_policy');
     }
     // 
     public function contactSubmt(Request $request)
