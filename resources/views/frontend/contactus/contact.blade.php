@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'Contact Us - Merit Education Foundation')
 @section('content')
     <div class="contact-hero">
         <div class="container position-relative" style="z-index:2">
@@ -33,21 +34,21 @@
                             <div class="ci-icon"><i class="fas fa-envelope"></i></div>
                             <div>
                                 <div class="ci-label">General Enquiries</div>
-                                <div class="ci-val">info@meriteducation.org</div>
+                                <div class="ci-val">{{ $companyInfo ? $companyInfo->primary_email : '' }}</div>
                             </div>
                         </div>
                         <div class="ci-item">
                             <div class="ci-icon"><i class="fas fa-shield-alt"></i></div>
                             <div>
                                 <div class="ci-label">Safeguarding</div>
-                                <div class="ci-val">safeguarding@meriteducation.org</div>
+                                <div class="ci-val">{{ $companyInfo ? $companyInfo->safeguarding_email : '' }}</div>
                             </div>
                         </div>
                         <div class="ci-item">
                             <div class="ci-icon"><i class="fas fa-phone"></i></div>
                             <div>
                                 <div class="ci-label">Phone</div>
-                                <div class="ci-val">+44 20 0000 0000</div>
+                                <div class="ci-val">{{ $companyInfo ? $companyInfo->phone : '' }}</div>
                             </div>
                         </div>
                         <div class="ci-item">

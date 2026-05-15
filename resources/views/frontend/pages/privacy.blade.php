@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'Privacy Policy - Merit Education Foundation')
 @section('content')
 <style>
 .page-hero{padding:145px 0 75px;background:var(--dark);position:relative;overflow:hidden}

@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Seo;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class SeoController extends Controller
 {
@@ -15,64 +19,34 @@ class SeoController extends Controller
 
      public function updateSeo(Request $request)
     {
-        $request->validate([
-            // URLs
-            'old_url'          => 'nullable|url|max:500',
-            'new_url'          => 'nullable|url|max:500',
-            'canonical_url'    => 'nullable|url|max:500',
-            'redirect_type'    => 'required|in:301,302',
-            'index_status'     => 'required|in:index,noindex',
+        
+    
  
-            // Meta
-            'page_title'       => 'nullable|string|max:70',
-            'meta_title'       => 'nullable|string|max:60',
-            'meta_description' => 'nullable|string|max:160',
-            'meta_keywords'    => 'nullable|string|max:500',
-            'h1_tag'           => 'nullable|string|max:200',
+        $record = Seo::where('id', 1)->update([
+
+            'old_url'          => $request->old_url,
+            'new_url'          => $request->new_url,
+            'canonical_url'    => $request->canonical_url,
+            'redirect_type'    => $request->redirect_type,
+            'index_status'     => $request->index_status,
  
-            // Open Graph
-            'og_title'         => 'nullable|string|max:60',
-            'og_description'   => 'nullable|string|max:200',
-            'og_image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'page_title'       => $request->page_title,
+            'meta_title'       => $request->meta_title,
+            'meta_description' => $request->meta_description,
+            'meta_keywords'    => $request->meta_keywords,
+            'h1_tag'           => $request->h1_tag,
  
-            // Twitter
-            'twitter_title'       => 'nullable|string|max:60',
-            'twitter_description' => 'nullable|string|max:200',
-            'twitter_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'og_title'         => $request->og_title,
+            'og_description'   => $request->og_description,
  
-            // Schema / Notes
-            'schema_markup'    => ['nullable', 'string', function ($attr, $val, $fail) {
-                if ($val && ! $this->isValidJson($val)) {
-                    $fail('Schema markup must be valid JSON-LD.');
-                }
-            }],
-            'seo_notes'        => 'nullable|string|max:2000',
+            'twitter_title'       => $request->twitter_title,
+            'twitter_description' => $request->twitter_description,
+            'schema_markup'       => $request->schema_markup,
+            'seo_notes'          => $request->seo_notes,
+            'updated_at'          => now(),
         ]);
  
-        $record = Seo::firstOrNew([]);
- 
-        $record->fill($request->only([
-            'old_url', 'new_url', 'canonical_url', 'redirect_type', 'index_status',
-            'page_title', 'meta_title', 'meta_description', 'meta_keywords', 'h1_tag',
-            'og_title', 'og_description',
-            'twitter_title', 'twitter_description',
-            'schema_markup', 'seo_notes',
-        ]));
- 
-        // OG Image
-        if ($request->hasFile('og_image')) {
-            if ($record->og_image) Storage::disk('public')->delete($record->og_image);
-            $record->og_image = $request->file('og_image')->store('seo', 'public');
-        }
- 
-        // Twitter Image
-        if ($request->hasFile('twitter_image')) {
-            if ($record->twitter_image) Storage::disk('public')->delete($record->twitter_image);
-            $record->twitter_image = $request->file('twitter_image')->store('seo', 'public');
-        }
- 
-        $record->save();
- 
+      
         return response()->json([
             'success' => true,
             'message' => 'SEO settings saved successfully.',

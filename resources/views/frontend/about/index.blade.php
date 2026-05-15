@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'About Us - Merit Education Foundation')
 @section('content')
 
   <div class="about-hero">

@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'Home - Merit Education Foundation')
 @section('content')
   <!-- Hero -->
   <section class="hero">
@@ -32,7 +33,7 @@
             <div class="hero-feat"><div class="hero-feat-ic"><i class="fas fa-globe"></i></div><div><div class="hero-feat-t">Global Impact</div><div class="hero-feat-s">Supporting students across 30+ countries through our charity programmes</div></div></div>
             <div class="hero-mini-cta">
               <div class="hero-mini-stat"><strong>5,000+</strong><span>Children Supported</span></div>
-              <button class="btn-sm-gold" onclick="showPage('about')">Our Story <i class="fas fa-arrow-right"></i></button>
+              <a class="btn-sm-gold" href="{{ url('/about') }}">Our Story <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         </div>
@@ -90,9 +91,9 @@
         <p class="sec-p mx-auto" style="max-width:520px">Every action we take is built around education, support and charity — working together to change lives.</p>
       </div>
       <div class="row g-4">
-        <div class="col-lg-4" data-r="up"><div class="wwd-card"><div class="wwd-num">01</div><div class="wwd-ic-wrap"><i class="fas fa-quran"></i></div><h5>Online Quran Teaching</h5><p>One-to-one online Quran lessons with qualified, vetted tutors. From beginners to advanced Tajweed — tailored to every student's level and pace.</p><span class="wwd-link" onclick="showPage('book')">Book a Lesson <i class="fas fa-arrow-right"></i></span></div></div>
-        <div class="col-lg-4" data-r="up" style="transition-delay:.1s"><div class="wwd-card"><div class="wwd-num">02</div><div class="wwd-ic-wrap"><i class="fas fa-book-reader"></i></div><h5>Educational Support</h5><p>Structured academic support programmes for disadvantaged children — covering literacy, numeracy, and general learning tailored to need.</p><span class="wwd-link" onclick="showPage('about')">Learn More <i class="fas fa-arrow-right"></i></span></div></div>
-        <div class="col-lg-4" data-r="up" style="transition-delay:.2s"><div class="wwd-card"><div class="wwd-num">03</div><div class="wwd-ic-wrap"><i class="fas fa-hand-holding-heart"></i></div><h5>Charity & Sponsorship</h5><p>Funding free education for orphaned and disadvantaged children globally. Every pound donated is tracked, reported, and used with full accountability.</p><span class="wwd-link" onclick="showPage('donate')">Donate Now <i class="fas fa-arrow-right"></i></span></div></div>
+        <div class="col-lg-4" data-r="up"><div class="wwd-card"><div class="wwd-num">01</div><div class="wwd-ic-wrap"><i class="fas fa-quran"></i></div><h5>Online Quran Teaching</h5><p>One-to-one online Quran lessons with qualified, vetted tutors. From beginners to advanced Tajweed — tailored to every student's level and pace.</p><a class="wwd-link" href="{{ url('/book-lesson') }}">Book a Lesson <i class="fas fa-arrow-right"></i></a></div></div>
+        <div class="col-lg-4" data-r="up" style="transition-delay:.1s"><div class="wwd-card"><div class="wwd-num">02</div><div class="wwd-ic-wrap"><i class="fas fa-book-reader"></i></div><h5>Educational Support</h5><p>Structured academic support programmes for disadvantaged children — covering literacy, numeracy, and general learning tailored to need.</p><a class="wwd-link" href="{{ url('/about') }}">Learn More <i class="fas fa-arrow-right"></i></a></div></div>
+        <div class="col-lg-4" data-r="up" style="transition-delay:.2s"><div class="wwd-card"><div class="wwd-num">03</div><div class="wwd-ic-wrap"><i class="fas fa-hand-holding-heart"></i></div><h5>Charity & Sponsorship</h5><p>Funding free education for orphaned and disadvantaged children globally. Every pound donated is tracked, reported, and used with full accountability.</p><a class="wwd-link" href="{{ url('/donate') }}">Donate Now <i class="fas fa-arrow-right"></i></a></div></div>
       </div>
     </div>
   </section>
@@ -123,7 +124,7 @@
         </div>
       </div>
       <div class="text-center mt-5" data-r="up">
-        <button class="btn-gold" onclick="showPage('book')"><i class="fas fa-graduation-cap"></i>Book a Lesson Today</button>
+        <a class="btn-gold" href="{{ url('/book-lesson') }}"><i class="fas fa-graduation-cap"></i>Book a Lesson Today</a>
       </div>
     </div>
   </section>
@@ -195,8 +196,8 @@
           <p style="color:rgba(15,31,92,.6);font-size:.95rem;margin-top:10px;font-weight:300;max-width:440px">Join hundreds of families who trust Merit Education Foundation for quality Quran teaching — and help us change a life along the way.</p>
         </div>
         <div class="col-lg-5 d-flex flex-wrap gap-3 justify-content-lg-end" data-r="right">
-          <button class="btn-navy" onclick="showPage('book')"><i class="fas fa-graduation-cap"></i>Book a Lesson</button>
-          <button class="btn-outline-gold" onclick="showPage('donate')"><i class="fas fa-heart"></i>Donate Now</button>
+          <a class="btn-navy" href="{{ url('/book-lesson') }}"><i class="fas fa-graduation-cap"></i>Book a Lesson</a>
+          <a class="btn-outline-gold" href="{{ url('/donate') }}"><i class="fas fa-heart"></i>Donate Now</a>
         </div>
       </div>
     </div></div>

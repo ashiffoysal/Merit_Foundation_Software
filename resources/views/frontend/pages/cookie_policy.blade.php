@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'Cookie Policy - Merit Education Foundation')
 @section('content')
 <style>
 /* ═══════════════════════════════════════

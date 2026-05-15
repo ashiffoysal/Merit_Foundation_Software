@@ -35,14 +35,10 @@
       </div>
       <div class="col-lg-4">
         <div class="footer-col-title">Contact & Newsletter</div>
-        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>info@meriteducation.org</span></div>
-        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-phone" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>+44 20 0000 0000</span></div>
-        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:20px"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>London, United Kingdom</span></div>
-        <div class="footer-newsletter">
-          <div class="footer-nl-title">Stay Updated</div>
-          <div class="footer-nl-sub">Monthly impact reports and updates from our programmes worldwide.</div>
-          <div class="footer-nl-row"><input type="email" placeholder="Your email address"><button>Subscribe</button></div>
-        </div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->primary_email : '' }}</span></div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-phone" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->phone : '' }}</span></div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:20px"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->address : '' }}</span></div>
+      
       </div>
     </div>
     <!-- Key disclaimer -->

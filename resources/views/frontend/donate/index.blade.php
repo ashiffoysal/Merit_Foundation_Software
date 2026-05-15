@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'Donate - Merit Education Foundation')
 @section('content')
   <div class="donate-hero">
     <div class="container position-relative" style="z-index:2">

@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'Terms and Conditions - Merit Education Foundation')
 @section('content')
 <style>
 /* ═══════════════════════════════════════

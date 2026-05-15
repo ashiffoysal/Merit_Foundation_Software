@@ -114,4 +114,15 @@ class BlogsController extends Controller
         return redirect()->route('admin.blogs.index')
                          ->with('success', 'Blog updated successfully.');
     }
+
+    public function destroy($id)
+    {
+        $blog = Blog::findOrFail($id);
+        if ($blog->featured_image && Storage::disk('public')->exists($blog->featured_image)) {
+            Storage::disk('public')->delete($blog->featured_image); 
+        }
+        $blog->delete();
+        return redirect()->route('admin.blogs.index')
+                         ->with('success', 'Blog deleted successfully.');
+    }
 }

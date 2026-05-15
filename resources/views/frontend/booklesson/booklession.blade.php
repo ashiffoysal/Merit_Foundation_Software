@@ -1,4 +1,5 @@
 @extends('layouts.frontend')
+@section('title', 'Book a Lesson - Merit Education Foundation')
 @section('content')
 
   <div class="book-hero">
@@ -38,6 +39,7 @@
       </div>
       <div class="row g-4 justify-content-center align-items-center">
         <div class="col-lg-4 col-md-6" data-r="up">
+           <a href="{{ url('/contact') }}">
           <div class="price-box">
             <div class="pb-label">Standard</div>
             <div class="pb-amt"><span style="font-size:1.3rem;vertical-align:top;margin-top:10px">£</span>15</div>
@@ -49,8 +51,10 @@
               <li style="font-size:.82rem;color:var(--muted);margin-bottom:8px;display:flex;gap:9px;align-items:center"><i class="fas fa-check-circle" style="color:var(--teal)"></i>Progress tracking</li>
             </ul>
           </div>
+           </a>
         </div>
         <div class="col-lg-4 col-md-6" data-r="up" style="transition-delay:.1s">
+           <a href="{{ url('/contact') }}">
           <div class="price-box featured">
             <div class="pb-ribbon">Most Popular</div>
             <div class="pb-label">Popular</div>
@@ -64,8 +68,10 @@
               <li style="font-size:.82rem;color:rgba(255,255,255,.7);margin-bottom:8px;display:flex;gap:9px;align-items:center"><i class="fas fa-check-circle" style="color:var(--gold)"></i>Parent feedback session</li>
             </ul>
           </div>
+           </a>
         </div>
         <div class="col-lg-4 col-md-6" data-r="up" style="transition-delay:.2s">
+          <a href="{{ url('/contact') }}">
           <div class="price-box">
             <div class="pb-label">Intensive</div>
             <div class="pb-amt"><span style="font-size:1.3rem;vertical-align:top;margin-top:10px">£</span>40</div>
@@ -78,6 +84,8 @@
               <li style="font-size:.82rem;color:var(--muted);margin-bottom:8px;display:flex;gap:9px;align-items:center"><i class="fas fa-check-circle" style="color:var(--teal)"></i>Priority tutor matching</li>
             </ul>
           </div>
+        </a>
+
         </div>
       </div>
       <div class="text-center mt-4">

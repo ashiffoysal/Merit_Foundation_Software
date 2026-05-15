@@ -68,12 +68,19 @@ class FrontendController extends Controller
     // news page
     public function news()
     {
-        $firstBlogs=Blog::where('status','published')->orderBy('id','desc')->first();
-        $blogsCategory=BlogsCategory::where('status','published')->orderBy('id','desc')->skip(1)->take(4)->get();
-        $allBlogs=Blog::where('status','published')->orderBy('id','desc')->skip(1)->paginate(6);
-        return view('frontend.news.index',compact('allBlogs','firstBlogs','blogsCategory'));
+        $firstBlogs=Blog::where('status','published')->orderBy('id','desc')->with('category')->first();
+        $blogsCategory=BlogsCategory::orderBy('id','desc')->take(6)->get();
+        $allBlogs=Blog::where('status','published')->orderBy('id','desc')->with('category')->skip(1)->paginate(6);
+        $mostRecent=Blog::where('status','published')->orderBy('id','desc')->with('category')->skip(6)->take(5)->get();
+        return view('frontend.news.index',compact('allBlogs','firstBlogs','blogsCategory','mostRecent'));
     }
 
+    public function newsDetails($slug)
+    {
+        $blog=Blog::where('slug',$slug)->with('category')->firstOrFail();
+        $recentBlogs=Blog::where('status','published')->orderBy('id','desc')->with('category')->take(5)->get();
+        return view('frontend.news.details',compact('blog','recentBlogs'));
+    }
     // cookie_policy_page
     public function cookiePolicy()
     {

@@ -169,7 +169,7 @@
 <div class="seo-page">
 
     {{-- Header --}}
-    <div class="seo-ph">
+    <div class="seo-ph " style="margin-top:100px">
         <div class="seo-ph-left">
             <h1><i class="fas fa-search" style="color:#f59e0b;margin-right:8px"></i>SEO Settings</h1>
             <p>Manage meta tags, Open Graph, Twitter cards, redirects and schema markup</p>
