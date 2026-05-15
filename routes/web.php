@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\UserLoginController;
 use App\Http\Controllers\Backend\CompanyInformationController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\BlogsController;
+use App\Http\Controllers\Backend\SeoController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -104,6 +105,13 @@ Route::prefix('admin')->group(function () {
     }); 
 });
 
+Route::prefix('admin')->group(function () {
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('seo-update',         [SeoController::class, 'index'])->name('admin.seo.update');
+        Route::post('seo-update',         [SeoController::class, 'updateSeo'])->name('admin.settings.seo.update');
+   
+    }); 
+});
 
 
 

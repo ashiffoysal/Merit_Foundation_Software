@@ -52,7 +52,12 @@ a {
       
       <div class="sb-item" onclick="showView('messages',this)"><i class="fas fa-envelope"></i><span>Messages</span><span class="sb-badge">5</span></div> --}}
       <div class="sb-section">System</div>
-      <div class="sb-item" onclick="showView('admins',this)"><i class="fas fa-user-shield"></i><span>Admin Users</span></div>
+      <a href="{{ route('admin.seo.update') }}">
+        <div class="sb-item">
+          <i class="fas fa-search"></i>
+          <span>SEO Settings</span>
+        </div>
+      </a>
       <a href="{{ route('admin.company-information.index') }}">
         <div class="sb-item">
           <i class="fas fa-cog"></i>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ContactMessage;
 use Carbon\Carbon;
+use App\Models\Blog;
+use App\Models\BlogsCategory;
 use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
@@ -66,7 +68,10 @@ class FrontendController extends Controller
     // news page
     public function news()
     {
-        return view('frontend.news.index');
+        $firstBlogs=Blog::where('status','published')->orderBy('id','desc')->first();
+        $blogsCategory=BlogsCategory::where('status','published')->orderBy('id','desc')->skip(1)->take(4)->get();
+        $allBlogs=Blog::where('status','published')->orderBy('id','desc')->skip(1)->paginate(6);
+        return view('frontend.news.index',compact('allBlogs','firstBlogs','blogsCategory'));
     }
 
     // cookie_policy_page
