@@ -42,12 +42,27 @@ a {
          
         </div>
       </a>
+       <div class="sb-section">Price Categories</div>
+      <a href="{{ route('admin.fees-category.index') }}">
+        <div class="sb-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Price Category Index</span>
+
+        </div>
+      </a>
+         <a href="{{ route('admin.fees-category.create') }}">
+        <div class="sb-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Price Category Create</span>
+         
+        </div>
+      </a>
       {{-- <div class="sb-item" onclick="showView('donations',this)"><i class="fas fa-heart"></i><span>Donations</span></div>
       <div class="sb-item" onclick="showView('bookings',this)"><i class="fas fa-calendar-check"></i><span>Bookings</span><span class="sb-badge">3</span></div>
       <div class="sb-item" onclick="showView('reports',this)"><i class="fas fa-chart-bar"></i><span>Reports</span></div> --}}
       <div class="sb-section">Content</div>
       <a href="{{ route('admin.blogs.index') }}"><div class="sb-item"><i class="fas fa-newspaper"></i><span>News & Articles</span></div></a>
-         <a href="{{ route('admin.blogs.create') }}"><div class="sb-item"><i class="fas fa-newspaper"></i><span>News & Articles Create</span></div></a>
+      <a href="{{ route('admin.blogs.create') }}"><div class="sb-item"><i class="fas fa-newspaper"></i><span>News & Articles Create</span></div></a>
       {{-- <div class="sb-item" onclick="showView('safeguarding',this)"><i class="fas fa-shield-alt"></i><span>Safeguarding</span></div>
       
       <div class="sb-item" onclick="showView('messages',this)"><i class="fas fa-envelope"></i><span>Messages</span><span class="sb-badge">5</span></div> --}}

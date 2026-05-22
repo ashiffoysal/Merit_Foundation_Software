@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\CompanyInformationController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\BlogsController;
 use App\Http\Controllers\Backend\SeoController;
+use App\Http\Controllers\Backend\FeesCategoryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -90,8 +91,22 @@ Route::prefix('admin')->group(function () {
         Route::post('category-update/{id}',         [CategoryController::class, 'update'])->name('admin.category.update');
         Route::delete('category-delete/{id}',         [CategoryController::class, 'destroy'])->name('admin.category.destroy');
     });
-
 });
+
+
+// fees category
+Route::prefix('admin')->group(function () {
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('fees-category-create',         [FeesCategoryController::class, 'create'])->name('admin.fees-category.create');
+        Route::get('fees-category-index',         [FeesCategoryController::class, 'index'])->name('admin.fees-category.index');
+        Route::post('fees-category-store',         [FeesCategoryController::class, 'store'])->name('admin.fees-category.store');
+        Route::get('fees-category-edit/{id}',         [FeesCategoryController::class, 'edit'])->name('admin.fees-category.edit');
+        Route::post('fees-category-update/{id}',         [FeesCategoryController::class, 'update'])->name('admin.fees-category.update');
+        Route::delete('fees-category-delete/{id}',         [FeesCategoryController::class, 'destroy'])->name('admin.fees-category.destroy');
+    });
+});
+
+
 
 // blogs
 Route::prefix('admin')->group(function () {
@@ -112,9 +127,6 @@ Route::prefix('admin')->group(function () {
    
     }); 
 });
-
-
-
 
 
 Route::post('/ajax-login', [UserLoginController::class, 'login'])->name('ajax.login');
