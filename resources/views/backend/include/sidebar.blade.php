@@ -57,6 +57,26 @@ a {
          
         </div>
       </a>
+
+
+    <div class="sb-section">Plan Categories</div>
+      <a href="{{ route('admin.plans.index') }}">
+        <div class="sb-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Plan Index</span>
+
+        </div>
+      </a>
+         <a href="{{ route('admin.plans.create') }}">
+        <div class="sb-item">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Plan Create</span>
+         
+        </div>
+      </a>
+
+
+      {{--  --}}
       {{-- <div class="sb-item" onclick="showView('donations',this)"><i class="fas fa-heart"></i><span>Donations</span></div>
       <div class="sb-item" onclick="showView('bookings',this)"><i class="fas fa-calendar-check"></i><span>Bookings</span><span class="sb-badge">3</span></div>
       <div class="sb-item" onclick="showView('reports',this)"><i class="fas fa-chart-bar"></i><span>Reports</span></div> --}}

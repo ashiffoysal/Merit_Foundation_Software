@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\BlogsController;
 use App\Http\Controllers\Backend\SeoController;
 use App\Http\Controllers\Backend\FeesCategoryController;
+use App\Http\Controllers\Backend\PlanController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -105,6 +106,20 @@ Route::prefix('admin')->group(function () {
         Route::delete('fees-category-delete/{id}',         [FeesCategoryController::class, 'destroy'])->name('admin.fees-category.destroy');
     });
 });
+
+
+// plans
+Route::prefix('admin')->group(function () {
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('plans-create',         [PlanController::class, 'create'])->name('admin.plans.create');
+        Route::get('plans-index',         [PlanController::class, 'index'])->name('admin.plans.index');
+        Route::post('plans-store',         [PlanController::class, 'store'])->name('admin.plans.store');
+        Route::get('plans-edit/{id}',         [PlanController::class, 'edit'])->name('admin.plans.edit');
+        Route::post('plans-update/{id}',         [PlanController::class, 'update'])->name('admin.plans.update');
+        Route::delete('plans-delete/{id}',         [PlanController::class, 'destroy'])->name('admin.plans.destroy');
+    });
+});
+
 
 
 
