@@ -45,6 +45,9 @@ Route::get('/news', [FrontendController::class, 'news'])->name('news');
 Route::get('/news/{slug}', [FrontendController::class, 'newsDetails'])->name('news.details');
 Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
 
+Route::get('book-lesson/form', [FrontendController::class, 'checkout'])->name('checkout'); 
+Route::post('book-lesson/store', [FrontendController::class, 'checkoutstore'])->name('checkout.store');
+
 
 
 // Admin routes

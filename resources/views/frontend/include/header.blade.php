@@ -12,7 +12,7 @@
       <a href="{{ url('/about') }}" ><span class="nav-link-item">About Us</span></a>
       <a href="{{ url('/news') }}" ><span class="nav-link-item">News</span></a>
       <a href="{{ url('/book-lesson') }}" ><span class="nav-link-item">Book Lesson</span></a>
-      <a href="{{ url('/donate') }}" ><span class="nav-link-item">Donate</span></a>
+      {{-- <a href="{{ url('/donate') }}" ><span class="nav-link-item">Donate</span></a> --}}
       <a href="{{ url('/safeguarding-policy') }}" ><span class="nav-link-item">Safeguarding</span></a>
       <a href="{{ url('/contact') }}" ><span class="nav-link-item">Contact</span></a>
     </div>
@@ -27,7 +27,7 @@
     <a href="{{ url('/about') }}" ><span class="mobile-link">About Us</span></a>
     <a href="{{ url('/news') }}" ><span class="mobile-link">News</span></a>
     <a href="{{ url('/book-lesson') }}" ><span class="mobile-link">Book Lesson</span></a>
-    <a href="{{ url('/donate') }}" ><span class="mobile-link">Donate</span></a>
+    {{-- <a href="{{ url('/donate') }}" ><span class="mobile-link">Donate</span></a> --}}
     <a href="{{ url('/safeguarding-policy') }}" ><span class="mobile-link">Safeguarding</span></a>
     <a href="{{ url('/contact') }}" ><span class="mobile-link">Contact</span></a>
     <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)">

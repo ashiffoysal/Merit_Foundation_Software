@@ -14,8 +14,8 @@
           <div class="hero-rule" data-r="fade" style="transition-delay:.2s"><div class="hero-rl"></div><div class="hero-diamond"></div></div>
           <p class="hero-p" data-r="up" style="transition-delay:.22s">Merit Education Foundation offers expert online Quran lessons and educational support — while funding places for children who cannot afford them. Every lesson fee helps a child in need.</p>
           <div class="hero-btns" data-r="up" style="transition-delay:.3s">
-            <button class="btn-gold" onclick="showPage('book')"><i class="fas fa-graduation-cap"></i>Book a Lesson</button>
-            <button class="btn-outline-white" onclick="showPage('donate')"><i class="fas fa-heart"></i>Donate</button>
+            <a class="btn-gold" href="{{ url('/book-lesson') }}"><i class="fas fa-graduation-cap"></i>Book a Lesson</a>
+            {{-- <a class="btn-outline-white" href="{{ url('/donate') }}"><i class="fas fa-heart"></i>Donate</a> --}}
           </div>
           <div class="hero-trust" data-r="fade" style="transition-delay:.38s">
             <span class="trust-item"><i class="fas fa-shield-alt"></i>UK-Based Organisation</span>
@@ -80,7 +80,7 @@
       </div>
     </div>
   </section>
-
+  @include('frontend.include.lessonplan')
   <!-- What We Do -->
   <section class="section-light">
     <div class="container">
