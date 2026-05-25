@@ -5,22 +5,6 @@
 /* ═══════════════════════════════════════
    DESIGN TOKENS — matches Merit premium
 ═══════════════════════════════════════ */
-:root {
-  --navy:   #0F1F5C;
-  --navy2:  #1A2E7A;
-  --gold:   #C9A84C;
-  --gold2:  #E8C96B;
-  --teal:   #0D6B63;
-  --cream:  #FAF8F3;
-  --light:  #F4F2ED;
-  --muted:  #7A7A8C;
-  --border: #E2DDD4;
-  --white:  #FFFFFF;
-  --dark:   #080E2B;
-  --txt:    #1C1C2E;
-  --red:    #DC2626;
-  --green:  #15803D;
-}
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;font-size:16px}
@@ -128,14 +112,13 @@ body{font-family:'DM Sans',sans-serif;color:var(--txt);background:var(--white);o
 ══════════════════════════════════════ */
 .page-hero{
   padding:148px 0 80px;
-  background:var(--dark);
+  background:#1a3a2a;
   position:relative;overflow:hidden;
 }
 .page-hero::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 80% 80% at 50% 40%,rgba(26,46,122,.88),transparent 66%),
-    radial-gradient(ellipse 40% 40% at 85% 15%,rgba(201,168,76,.06),transparent);
+    radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%);
 }
 .page-hero::after{
   content:'';position:absolute;inset:0;

@@ -5,22 +5,6 @@
 /* ═══════════════════════════════════════
    DESIGN TOKENS — matches Merit premium
 ═══════════════════════════════════════ */
-:root {
-  --navy:   #0F1F5C;
-  --navy2:  #1A2E7A;
-  --gold:   #C9A84C;
-  --gold2:  #E8C96B;
-  --teal:   #0D6B63;
-  --cream:  #FAF8F3;
-  --light:  #F4F2ED;
-  --muted:  #7A7A8C;
-  --border: #E2DDD4;
-  --white:  #FFFFFF;
-  --dark:   #080E2B;
-  --txt:    #1C1C2E;
-  --red:    #DC2626;
-  --green:  #15803D;
-}
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;font-size:16px}

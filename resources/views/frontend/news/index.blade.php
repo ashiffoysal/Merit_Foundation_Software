@@ -12,7 +12,11 @@
     padding-top: 136px;
     padding-bottom: 100px;
 }
-.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 40%,rgba(26,46,122,.85),transparent 65%)}
+.page-hero::before{content:'';position:absolute;inset:0;
+
+background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%)
+
+}
 .page-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px}
 .ph-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.28);border-radius:30px;padding:6px 18px;margin-bottom:18px;position:relative;z-index:1}
 .ph-badge span{font-size:.68rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;font-weight:600}

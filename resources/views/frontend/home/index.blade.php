@@ -2,7 +2,7 @@
 @section('title', 'Home - Merit Education Foundation')
 @section('content')
   <!-- Hero -->
-  <section class="hero">
+  {{-- <section class="hero">
     <div class="hero-mesh"></div><div class="hero-grid"></div>
     <div class="hero-orb hero-orb-1"></div><div class="hero-orb hero-orb-2"></div>
     <div class="container" style="padding-bottom:130px;padding-top:60px">
@@ -15,7 +15,7 @@
           <p class="hero-p" data-r="up" style="transition-delay:.22s">Merit Education Foundation offers expert online Quran lessons and educational support — while funding places for children who cannot afford them. Every lesson fee helps a child in need.</p>
           <div class="hero-btns" data-r="up" style="transition-delay:.3s">
             <a class="btn-gold" href="{{ url('/book-lesson') }}"><i class="fas fa-graduation-cap"></i>Book a Lesson</a>
-            {{-- <a class="btn-outline-white" href="{{ url('/donate') }}"><i class="fas fa-heart"></i>Donate</a> --}}
+         
           </div>
           <div class="hero-trust" data-r="fade" style="transition-delay:.38s">
             <span class="trust-item"><i class="fas fa-shield-alt"></i>UK-Based Organisation</span>
@@ -47,7 +47,535 @@
         <div class="col-6 col-md-3"><div class="hero-stat"><div class="hero-stat-n">15+</div><div class="hero-stat-l">Years of Impact</div></div></div>
       </div></div>
     </div>
-  </section>
+  </section> --}}
+  
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600&display=swap');
+
+  .mef-hero {
+    font-family: 'DM Sans', sans-serif;
+    background: #FAFAF7;
+    padding: 0;
+    min-height: 580px;
+    position: relative;
+    overflow: hidden;
+  }
+
+
+  .mef-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 145px 32px 48px;
+    align-items: center;
+}
+
+  .mef-top-bar {
+    background: #1a3a2a;
+    color: #d4a84b;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    padding: 8px 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .mef-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    background: #fff;
+    border-bottom: 1px solid #e8e4db;
+  }
+
+  .mef-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mef-logo-icon {
+    width: 36px;
+    height: 36px;
+    background: #1a3a2a;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mef-logo-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a3a2a;
+    line-height: 1.2;
+  }
+
+  .mef-logo-sub {
+    font-size: 10px;
+    color: #7a7a6a;
+    font-weight: 400;
+  }
+
+  .mef-nav-links {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: #444;
+    font-weight: 500;
+  }
+
+  .mef-nav-cta {
+    background: #d4a84b;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+.mef-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 145px 32px 48px;
+    align-items: center;
+}
+
+  .mef-left {}
+
+  .mef-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #E8F4ED;
+    color: #1a3a2a;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  .mef-pill-dot {
+    width: 6px;
+    height: 6px;
+    background: #d4a84b;
+    border-radius: 50%;
+  }
+
+  .mef-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #1a2a18;
+    line-height: 1.12;
+    margin: 0 0 6px;
+  }
+
+  .mef-h1 em {
+    font-style: italic;
+    color: #d4a84b;
+  }
+
+  .mef-tagline {
+    font-size: 14px;
+    color: #7a7a6a;
+    font-weight: 500;
+    margin: 0 0 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .mef-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 20px;
+  }
+
+  .mef-divider-line {
+    flex: 1;
+    max-width: 60px;
+    height: 1.5px;
+    background: linear-gradient(90deg, #d4a84b, transparent);
+  }
+
+  .mef-divider-diamond {
+    width: 7px;
+    height: 7px;
+    background: #d4a84b;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .mef-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #4a4a3a;
+    max-width: 440px;
+    margin: 0 0 28px;
+  }
+
+  .mef-btns {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .mef-btn-primary {
+    background: #1a3a2a;
+    color: #fff;
+    border: none;
+    padding: 13px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+
+  .mef-btn-price {
+    background: #d4a84b;
+    color: #fff;
+    border: none;
+    padding: 13px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .mef-price-badge {
+    background: #fff3;
+    padding: 1px 7px;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+
+  .mef-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .mef-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #5a5a4a;
+    font-weight: 500;
+  }
+
+  .mef-trust-icon {
+    width: 16px;
+    height: 16px;
+    background: #E8F4ED;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mef-right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 48px;
+  }
+
+  .mef-card-main {
+    background: #fff;
+    border: 1px solid #e8e4db;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 16px rgba(26,58,42,0.06);
+  }
+
+  .mef-card-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7a7a6a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .mef-pricing-hero {
+    background: linear-gradient(135deg, #1a3a2a 0%, #2a5a3a 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mef-price-main {
+    color: #fff;
+  }
+
+  .mef-price-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #d4a84b;
+    line-height: 1;
+  }
+
+  .mef-price-per {
+    font-size: 13px;
+    color: #a0c8b0;
+    margin-top: 4px;
+  }
+
+  .mef-price-label {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    text-align: right;
+    line-height: 1.3;
+  }
+
+  .mef-feat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mef-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .mef-feat-ic {
+    width: 32px;
+    height: 32px;
+    background: #E8F4ED;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  .mef-feat-t {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a2a18;
+    margin-bottom: 1px;
+  }
+
+  .mef-feat-s {
+    font-size: 11px;
+    color: #7a7a6a;
+    line-height: 1.5;
+  }
+
+  .mef-charity-strip {
+    background: #fffbf0;
+    border: 1px solid #f0dea0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #7a5a00;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .mef-charity-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .mef-stat-bar {
+    background: #1a3a2a;
+    padding: 20px 32px;
+  }
+
+  .mef-stats {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+  }
+
+  .mef-stat-item {
+    padding: 0 16px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .mef-stat-item:last-child { border-right: none; }
+
+  .mef-stat-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #d4a84b;
+  }
+
+  .mef-stat-l {
+    font-size: 11px;
+    color: #a0c8b0;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+  }
+</style>
+
+<div class="mef-hero">
+ 
+  <div class="mef-main">
+    <div class="mef-left">
+      <div class="mef-pill">
+        <div class="mef-pill-dot"></div>
+        UK Registered Charity
+      </div>
+
+      <h1 class="mef-h1">Education<br>for <em>Every</em><br>Child</h1>
+      <p class="mef-tagline">Opportunity knows no boundaries</p>
+
+      <div class="mef-divider">
+        <div class="mef-divider-line"></div>
+        <div class="mef-divider-diamond"></div>
+      </div>
+
+      <p class="mef-desc">
+        Expert 1-to-1 online Quran lessons from qualified tutors — starting at just <strong style="color:#1a3a2a">£5 per lesson</strong>. Every fee you pay helps fund a free place for an orphaned or disadvantaged child.
+      </p>
+
+      <div class="mef-btns">
+        <a href="{{ url('/book-lesson') }}" class="mef-btn-primary">
+          <i class="ti ti-school" aria-hidden="true" style="font-size:16px"></i>
+          Book a Lesson
+        </a>
+        <a href="{{ url('/book-lesson') }}"  class="mef-btn-price">
+          <i class="ti ti-star" aria-hidden="true" style="font-size:16px"></i>
+          From
+          <span class="mef-price-badge">£5</span>
+          per session
+        </a>
+      </div>
+
+      <div class="mef-trust">
+        <div class="mef-trust-item">
+          <div class="mef-trust-icon">
+            <i class="ti ti-shield" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
+          </div>
+          UK-Based Organisation
+        </div>
+        <div class="mef-trust-item">
+          <div class="mef-trust-icon">
+            <i class="ti ti-user-check" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
+          </div>
+          Safeguarding First
+        </div>
+        <div class="mef-trust-item">
+          <div class="mef-trust-icon">
+            <i class="ti ti-certificate" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
+          </div>
+          Qualified Tutors
+        </div>
+        <div class="mef-trust-item">
+          <div class="mef-trust-icon">
+            <i class="ti ti-eye" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
+          </div>
+          Transparent Funds
+        </div>
+      </div>
+    </div>
+
+    <div class="mef-right">
+      <div class="mef-card-main">
+        <div class="mef-card-title">Quran Learning · Starting from</div>
+
+        <div class="mef-pricing-hero">
+          <div class="mef-price-main">
+            <div class="mef-price-amount">£5</div>
+            <div class="mef-price-per">per lesson · no hidden fees</div>
+          </div>
+          <div class="mef-price-label">1-to-1<br>Online Quran<br>Lessons</div>
+        </div>
+
+        <div class="mef-feat-list">
+          <div class="mef-feat">
+            <div class="mef-feat-ic">📖</div>
+            <div>
+              <div class="mef-feat-t">Qaida to Tajweed</div>
+              <div class="mef-feat-s">Structured progression for all levels, beginners to advanced</div>
+            </div>
+          </div>
+          <div class="mef-feat">
+            <div class="mef-feat-ic">🕐</div>
+            <div>
+              <div class="mef-feat-t">Flexible scheduling</div>
+              <div class="mef-feat-s">Book sessions around your family — evenings, weekends available</div>
+            </div>
+          </div>
+          <div class="mef-feat">
+            <div class="mef-feat-ic">📚</div>
+            <div>
+              <div class="mef-feat-t">Educational support</div>
+              <div class="mef-feat-s">Literacy & numeracy programmes alongside Quran studies</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mef-charity-strip">
+        <div class="mef-charity-icon">🤲</div>
+        <div>Your £5 lesson fee funds a <strong>free place for an orphaned child</strong> in one of our 30+ supported countries. Every lesson is sadaqah in action.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mef-stat-bar">
+    <div class="mef-stats">
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">5,000+</div>
+        <div class="mef-stat-l">Students Helped</div>
+      </div>
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">120+</div>
+        <div class="mef-stat-l">Schools Supported</div>
+      </div>
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">30+</div>
+        <div class="mef-stat-l">Countries</div>
+      </div>
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">15+</div>
+        <div class="mef-stat-l">Years of Impact</div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- About Summary -->
   <section class="section-cream">
     <div class="container">

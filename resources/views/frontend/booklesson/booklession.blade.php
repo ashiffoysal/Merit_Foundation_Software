@@ -234,8 +234,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse 100% 80% at 30% 60%, rgba(26, 46, 122, .85), transparent 65%),
+            background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%),
                 radial-gradient(ellipse 50% 50% at 80% 20%, rgba(201, 168, 76, .06), transparent);
         }
 
@@ -1721,104 +1720,7 @@
     </section>
 
 
-    <!-- ═══════════════ FOOTER ═══════════════ -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div
-                            style="width:42px;height:42px;background:rgba(201,168,76,.1);border:1.5px solid rgba(201,168,76,.28);border-radius:10px;display:flex;align-items:center;justify-content:center">
-                            <i class="fas fa-book-open" style="color:var(--gold);font-size:.9rem"></i>
-                        </div>
-                        <div>
-                            <div class="footer-brand-n">MERIT</div>
-                            <div class="footer-brand-s">Education Foundation</div>
-                        </div>
-                    </div>
-                    <p
-                        style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.3);font-size:.9rem;margin-bottom:14px">
-                        "Education for All, Opportunity for Every Child"</p>
-                    <p style="font-size:.8rem;color:rgba(255,255,255,.32);line-height:1.75;max-width:290px">A UK-based
-                        education charity combining expert online Quran teaching with a global mission to fund education for
-                        disadvantaged children.</p>
-                    <div class="footer-soc">
-                        <div class="footer-soc-btn"><i class="fab fa-facebook-f"></i></div>
-                        <div class="footer-soc-btn"><i class="fab fa-instagram"></i></div>
-                        <div class="footer-soc-btn"><i class="fab fa-twitter"></i></div>
-                        <div class="footer-soc-btn"><i class="fab fa-linkedin-in"></i></div>
-                        <div class="footer-soc-btn"><i class="fab fa-youtube"></i></div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-6">
-                    <div class="footer-col-title">Navigate</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Home</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>About Us</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Book a Lesson</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Donate</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Contact</div>
-                </div>
-                <div class="col-lg-2 col-6">
-                    <div class="footer-col-title">Legal</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Privacy Policy</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Terms & Conditions</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Refund Policy</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Cookie Policy</div>
-                    <div class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding Policy</div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="footer-col-title">Contact</div>
-                    <p style="font-size:.8rem;color:rgba(255,255,255,.35);margin-bottom:8px;display:flex;gap:10px">
-                        <i class="fas fa-envelope"
-                            style="color:var(--gold);margin-top:3px;font-size:.75rem"></i>info@meriteducation.org
-                    </p>
-                    <p style="font-size:.8rem;color:rgba(255,255,255,.35);margin-bottom:18px;display:flex;gap:10px">
-                        <i class="fas fa-phone" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i>+44 20 0000
-                        0000
-                    </p>
-                    <div
-                        style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:22px 18px">
-                        <div style="font-size:.8rem;font-weight:600;color:var(--white);margin-bottom:4px">Newsletter</div>
-                        <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-bottom:12px;line-height:1.5">
-                            Monthly impact reports delivered to your inbox.</div>
-                        <div style="display:flex;gap:7px">
-                            <input type="email" placeholder="Your email address"
-                                style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:10px 13px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.8rem;outline:none">
-                            <button
-                                style="background:var(--gold);color:var(--navy);border:none;border-radius:7px;padding:10px 16px;font-size:.75rem;font-weight:700;cursor:pointer">Subscribe</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.14);border-radius:10px;padding:14px 20px;margin-top:40px;display:flex;align-items:flex-start;gap:12px">
-                <i class="fas fa-info-circle" style="color:var(--gold);margin-top:2px;font-size:.9rem;flex-shrink:0"></i>
-                <p style="font-size:.74rem;color:rgba(255,255,255,.38);margin:0;line-height:1.65">
-                    <strong style="color:rgba(255,255,255,.55)">Important:</strong> Lesson fees are a service payment and
-                    are not charitable donations. Donations are voluntary, separate, and Gift Aid eligible for UK taxpayers.
-                </p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <p class="footer-bot-txt">© 2025 Merit Education Foundation. Registered Charity. All Rights
-                            Reserved.</p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <div class="footer-bot-links justify-content-md-end d-flex gap-3 flex-wrap">
-                            <span style="font-size:.72rem;color:rgba(255,255,255,.22);cursor:pointer">Privacy Policy</span>
-                            <span style="font-size:.72rem;color:rgba(255,255,255,.22);cursor:pointer">Terms</span>
-                            <span style="font-size:.72rem;color:rgba(255,255,255,.22);cursor:pointer">Refund Policy</span>
-                            <span style="font-size:.72rem;color:rgba(255,255,255,.22);cursor:pointer">Cookies</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+
 
     <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
         <i class="fas fa-chevron-up"></i>

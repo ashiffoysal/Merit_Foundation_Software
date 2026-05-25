@@ -2,8 +2,9 @@
 /* ═══════════════════════════════════
    DESIGN TOKENS
 ═══════════════════════════════════ */
+
 :root{
-  --navy:#0F1F5C; --navy2:#1A2E7A; --dark:#07102A;
+  --navy:#2a5a3a ; --navy2:#1a3a2a ; --dark:#1a3a2a;
   --gold:#C9A84C; --gold2:#E2C06A; --gold-pale:rgba(201,168,76,.1);
   --teal:#0D6B63; --teal2:#0F8A80;
   --cream:#FAF8F2; --light:#F2EFE8; --border:#E4DDD1;
@@ -56,8 +57,8 @@ a{text-decoration:none}
 
 /* ═══ NAVBAR ═══ */
 #nav{position:fixed;top:0;left:0;right:0;z-index:900;transition:all .4s}
-.nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;transition:all .4s}
-#nav.scrolled .nav-wrap{background:rgba(7,16,42,.96);backdrop-filter:blur(20px);padding:12px 32px;box-shadow:0 2px 30px rgba(0,0,0,.25)}
+.nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;transition:all .4s;background: #1a3a2a;}
+#nav.scrolled .nav-wrap{background:#1a3a2a;backdrop-filter:blur(20px);padding:12px 32px;box-shadow:0 2px 30px rgba(0,0,0,.25)}
 .nav-brand{display:flex;align-items:center;gap:12px;cursor:pointer}
 .nav-brand-icon{width:42px;height:42px;border:1.5px solid rgba(201,168,76,.4);border-radius:10px;background:rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;transition:all .3s}
 .nav-brand-icon i{color:var(--gold);font-size:.95rem}
@@ -209,7 +210,11 @@ section{padding:100px 0}
    ABOUT PAGE
 ══════════════════════════════════════ */
 .about-hero{padding:160px 0 90px;background:var(--dark);position:relative;overflow:hidden}
-.about-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(26,46,122,.8),transparent 70%)}
+.about-hero::before{content:'';position:absolute;inset:0;
+   
+   background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%)
+
+}
 .about-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px}
 .page-hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:30px;padding:6px 18px;margin-bottom:20px;position:relative;z-index:1}
 .page-hero-badge span{font-size:.68rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;font-weight:600}
@@ -241,7 +246,10 @@ section{padding:100px 0}
    BOOK LESSON PAGE
 ══════════════════════════════════════ */
 .book-hero{padding:150px 0 80px;background:var(--dark);position:relative;overflow:hidden}
-.book-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 80% at 30% 60%,rgba(26,46,122,.85),transparent 65%),radial-gradient(ellipse 50% 50% at 80% 20%,rgba(201,168,76,.06),transparent)}
+.book-hero::before{content:'';position:absolute;inset:0;
+   background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%),
+   radial-gradient(ellipse 50% 50% at 80% 20%,rgba(201,168,76,.06),transparent)
+}
 .book-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px}
 
 .offer-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:30px 24px;text-align:center;height:100%;transition:.35s}
@@ -301,7 +309,11 @@ section{padding:100px 0}
    SAFEGUARDING PAGE
 ══════════════════════════════════════ */
 .safe-hero{padding:150px 0 80px;background:var(--dark);position:relative;overflow:hidden}
-.safe-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 40%,rgba(26,46,122,.9),transparent 65%)}
+.safe-hero::before{content:'';position:absolute;inset:0;
+
+   background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%)
+
+}
 .safe-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px}
 .policy-block{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:32px 28px;margin-bottom:20px}
 .policy-block h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:10px}
@@ -316,7 +328,9 @@ section{padding:100px 0}
    CONTACT PAGE
 ══════════════════════════════════════ */
 .contact-hero{padding:150px 0 80px;background:var(--dark);position:relative;overflow:hidden}
-.contact-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 40% 50%,rgba(26,46,122,.85),transparent 60%)}
+.contact-hero::before{content:'';position:absolute;inset:0;
+   background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%)
+}
 .contact-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px}
 .contact-info-card{background:var(--navy);border-radius:20px;padding:48px 38px;position:relative;overflow:hidden;height:100%}
 .contact-info-card::after{content:'';position:absolute;bottom:-60px;right:-60px;width:180px;height:180px;border-radius:50%;border:45px solid rgba(201,168,76,.07)}
@@ -439,7 +453,9 @@ section{padding:100px 0}
    NEWS DETAIL PAGE
 ════════════════════════════════════════ */
 .article-hero{padding:145px 0 60px;background:var(--dark);position:relative;overflow:hidden}
-.article-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 40% 60%,rgba(26,46,122,.9),transparent 60%),radial-gradient(ellipse 50% 50% at 80% 20%,rgba(201,168,76,.06),transparent)}
+.article-hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), transparent 60%),
+   radial-gradient(ellipse 50% 50% at 80% 20%,rgba(201,168,76,.06),transparent)}
 .article-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px}
 .article-cat{display:inline-flex;align-items:center;gap:7px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.28);border-radius:20px;padding:5px 16px;font-size:.65rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:16px;position:relative;z-index:1}
 .article-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:700;color:var(--white);line-height:1.05;position:relative;z-index:1;max-width:760px}
