@@ -755,4 +755,157 @@
 ══════════════════════════════════════ -->
 @include('frontend.include.contact')
 <!-- ══════════════ FOOTER ══════════════ -->
+    <script>
+        /* ── Loader */
+        window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('done'),
+            1000));
+
+        /* ── Navbar scroll */
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', scrollY > 50);
+            document.getElementById('btt').classList.toggle('show', scrollY > 350);
+        });
+
+        /* ── Mobile nav */
+        document.querySelectorAll('.mob-lnk').forEach(l => l.addEventListener('click', () => document.querySelector(
+            '.mob-menu').classList.remove('open')));
+
+        /* ── Scroll reveal */
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('on');
+                    io.unobserve(e.target)
+                }
+            });
+        }, {
+            threshold: .08
+        });
+        document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
+
+        /* ────────────────────────────
+           CATEGORY TABS
+        ──────────────────────────── */
+        let activeCat = '30min';
+
+        function switchCat(cat, btn) {
+            // Hide all categories
+            document.querySelectorAll('.plans-category').forEach(c => c.classList.remove('active'));
+            // Show target
+            document.getElementById('cat-' + cat).classList.add('active');
+            // Update tab buttons
+            document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCat = cat;
+        }
+
+        /* ────────────────────────────
+           BILLING TOGGLE
+        ──────────────────────────── */
+        function toggleBilling(chk) {
+            const isAnnual = chk.checked;
+            document.getElementById('lbl-monthly').classList.toggle('active', !isAnnual);
+            document.getElementById('lbl-annual').classList.toggle('active', isAnnual);
+            // Toggle price displays
+            document.querySelectorAll('.plan-monthly-price').forEach(el => el.style.display = isAnnual ? 'none' : '');
+            document.querySelectorAll('.plan-annual-price').forEach(el => el.style.display = isAnnual ? '' : 'none');
+            document.querySelectorAll('.plan-monthly-text').forEach(el => el.style.display = isAnnual ? 'none' : '');
+            document.querySelectorAll('.plan-annual-text').forEach(el => el.style.display = isAnnual ? '' : 'none');
+        }
+
+        /* ────────────────────────────
+           PLAN SELECTION
+        ──────────────────────────── */
+        let selectedPlan = {
+            name: '',
+            price: '',
+            duration: '',
+            days: '',
+            billing: 'monthly'
+        };
+
+        function selectPlan(card, name, price, billing, duration, days) {
+            // Deselect all in current category
+            const cat = document.getElementById('cat-' + activeCat);
+            cat.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+            // Select this card
+            card.classList.add('selected');
+            // Billing adjust for annual toggle
+            const isAnnual = document.getElementById('billing-toggle').checked;
+            const priceNum = parseFloat(price.replace('£', ''));
+            const finalPrice = isAnnual ? '£' + (priceNum * .8).toFixed(2) + '/mo' : price + '/mo';
+            // Store
+            selectedPlan = {
+                name,
+                price: finalPrice,
+                duration,
+                days,
+                billing: isAnnual ? 'annually' : 'monthly'
+            };
+            // Update selected bar for this category
+            const bar = document.getElementById('selected-bar-' + activeCat);
+            if (bar) {
+                bar.classList.add('show');
+                document.getElementById('selected-name-' + activeCat).textContent = name;
+                document.getElementById('selected-price-' + activeCat).textContent = finalPrice;
+            }
+            // Update form summary hidden fields
+            document.getElementById('selected_plan_name').value = name;
+            document.getElementById('selected_plan_price').value = finalPrice;
+            document.getElementById('selected_plan_duration').value = duration;
+            document.getElementById('selected_plan_days').value = days;
+            document.getElementById('selected_plan_billing').value = selectedPlan.billing;
+            // Update form plan summary
+            const summary = document.getElementById('form-plan-summary');
+            summary.classList.add('show');
+            document.getElementById('form-plan-name').textContent = name;
+            document.getElementById('form-plan-price').textContent = finalPrice;
+            document.getElementById('form-plan-duration').textContent = duration;
+            document.getElementById('form-plan-days').textContent = days;
+            document.getElementById('form-plan-billing').textContent = 'Billed ' + selectedPlan.billing;
+            // Update CTA buttons in all plan cards
+            const allBtns = document.getElementById('cat-' + activeCat).querySelectorAll('.btn-plan');
+            allBtns.forEach(b => {
+                b.innerHTML = b.closest('.plan-card') === card ?
+                    '<i class="fas fa-check"></i>Plan Selected' :
+                    '<i class="fas fa-graduation-cap"></i>Choose Plan';
+            });
+        }
+
+        function scrollToForm() {
+            document.getElementById('booking-form-section').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function scrollToPricing() {
+            document.getElementById('pricing-section').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        /* ── Form Submit */
+        function submitBookForm() {
+            // Basic validation
+            const required = ['parent_name', 'student_name', 'student_age', 'preferred_time', 'location', 'email'];
+            let valid = true;
+            required.forEach(name => {
+                const el = document.querySelector('[name="' + name + '"]');
+                if (el && !el.value.trim()) {
+                    el.style.borderColor = 'var(--red)';
+                    valid = false;
+                } else if (el) {
+                    el.style.borderColor = 'var(--border)';
+                }
+            });
+            if (!valid) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            document.getElementById('book-form-body').style.display = 'none';
+            document.getElementById('book-success').style.display = 'block';
+        }
+    </script>
 @endsection
