@@ -13,11 +13,12 @@ use App\Http\Controllers\Backend\SeoController;
 use App\Http\Controllers\Backend\FeesCategoryController;
 use App\Http\Controllers\Backend\PlanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\UserDashboardController;
 
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('frontend.user_dashboard.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -25,6 +26,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/register-verify-email', [UserLoginController::class, 'verifyEmail']);
+
+Route::get('/user-forgot-password', [UserLoginController::class, 'showForgotPasswordForm'])->name('user.forgot.password');
+Route::post('/user-forgot-password', [UserLoginController::class, 'sendResetLink'])->name('ajax.forgot-password');
+Route::post('/user-reset-password', [UserLoginController::class, 'resetPassword'])->name('ajax.reset-password');
+
+// logout
+Route::get('/userlogout', [UserDashboardController::class, 'logout'])->name('logout');
+
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');

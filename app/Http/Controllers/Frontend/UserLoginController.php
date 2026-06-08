@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterVerifyMail;
+use Carbon\Carbon;
+
 
 class UserLoginController extends Controller
 {
@@ -16,9 +20,10 @@ class UserLoginController extends Controller
 
     public function login(Request $request)
     {
+        
          $validator = Validator::make($request->all(), [
             'email'    => ['required', 'email'],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => ['required', 'string', 'min:4'],
         ], [
             'email.required'    => 'Email address is required.',
             'email.email'       => 'Please enter a valid email address.',
@@ -72,7 +77,7 @@ class UserLoginController extends Controller
             'last_name'  => ['required', 'string', 'max:100'],
             'email'      => ['required', 'email', 'unique:users,email'],
             'phone'      => ['required', 'string', 'max:20'],
-            'password'   => ['required', 'string', 'min:8', 'confirmed'],
+            'password'   => ['required', 'string', 'min:4', 'confirmed'],
             'terms'      => ['accepted'],
         ], [
             'first_name.required' => 'First name is required.',
@@ -93,26 +98,118 @@ class UserLoginController extends Controller
                 'errors'  => $validator->errors(),
             ], 422);
         }
+       $code = rand(100000, 999999);
 
-        $user = User::create([
-            'name' => $request->first_name,
-            'last_name'  => $request->last_name,
-            'email'      => $request->email,
-            'phone'      => $request->phone,
-            'password'   => Hash::make($request->password),
-        ]);
+$userId = User::insertGetId([
+    'name'      => $request->first_name,
+    'last_name' => $request->last_name,
+    'email'     => $request->email,
+    'phone'     => $request->phone,
+    'password'  => Hash::make($request->password),
+    'code'      => $code,
+]);
 
-        // Fire the Registered event → triggers SendEmailVerificationNotification
-        // event(new Registered($user));
+$user = User::find($userId); // ✅ fetch the full model
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Account created! We\'ve sent a verification link to ' . $user->email . '. Please check your inbox (and spam folder) to activate your account.',
-        ]);
+Mail::to($request->email)->send(new RegisterVerifyMail($userId));
+
+return response()->json([
+    'success' => true,
+    'message' => 'Account created! We\'ve sent a verification code to ' . $user->email,
+]);
     }
 
-    public function resendVerification(Request $request)
+
+
+    public function verifyEmail(Request $request)
     {
-        // Handle resend verification logic here
+         
+
+        $user = User::where('email', $request->email)
+                    ->where('code', $request->code)
+                    ->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid or expired verification code.',
+            ], 400);
+        }
+        $update=User::where('id', $user->id)->update([
+            'email_verified_at' => Carbon::now(),
+            'code'              => null,
+            'is_verified'      => 1, // Optional: add a flag to indicate verification status
+             // clear code after use
+             'is_active' => 1, // Optional: activate the user account after verification
+        ]);
+        
+        Auth::login($user); 
+
+       return redirect()->route('dashboard')->with('success', 'Your email has been verified! Welcome to your dashboard.');
     }
+
+    // resend code
+        public function resendVerification(Request $request)
+        {
+            $user = User::where('email', $request->email)->first();
+    
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No account found with that email address.',
+                ], 404);
+            }
+    
+            if ($user->hasVerifiedEmail()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your email is already verified. Please log in.',
+                ], 400);
+            }
+    
+            // Generate a new verification code
+            $code = rand(100000, 999999);
+            $user->update(['code' => $code]);
+    
+            // Resend the verification email
+            Mail::to($user->email)->send(new RegisterVerifyMail($user->id));
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'A new verification code has been sent to ' . $user->email,
+            ]);
+        }
+
+        // forgot password page
+        public function showForgotPasswordForm()
+        {
+            return view('auth.forgot-password');
+        }
+        // forgot password
+        public function forgotPassword(Request $request)
+        {
+            $validator = Validator::make($request->all(), [
+                'email' => ['required', 'email', 'exists:users,email'],
+            ], [
+                'email.required' => 'Email address is required.',
+                'email.email'    => 'Please enter a valid email address.',
+                'email.exists'   => 'No account found with that email address.',
+            ]);
+            // validation failed
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'errors'  => $validator->errors(),
+                ], 422);
+            }
+            // generate reset token and send email
+            $user = User::where('email', $request->email)->first();
+            $token = Str::random(60);
+            $user->update(['password_reset_token' => $token, 'password_reset_sent_at' => Carbon::now()]);
+            Mail::to($user->email)->send(new PasswordResetMail($user, $token));
+            return response()->json([
+                'success' => true,
+                'message' => 'A password reset link has been sent to ' . $user->email,
+            ]);
+        }
 }

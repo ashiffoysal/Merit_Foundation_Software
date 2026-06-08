@@ -17,8 +17,8 @@
       <a href="{{ url('/contact') }}" ><span class="nav-link-item">Contact</span></a>
     </div>
     <div class="nav-cta-wrap">
-      {{-- <a class="btn-outline-white" href="{{ url('/book-lesson') }}" style="padding:9px 20px;font-size:.72rem;">Book Lesson</a>
-      <a class="btn-gold" href="{{ url('/login') }}" style="padding:9px 20px;font-size:.72rem;"><i class="fas fa-heart"></i>Login</a> --}}
+      <a class="btn-outline-white" href="{{ url('/book-lesson') }}" style="padding:9px 20px;font-size:.72rem;">Book Lesson</a>
+      <a class="btn-gold" href="{{ url('/login') }}" style="padding:9px 20px;font-size:.72rem;"><i class="fas fa-heart"></i>Login</a>
     </div>
     <button class="nav-toggle" onclick="document.querySelector('.mobile-menu').classList.toggle('open')"><i class="fas fa-bars"></i></button>
   </div>

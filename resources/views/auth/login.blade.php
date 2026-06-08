@@ -62,7 +62,7 @@
 
           <div class="remember-row">
             <label><input type="checkbox" name="remember"> Remember me</label>
-            <span class="forgot-link" onclick="showForgotModal()">Forgot password?</span>
+            <a class="forgot-link" href="{{ url('/user-forgot-password') }}">Forgot password?</a>
           </div>
 
           <button type="submit" class="btn-gold" id="login-btn" style="width:100%;justify-content:center;padding:15px;font-size:.82rem">
