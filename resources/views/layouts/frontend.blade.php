@@ -46,13 +46,9 @@
 </head>
 
 <body>
-    <!-- ── Loader ── -->
-    {{-- <div id="loader"><div class="loader-t">MERIT</div><div class="loader-track"><div class="loader-fill"></div></div></div> --}}
-    <!-- ══════════════ NAVBAR ══════════════ -->
+   
     @include('frontend.include.header')
-    <!-- ══════════════════════════════════════
-   HOME PAGE
-══════════════════════════════════════ -->
+
     @yield('content')
 
     @include('frontend.include.footer')

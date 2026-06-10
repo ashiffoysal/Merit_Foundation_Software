@@ -6,43 +6,19 @@
 <div>
   <div class="dashboard-layout">
     <!-- Sidebar -->
-    <aside class="dash-sidebar" id="dash-sidebar">
-      <div class="dash-sidebar-inner">
-        <div class="dash-user-block">
-          <div class="dash-av-wrap">
-            <div class="dash-av" id="dash-av-main">A</div>
-            <div class="dash-av-edit" onclick="switchDash('profile')"><i class="fas fa-pencil-alt"></i></div>
-          </div>
-          <div class="dash-user-name">Ayesha Malik</div>
-          <div class="dash-user-email">ayesha.malik@email.com</div>
-          <div class="dash-user-badge"><i class="fas fa-star" style="font-size:.55rem"></i>Active Sponsor</div>
-        </div>
-        <div class="dash-nav-section">Main</div>
-        <div class="dash-nav-item active" onclick="switchDash('overview')"><i class="fas fa-th-large"></i>Dashboard</div>
-        <div class="dash-nav-item" onclick="switchDash('lessons')"><i class="fas fa-graduation-cap"></i>My Lessons<span class="nav-badge">3</span></div>
-        <div class="dash-nav-item" onclick="switchDash('donations')"><i class="fas fa-heart"></i>Donations</div>
-        <div class="dash-nav-item" onclick="switchDash('notifications')"><i class="fas fa-bell"></i>Notifications<span class="nav-badge">5</span></div>
-        <div class="dash-nav-section">Account</div>
-        <div class="dash-nav-item" onclick="switchDash('profile')"><i class="fas fa-user"></i>My Profile</div>
-        <div class="dash-nav-item" onclick="switchDash('settings')"><i class="fas fa-cog"></i>Settings</div>
-        <div class="dash-nav-item" onclick="switchDash('documents')"><i class="fas fa-file-alt"></i>Documents</div>
-        <div class="dash-logout">
-          <a class="dash-logout-btn" href="{{ url('userlogout') }}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
-        </div>
-      </div>
-    </aside>
+   @include('frontend.user_dashboard.include.sidebar')
 
     <!-- Main Content -->
     <main class="dash-main">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
         <div>
           <div class="dash-breadcrumb"><span>Merit</span><i class="fas fa-chevron-right"></i><span id="breadcrumb-txt">Dashboard</span></div>
-          <h1 class="dash-h1" id="dash-main-title">Good Morning, <em style="font-style:italic;color:var(--gold)">Ayesha</em> 👋</h1>
+          <h1 class="dash-h1" id="dash-main-title">@php echo date('g:i A'); @endphp, <em style="font-style:italic;color:var(--gold)">{{ Auth::user()->name }}</em> 👋</h1>
           <p class="dash-sub">Here's an overview of your account and recent activity.</p>
         </div>
         <div class="d-flex gap-2">
-          <button class="btn-outline-navy btn-sm" onclick="switchDash('lessons')"><i class="fas fa-plus"></i>Book Lesson</button>
-          <button class="btn-gold btn-sm" onclick="switchDash('donations')"><i class="fas fa-heart"></i>Donate</button>
+          <a class="btn-outline-navy btn-sm" href="{{ url('/book-lesson') }}"><i class="fas fa-plus"></i>Book Lesson</a>
+          {{-- <button class="btn-gold btn-sm" onclick="switchDash('donations')"><i class="fas fa-heart"></i>Donate</button> --}}
         </div>
       </div>
 
@@ -87,7 +63,7 @@
           </div>
         </div>
       </div>
-
+{{-- 
       <!-- LESSONS PANEL -->
       <div id="dash-lessons" class="dash-panel">
         <div class="profile-section">
@@ -140,7 +116,7 @@
           </div>
         </div>
       </div>
-
+ --}}
       <!-- PROFILE PANEL -->
       <div id="dash-profile" class="dash-panel">
         <div class="save-bar"><div class="save-bar-msg"><strong>Profile Settings</strong> — Keep your information up to date</div><div class="d-flex gap-2"><button class="btn-outline-navy btn-sm">Cancel</button><button class="btn-gold btn-sm" onclick="saveProfile()"><i class="fas fa-save"></i>Save Changes</button></div></div>
