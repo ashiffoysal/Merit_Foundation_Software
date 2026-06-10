@@ -72,7 +72,9 @@
         </form>
 
         <div class="divider-or"><span>or continue with</span></div>
-        <div class="social-login-btn"><i class="fab fa-google" style="color:#EA4335"></i>Continue with Google</div>
+        <a href="{{ url('/auth/google') }}" class="social-login-btn">
+          <i class="fab fa-google" style="color:#EA4335"></i>Continue with Google
+        </a>
 
         {{-- Resend verification (shown only when needed) --}}
         <div id="resend-wrap" style="display:none;margin-top:14px">

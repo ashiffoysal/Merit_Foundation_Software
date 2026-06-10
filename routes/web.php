@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\BlogsController;
 use App\Http\Controllers\Backend\SeoController;
 use App\Http\Controllers\Backend\FeesCategoryController;
 use App\Http\Controllers\Backend\PlanController;
+use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\UserDashboardController;
 
@@ -27,8 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/register-verify-email', [UserLoginController::class, 'verifyEmail']);
 
+Route::get('/auth/google', [GoogleController::class, 'redirect']);
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+
+Route::get('/register-verify-email', [UserLoginController::class, 'verifyEmail']);
 Route::get('/user-forgot-password', [UserLoginController::class, 'showForgotPasswordForm'])->name('user.forgot.password');
 Route::post('/user-forgot-password', [UserLoginController::class, 'sendResetLink'])->name('ajax.forgot-password');
 Route::post('/user-reset-password', [UserLoginController::class, 'resetPassword'])->name('ajax.reset-password');
