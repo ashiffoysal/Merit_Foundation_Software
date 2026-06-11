@@ -90,19 +90,19 @@ function switchDash(id){
 }
 
 /* ── Profile save */
-function saveProfile(){
-  const fname=document.getElementById('prof-fname')?.value||'A';
-  const av=document.getElementById('dash-av-main');
-  const pav=document.getElementById('profile-av-display');
-  const initial=fname.charAt(0).toUpperCase();
-  if(av)av.textContent=initial;
-  if(pav)pav.textContent=initial;
-  const bar=document.createElement('div');
-  bar.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--teal);color:white;padding:12px 28px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:pgIn .3s ease';
-  bar.innerHTML='<i class="fas fa-check-circle me-2"></i>Profile saved successfully!';
-  document.body.appendChild(bar);
-  setTimeout(()=>bar.remove(),3000);
-}
+// function saveProfile(){
+//   const fname=document.getElementById('prof-fname')?.value||'A';
+//   const av=document.getElementById('dash-av-main');
+//   const pav=document.getElementById('profile-av-display');
+//   const initial=fname.charAt(0).toUpperCase();
+//   if(av)av.textContent=initial;
+//   if(pav)pav.textContent=initial;
+//   const bar=document.createElement('div');
+//   bar.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--teal);color:white;padding:12px 28px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:pgIn .3s ease';
+//   bar.innerHTML='<i class="fas fa-check-circle me-2"></i>Profile saved successfully!';
+//   document.body.appendChild(bar);
+//   setTimeout(()=>bar.remove(),3000);
+// }
 
 /* ── Policy scroll highlight */
 function scrollToSection(id){

@@ -2,8 +2,7 @@
 @extends('layouts.frontend')
 @section('title', 'Privacy Policy - Merit Education Foundation')
 @section('content')
-<!-- jQuery (load BEFORE your script) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <div>
   <div class="dashboard-layout">
     <!-- Sidebar -->
@@ -119,269 +118,79 @@
       </div>
  --}}
       <!-- PROFILE PANEL -->
-      {{-- resources/views/dashboard/profile.blade.php --}}
+      <div id="dash-profile" class="dash-panel">
+        <div class="save-bar"><div class="save-bar-msg"><strong>Profile Settings</strong> — Keep your information up to date</div><div class="d-flex gap-2"><button class="btn-outline-navy btn-sm">Cancel</button><button class="btn-gold btn-sm" onclick="saveProfile()"><i class="fas fa-save"></i>Save Changes</button></div></div>
 
-@php $user = Auth::user(); @endphp
+        <!-- Avatar -->
+        <div class="profile-section">
+          <div class="profile-section-title"><i class="fas fa-user-circle"></i>Profile Photo</div>
+          <div class="profile-av-section">
+            <div class="profile-av-lg" id="profile-av-display">A</div>
+            <div class="profile-av-info">
+              <h5>Ayesha Malik</h5>
+              <p>JPG, PNG or GIF · Max 2MB</p>
+              <div class="d-flex gap-2 flex-wrap">
+                <button class="btn-gold btn-sm"><i class="fas fa-upload"></i>Upload Photo</button>
+                <button class="btn-outline-navy btn-sm"><i class="fas fa-trash"></i>Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        @php
+          $user=Auth::user();
+        @endphp
+        <!-- Personal Info -->
+        <div class="profile-section">
+          <div class="profile-section-title"><i class="fas fa-id-card"></i>Personal Information</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="field-group"><label class="field-label">First Name *</label><input name="name" type="text" class="field-input" value="{{ $user->name }}" id="prof-fname"><p class="field-hint">Your legal first name as on official documents</p></div></div>
+            <div class="col-md-6"><div class="field-group"><label class="field-label">Last Name *</label><input name="last_name" type="text" class="field-input" value="{{ $user->last_name }}" id="prof-lname"></div></div>
+            <div class="col-md-6"><div class="field-group"><label class="field-label">Email Address *</label><input name="email" type="email" class="field-input" value="{{ $user->email }}" id="prof-email"><p class="field-hint">Used for login and lesson notifications</p></div></div>
+            <div class="col-md-6"><div class="field-group"><label class="field-label">Phone Number</label><input name="phone" type="tel" class="field-input" value="{{ $user->phone }}" id="prof-phone"></div></div>
+              </div>
+        </div>
 
-<div id="dash-profile" class="dash-panel">
+        <!-- Address -->
+        <div class="profile-section">
+          <div class="profile-section-title"><i class="fas fa-map-marker-alt"></i>Address</div>
+          <div class="row g-3">
+            <div class="col-12"><div class="field-group"><label class="field-label">Address Line 1</label><input name="address_line_1" type="text" class="field-input" value="{{ $user->address_line_1 }}"></div></div>
+            <div class="col-12"><div class="field-group"><label class="field-label">Address Line 2</label><input name="address_line_2" type="text" class="field-input" value="{{ $user->address_line_2 }}"></div></div>
+            <div class="col-md-6"><div class="field-group"><label class="field-label">City</label><input name="city" type="text" class="field-input" value="{{ $user->city }}"></div></div>
+            <div class="col-md-3"><div class="field-group"><label class="field-label">Postcode</label><input name="postcode" type="text" class="field-input" value="{{ $user->postcode }}"></div></div>
+            <div class="col-md-3"><div class="field-group"><label class="field-label">Country</label><select class="field-select" name="country"><option @if($user->country=='United Kingdom') selected @endif>United Kingdom</option><option @if($user->country=='Other') selected @endif>Other</option></select></div></div>
+          </div>
+        </div>
 
-  {{-- ── Save Bar ── --}}
-  <div class="save-bar">
-    <div class="save-bar-msg">
-      <strong>Profile Settings</strong> — Keep your information up to date
-    </div>
-    <div class="d-flex gap-2">
-      {{-- <button class="btn-outline-navy btn-sm" id="cancel-btn">Cancel</button> --}}
-      <button class="btn-gold btn-sm" id="save-btn-top" onclick="saveProfile()">
-        <i class="fas fa-save"></i> Save Changes
-      </button>
-    </div>
-  </div>
+        <!-- Student Info -->
+        <div class="profile-section">
+          <div class="profile-section-title"><i class="fas fa-child"></i>Student Information</div>
+          <div class="row g-3">
+            <div class="col-md-6"><div class="field-group"><label class="field-label">Student Name</label><input type="text" name="student_name" class="field-input" value="{{ $user->student_name }}"></div></div>
+            <div class="col-md-3"><div class="field-group"><label class="field-label">Age</label><input type="number" name="age" class="field-input" value="{{ $user->age }}"></div></div>
+            <div class="col-md-3"><div class="field-group"><label class="field-label">Current Level</label><select name="quran_level" class="field-select"><option @if($user->quran_level=='Beginner') selected @endif>Beginner</option><option @if($user->quran_level=='Qaida') selected @endif >Qaida</option><option @if($user->quran_level=='Reading Quran') selected @endif >Reading Quran</option><option @if($user->quran_level=='Tajweed') selected @endif >Tajweed</option></select></div></div>
+            <div class="col-12"><div class="field-group"><label class="field-label">Learning Goals / Notes</label><textarea name="learning_goals" class="field-textarea" rows="3">{{ $user->learning_goals }}</textarea></div></div>
+           <div class="col-md-6"><div class="field-group"><label class="field-label">Date of Birth</label><input type="date" name="date_of_birth" class="field-input" value="{{ $user->date_of_birth }}"></div></div>
+            <div class="col-md-6"><div class="field-group"><label class="field-label">Gender</label><select name="gender" class="field-select"><option @if($user->gender=='Female') selected @endif >Female</option><option @if($user->gender=='Male') selected @endif >Male</option><option @if($user->gender=='Prefer not to say') selected @endif >Prefer not to say</option></select></div></div>
+       
+          </div>
+        </div>
 
-  {{-- ── Avatar ── --}}
-  {{-- <div class="profile-section">
-    <div class="profile-section-title"><i class="fas fa-user-circle"></i> Profile Photo</div>
-    <div class="profile-av-section">
-      <div class="profile-av-lg" id="profile-av-display">
-        {{ strtoupper(substr($user->name, 0, 1)) }}
-      </div>
-      <div class="profile-av-info">
-        <h5>{{ $user->name }} {{ $user->last_name }}</h5>
-        <p>JPG, PNG or GIF · Max 2MB</p>
-        <div class="d-flex gap-2 flex-wrap">
-          <button class="btn-gold btn-sm"><i class="fas fa-upload"></i> Upload Photo</button>
-          <button class="btn-outline-navy btn-sm"><i class="fas fa-trash"></i> Remove</button>
+        <!-- Password -->
+        <div class="profile-section">
+          <div class="profile-section-title"><i class="fas fa-lock"></i>Change Password</div>
+          <div class="row g-3">
+            <div class="col-md-4"><div class="field-group"><label class="field-label">Current Password</label><input type="password" class="field-input" placeholder="Current password"></div></div>
+            <div class="col-md-4"><div class="field-group"><label class="field-label">New Password</label><input type="password" class="field-input" placeholder="New password"></div></div>
+            <div class="col-md-4"><div class="field-group"><label class="field-label">Confirm New Password</label><input type="password" class="field-input" placeholder="Confirm"></div></div>
+          </div>
+          <button class="btn-outline-navy btn-sm"><i class="fas fa-key"></i>Update Password</button>
+        </div>
+        <div class="d-flex gap-3 mt-2">
+          <button class="btn-gold" onclick="saveProfile()"><i class="fas fa-save"></i>Save All Changes</button>
+          <button class="btn-outline-navy">Cancel</button>
         </div>
       </div>
-    </div>
-  </div> --}}
-
-  {{-- ── Personal Information ── --}}
-  <div class="profile-section">
-    <div class="profile-section-title"><i class="fas fa-id-card"></i> Personal Information</div>
-    <div class="row g-3">
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">First Name *</label>
-          <input type="text" class="field-input" id="prof-fname" value="{{ $user->name }}">
-          <p class="field-hint">Your legal first name as on official documents</p>
-          <div class="field-error" id="err-name"></div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">Last Name *</label>
-          <input type="text" class="field-input" id="prof-lname" value="{{ $user->last_name }}">
-          <div class="field-error" id="err-last_name"></div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">Email Address *</label>
-          <input type="email" class="field-input" id="prof-email" value="{{ $user->email }}">
-          <p class="field-hint">Used for login and lesson notifications</p>
-          <div class="field-error" id="err-email"></div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">Phone Number</label>
-          <input type="tel" class="field-input" id="prof-phone" value="{{ $user->phone }}">
-          <div class="field-error" id="err-phone"></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  {{-- ── Address ── --}}
-  <div class="profile-section">
-    <div class="profile-section-title"><i class="fas fa-map-marker-alt"></i> Address</div>
-    <div class="row g-3">
-
-      <div class="col-12">
-        <div class="field-group">
-          <label class="field-label">Address Line 1</label>
-          <input type="text" name="address_line_1" class="field-input" value="{{ $user->address_line_1 }}">
-          <div class="field-error" id="err-address_line_1"></div>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <div class="field-group">
-          <label class="field-label">Address Line 2</label>
-          <input type="text" name="address_line_2" class="field-input" value="{{ $user->address_line_2 }}">
-          <div class="field-error" id="err-address_line_2"></div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">City</label>
-          <input type="text" name="city" class="field-input" value="{{ $user->city }}">
-          <div class="field-error" id="err-city"></div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="field-group">
-          <label class="field-label">Postcode</label>
-          <input type="text" name="postcode" class="field-input" value="{{ $user->postcode }}">
-          <div class="field-error" id="err-postcode"></div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="field-group">
-          <label class="field-label">Country</label>
-          <select name="country" class="field-select">
-            <option @selected($user->country == 'United Kingdom')>United Kingdom</option>
-            <option @selected($user->country == 'Other')>Other</option>
-          </select>
-          <div class="field-error" id="err-country"></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  {{-- ── Student Information ── --}}
-  <div class="profile-section">
-    <div class="profile-section-title"><i class="fas fa-child"></i> Student Information</div>
-    <div class="row g-3">
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">Student Name</label>
-          <input type="text" name="student_name" class="field-input" value="{{ $user->student_name }}">
-          <div class="field-error" id="err-student_name"></div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="field-group">
-          <label class="field-label">Age</label>
-          <input type="number" name="age" class="field-input" value="{{ $user->age }}">
-          <div class="field-error" id="err-age"></div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="field-group">
-          <label class="field-label">Current Level</label>
-          <select name="quran_level" class="field-select">
-            <option @selected($user->quran_level == 'Beginner')>Beginner</option>
-            <option @selected($user->quran_level == 'Qaida')>Qaida</option>
-            <option @selected($user->quran_level == 'Reading Quran')>Reading Quran</option>
-            <option @selected($user->quran_level == 'Tajweed')>Tajweed</option>
-          </select>
-          <div class="field-error" id="err-quran_level"></div>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <div class="field-group">
-          <label class="field-label">Learning Goals / Notes</label>
-          <textarea name="learning_goals" class="field-textarea" rows="3">{{ $user->learning_goals }}</textarea>
-          <div class="field-error" id="err-learning_goals"></div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">Date of Birth</label>
-          <input type="date" name="date_of_birth" class="field-input" value="{{ $user->date_of_birth }}">
-          <div class="field-error" id="err-date_of_birth"></div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="field-group">
-          <label class="field-label">Gender</label>
-          <select name="gender" class="field-select">
-            <option @selected($user->gender == 'Female')>Female</option>
-            <option @selected($user->gender == 'Male')>Male</option>
-            <option @selected($user->gender == 'Prefer not to say')>Prefer not to say</option>
-          </select>
-          <div class="field-error" id="err-gender"></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  {{-- ── Change Password ── --}}
-  {{--  <div class="profile-section">
-    <div class="profile-section-title"><i class="fas fa-lock"></i> Change Password</div>
-    <div class="row g-3">
-
-      <div class="col-md-4">
-        <div class="field-group">
-          <label class="field-label">Current Password</label>
-          <input type="password" id="pwd-current" class="field-input" placeholder="Current password">
-          <div class="field-error" id="err-current_password"></div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="field-group">
-          <label class="field-label">New Password</label>
-          <input type="password" id="pwd-new" class="field-input" placeholder="New password">
-          <div class="field-error" id="err-new_password"></div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="field-group">
-          <label class="field-label">Confirm New Password</label>
-          <input type="password" id="pwd-confirm" class="field-input" placeholder="Confirm">
-          <div class="field-error" id="err-pwd-confirm"></div>
-        </div>
-      </div>
-
-    </div>
-    <button class="btn-outline-navy btn-sm mt-3" id="update-pwd-btn">
-      <i class="fas fa-key"></i> Update Password
-    </button>
-  </div> --}}
-
-  {{-- ── Bottom Action Bar ── --}}
-  <div class="d-flex gap-3 mt-2">
-    <button class="btn-gold" id="save-btn-bottom" onclick="saveProfile()">
-      <i class="fas fa-save"></i> Save All Changes
-    </button>
-    {{-- <button class="btn-outline-navy" id="cancel-btn-bottom">Cancel</button> --}}
-  </div>
-
-</div>{{-- end #dash-profile --}}
-
-
-{{-- ══════════════════════════════════════════════
-     JQUERY AJAX — Validation & Profile Update
-════════════════════════════════════════════════ --}}
-
-
-{{-- ── Inline styles for error states (add to your main CSS if preferred) ── --}}
-<style>
-  .field-error {
-    color: #c0392b;
-    font-size: .78rem;
-    margin-top: 4px;
-    min-height: 1rem;
-  }
-  .input-error {
-    border-color: #c0392b !important;
-    box-shadow: 0 0 0 2px rgba(192,57,43,.15) !important;
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-</style>
 
       <!-- NOTIFICATIONS PANEL -->
       <div id="dash-notifications" class="dash-panel">
@@ -432,189 +241,4 @@
     </main>
   </div>
 </div><!-- end dashboard -->
-
-
-<script>
-function saveProfile() {
-    // Clear previous errors
-    $('.field-input, .field-select, .field-textarea').removeClass('is-invalid');
-    $('.invalid-feedback').remove();
-
-    // Gather data
-    const data = {
-        _token: '{{ csrf_token() }}',
-        name:           $('#prof-fname').val().trim(),
-        last_name:      $('#prof-lname').val().trim(),
-        email:          $('#prof-email').val().trim(),
-        phone:          $('#prof-phone').val().trim(),
-        address_line_1: $('input[name="address_line_1"]').val().trim(),  // keep name attrs
-        address_line_2: $('input[name="address_line_2"]').val().trim(),
-        city:           $('input[name="city"]').val().trim(),
-        postcode:       $('input[name="postcode"]').val().trim(),
-        country:        $('select[name="country"]').val(),
-        student_name:   $('input[name="student_name"]').val().trim(),
-        age:            $('input[name="age"]').val().trim(),
-        quran_level:    $('select[name="quran_level"]').val(),
-        learning_goals: $('textarea[name="learning_goals"]').val().trim(),
-        date_of_birth:  $('input[name="date_of_birth"]').val(),
-        gender:         $('select[name="gender"]').val(),
-    };
-
-    // Client-side quick checks before hitting server
-    let hasError = false;
-
-    if (!data.name) {
-        showError('#prof-fname', 'First name is required.');
-        hasError = true;
-    }
-    if (!data.last_name) {
-        showError('#prof-lname', 'Last name is required.');
-        hasError = true;
-    }
-    if (!data.email) {
-        showError('#prof-email', 'Email address is required.');
-        hasError = true;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-        showError('#prof-email', 'Please enter a valid email address.');
-        hasError = true;
-    }
-
-    if (hasError) return;
-
-    // Disable save buttons during request
-    const $saveBtns = $('button[onclick="saveProfile()"]');
-    $saveBtns.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Saving…');
-
-    $.ajax({
-        url: '{{ route("profile.update") }}',
-        method: 'POST',
-        data: data,
-        success: function (res) {
-            if (res.success) {
-                showToast('success', res.message || 'Profile updated successfully.');
-            } else {
-                showToast('error', res.message || 'Something went wrong.');
-            }
-        },
-        error: function (xhr) {
-            if (xhr.status === 422) {
-                // Laravel validation errors
-                const errors = xhr.responseJSON.errors;
-                $.each(errors, function (field, messages) {
-                    const fieldMap = {
-                        name:           '#prof-fname',
-                        last_name:      '#prof-lname',
-                        email:          '#prof-email',
-                        phone:          '#prof-phone',
-                        address_line_1: 'input[name="address_line_1"]',
-                        address_line_2: 'input[name="address_line_2"]',
-                        city:           'input[name="city"]',
-                        postcode:       'input[name="postcode"]',
-                        country:        'select[name="country"]',
-                        student_name:   'input[name="student_name"]',
-                        age:            'input[name="age"]',
-                        quran_level:    'select[name="quran_level"]',
-                        learning_goals: 'textarea[name="learning_goals"]',
-                        date_of_birth:  'input[name="date_of_birth"]',
-                        gender:         'select[name="gender"]',
-                    };
-                    if (fieldMap[field]) {
-                        showError(fieldMap[field], messages[0]);
-                    }
-                });
-            } else {
-                showToast('error', 'Server error. Please try again.');
-            }
-        },
-        complete: function () {
-            $saveBtns.prop('disabled', false).html('<i class="fas fa-save"></i> Save Changes');
-        }
-    });
-}
-
-// ── Password Update ──────────────────────────────────────────────
-$('.btn-outline-navy:contains("Update Password")').on('click', function () {
-    const current  = $('input[placeholder="Current password"]').val();
-    const newPass  = $('input[placeholder="New password"]').val();
-    const confirm  = $('input[placeholder="Confirm"]').val();
-
-    $('input[type="password"]').removeClass('is-invalid');
-    $('.pwd-error').remove();
-
-    let hasError = false;
-    if (!current) { showPasswordError(0, 'Enter your current password.'); hasError = true; }
-    if (!newPass || newPass.length < 8) { showPasswordError(1, 'Min 8 characters.'); hasError = true; }
-    if (newPass !== confirm) { showPasswordError(2, 'Passwords do not match.'); hasError = true; }
-    if (hasError) return;
-
-    const $btn = $(this);
-    $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Updating…');
-
-    $.ajax({
-        url: '{{ route("profile.password") }}',
-        method: 'POST',
-        data: {
-            _token:                  '{{ csrf_token() }}',
-            current_password:        current,
-            new_password:            newPass,
-            new_password_confirmation: confirm,
-        },
-        success: function (res) {
-            if (res.success) {
-                showToast('success', res.message || 'Password updated.');
-                $('input[type="password"]').val('');
-            } else {
-                showToast('error', res.message || 'Could not update password.');
-            }
-        },
-        error: function (xhr) {
-            if (xhr.status === 422) {
-                const errors = xhr.responseJSON.errors;
-                const pwdInputs = $('input[type="password"]');
-                if (errors.current_password) showPasswordError(0, errors.current_password[0]);
-                if (errors.new_password)     showPasswordError(1, errors.new_password[0]);
-            } else {
-                showToast('error', 'Server error. Please try again.');
-            }
-        },
-        complete: function () {
-            $btn.prop('disabled', false).html('<i class="fas fa-key"></i> Update Password');
-        }
-    });
-});
-
-// ── Helpers ──────────────────────────────────────────────────────
-function showError(selector, message) {
-    const $el = $(selector);
-    $el.addClass('is-invalid');
-    $el.closest('.field-group').append(
-        `<div class="invalid-feedback d-block" style="color:#dc3545;font-size:.8rem;margin-top:4px;">${message}</div>`
-    );
-}
-
-function showPasswordError(index, message) {
-    const $inputs = $('input[type="password"]');
-    $inputs.eq(index).addClass('is-invalid')
-        .closest('.field-group').append(
-            `<div class="invalid-feedback pwd-error d-block" style="color:#dc3545;font-size:.8rem;margin-top:4px;">${message}</div>`
-        );
-}
-
-function showToast(type, message) {
-    const bg    = type === 'success' ? '#28a745' : '#dc3545';
-    const icon  = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-    const toast = $(`
-        <div style="
-            position:fixed;bottom:24px;right:24px;z-index:9999;
-            background:${bg};color:#fff;padding:14px 20px;border-radius:8px;
-            box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;
-            font-size:.9rem;min-width:260px;max-width:380px;
-        ">
-            <i class="fas ${icon}"></i><span>${message}</span>
-        </div>
-    `);
-    $('body').append(toast);
-    setTimeout(() => toast.fadeOut(400, () => toast.remove()), 3500);
-}
-</script>
 @endsection
