@@ -110,7 +110,7 @@ return response()->json([
     // Update
     public function update(Request $request, $id){
 
-         return $request;
+        //  return $request;
         // Ensure features is always an array before validation (missing key = empty array)
         if (! $request->has('features')) {
             $request->merge(['features' => []]);

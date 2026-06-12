@@ -1618,11 +1618,16 @@
                                     </div>
 
                                     <div class="plan-cta">
-                                        <a href="{{ route('checkout', ['plan' => $plan->id]) }}"
+                                        {{-- <a href="{{ route('checkout', ['plan' => $plan->id]) }}"
                                             class="btn-plan btn-plan-outline">
                                             <i class="fas fa-graduation-cap"></i>
                                             Choose Plan
+                                        </a> --}}
+      <a href="{{ route('checkout.real') }}" class="btn-plan btn-plan-outline">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            Choose Plan
                                         </a>
+                                      
                                     </div>
 
                                 </div>

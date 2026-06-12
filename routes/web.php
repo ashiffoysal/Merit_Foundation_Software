@@ -15,7 +15,8 @@ use App\Http\Controllers\Backend\PlanController;
 use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\UserDashboardController;
-
+use App\Http\Controllers\Frontend\CheckoutController;
+use Illuminate\Http\Request;
 
 
 Route::get('/dashboard', function () {
@@ -67,8 +68,28 @@ Route::get('/news', [FrontendController::class, 'news'])->name('news');
 Route::get('/news/{slug}', [FrontendController::class, 'newsDetails'])->name('news.details');
 Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
 
-Route::get('book-lesson/form', [FrontendController::class, 'checkout'])->name('checkout'); 
-Route::post('book-lesson/store', [FrontendController::class, 'checkoutstore'])->name('checkout.store');
+
+Route::middleware('auth')->group(function () {
+
+    // Route::get('book-lesson/form', [CheckoutController::class, 'checkout'])->name('checkout'); 
+    // Route::post('book-lesson/store', [CheckoutController::class, 'checkoutstore'])->name('checkout.store');
+
+
+     Route::get('checkout/real', [CheckoutController::class, 'checkoutreal'])->name('checkout.real'); 
+
+     
+     Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout-success'); 
+
+     
+     Route::get('checkout/cancel', [CheckoutController::class, 'checkoutCancel'])->name('checkout-cancel'); 
+});
+
+
+
+
+
+
+
 
 
 
