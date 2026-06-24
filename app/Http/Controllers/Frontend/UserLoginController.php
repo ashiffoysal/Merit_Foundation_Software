@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterVerifyMail;
 use Carbon\Carbon;
-
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+use App\Mail\PasswordResetMail;
 
 class UserLoginController extends Controller
 {
@@ -186,7 +188,7 @@ return response()->json([
             return view('auth.forgot-password');
         }
         // forgot password
-        public function forgotPassword(Request $request)
+        public function sendResetLink(Request $request)
         {
             $validator = Validator::make($request->all(), [
                 'email' => ['required', 'email', 'exists:users,email'],
@@ -205,7 +207,11 @@ return response()->json([
             // generate reset token and send email
             $user = User::where('email', $request->email)->first();
             $token = Str::random(60);
-            $user->update(['password_reset_token' => $token, 'password_reset_sent_at' => Carbon::now()]);
+            $update = User::where('email', $request->email)->update([
+                'password_reset_token' => $token,
+                'password_reset_sent_at' => Carbon::now(),
+            ]);
+
             Mail::to($user->email)->send(new PasswordResetMail($user, $token));
             return response()->json([
                 'success' => true,

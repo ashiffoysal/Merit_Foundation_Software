@@ -255,7 +255,7 @@ document.getElementById('forgot-form').addEventListener('submit', async function
 
         <form id="reset-form" novalidate>
           @csrf
-          {{-- Hidden fields passed from the signed URL --}}
+          Hidden fields passed from the signed URL
           {{-- <input type="hidden" name="token" value="{{ $token }}">
           <input type="hidden" name="email" value="{{ $email ?? '' }}" id="reset-email"> --}}
 
