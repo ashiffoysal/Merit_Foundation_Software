@@ -107,10 +107,7 @@ class CheckoutController extends Controller
         }
     
         $orderId = $session['metadata']['order_id'] ?? null;
-    
-    
-    
-    // return view('checkout-success', ['order' => $order]);
+        
         return view('frontend.checkout.success',['order' => $order]);
     }
 

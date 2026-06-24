@@ -71,7 +71,7 @@ Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name(
 
 Route::middleware('auth')->group(function () {
 
-    // Route::get('book-lesson/form', [CheckoutController::class, 'checkout'])->name('checkout'); 
+     Route::get('book-lesson/form', [CheckoutController::class, 'checkout'])->name('checkout'); 
     // Route::post('book-lesson/store', [CheckoutController::class, 'checkoutstore'])->name('checkout.store');
 
 
