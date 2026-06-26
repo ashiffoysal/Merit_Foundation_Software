@@ -147,13 +147,13 @@ background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), tra
             <div class="ps-li"><i class="fas fa-check"></i><strong>Right to restrict processing</strong></div>
             <div class="ps-li"><i class="fas fa-check"></i><strong>Right to data portability</strong></div>
             <div class="ps-li"><i class="fas fa-check"></i><strong>Right to object</strong> to processing based on legitimate interests</div>
-            <p class="ps-p mt-3">To exercise any of these rights, contact our Data Protection Officer at <strong style="color:var(--gold)">dpo@meriteducation.org</strong>. We will respond within 30 days.</p>
+            <p class="ps-p mt-3">To exercise any of these rights, contact our Data Protection Officer at <strong style="color:var(--gold)">{{ $companyInfo ? $companyInfo->safeguarding_email : '' }}</strong>. We will respond within 30 days.</p>
           </div>
 
           <div class="policy-section" id="children" data-r="up">
             <h3 class="ps-h"><i class="fas fa-child"></i>7. Children's Privacy</h3>
             <p class="ps-p">We take children's privacy extremely seriously. All student data is provided by a parent or legal guardian — we do not collect data directly from children under 16. Student data is used solely for educational purposes and is never shared with third parties without parental consent.</p>
-            <div class="ps-box mt-3"><p>All tutors are DBS checked and operate under our Safeguarding Policy. Parents can request deletion of their child's data at any time by contacting us at <strong>safeguarding@meriteducation.org</strong>.</p></div>
+            <div class="ps-box mt-3"><p>All tutors are DBS checked and operate under our Safeguarding Policy. Parents can request deletion of their child's data at any time by contacting us at <strong>{{ $companyInfo ? $companyInfo->safeguarding_email : '' }}</strong>.</p></div>
           </div>
 
           <div class="policy-section" id="security" data-r="up">
@@ -165,7 +165,7 @@ background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), tra
             <h3 class="ps-h"><i class="fas fa-envelope"></i>9. Contact Our DPO</h3>
             <p class="ps-p">If you have any questions, concerns, or wish to exercise your data rights:</p>
             <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:20px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
-              <div style="flex:1"><h6 style="font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:12px">Data Protection Officer</h6><p style="font-size:.82rem;color:var(--muted);margin-bottom:6px;display:flex;gap:9px;align-items:center"><i class="fas fa-envelope" style="color:var(--gold)"></i>dpo@meriteducation.org</p><p style="font-size:.82rem;color:var(--muted);display:flex;gap:9px;align-items:center"><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i>Merit Education Foundation, London, UK</p></div>
+              <div style="flex:1"><h6 style="font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:12px">Data Protection Officer</h6><p style="font-size:.82rem;color:var(--muted);margin-bottom:6px;display:flex;gap:9px;align-items:center"><i class="fas fa-envelope" style="color:var(--gold)"></i>{{ $companyInfo ? $companyInfo->safeguarding_email : '' }}</p><p style="font-size:.82rem;color:var(--muted);display:flex;gap:9px;align-items:center"><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i>Merit Education Foundation, London, UK</p></div>
               <button class="btn-navy btn-sm" onclick="showPage('page-contact')"><i class="fas fa-paper-plane"></i>Send Message</button>
             </div>
             <p class="ps-p mt-3">You also have the right to lodge a complaint with the <strong>Information Commissioner's Office (ICO)</strong> at ico.org.uk if you are unhappy with how we handle your data.</p>

@@ -693,7 +693,7 @@
             <p style="font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.8;max-width:580px;font-weight:300">All Merit tutors are DBS checked, and our platform operates under a robust safeguarding policy. Parents can observe lessons at any time. We follow UK safeguarding guidelines strictly — because trust is everything.</p>
           </div>
           <div class="col-lg-4 text-lg-end">
-            <button class="btn-gold" onclick="showPage('safeguarding')"><i class="fas fa-shield-alt"></i>Read Our Policy</button>
+            <a class="btn-gold" href="{{ url('/safeguarding-policy') }}"><i class="fas fa-shield-alt"></i>Read Our Policy</a>
           </div>
         </div>
       </div>
