@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\SubscriptionController;
 use Illuminate\Http\Request;
 
 
@@ -85,11 +86,25 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/subscribe',        [SubscriptionController::class, 'showPlans'])->name('subscribe');
+    Route::post('/subscribe',       [SubscriptionController::class, 'create'])->name('subscribe.create');
+    Route::post('/subscribe/pause', [SubscriptionController::class, 'pause'])->name('subscribe.pause');
+    Route::post('/subscribe/resume',[SubscriptionController::class, 'resume'])->name('subscribe.resume');
+    Route::post('/subscribe/cancel',[SubscriptionController::class, 'cancel'])->name('subscribe.cancel');
+    Route::post('/subscribe/update',[SubscriptionController::class, 'update'])->name('subscribe.update');
+    Route::get('/subscribe/success', [SubscriptionController::class, 'success'])->name('subscribe.success');
+});
+
+Route::post('stripe/webhook', [SubscriptionController::class, 'webhook'])->name('subscribe.webhook');
 
 
 
+Route::get('user/showPlans', [SubscriptionController::class, 'showPlans']);
+Route::get('user/cancel', [SubscriptionController::class, 'cancel']);
 
-
+// fluent-safe-chaste-quaint
+// acct_1LZ7mIIi1Z8eD8I6
 
 
 
