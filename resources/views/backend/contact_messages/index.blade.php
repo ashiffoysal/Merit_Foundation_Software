@@ -301,7 +301,7 @@ function renderTable(rows) {
             <td><span style="font-size:.72rem;color:var(--muted)">${formatDate(r.created_at)}</span></td>
             <td>
                 <div class="d-flex gap-1">
-                    <button class="btn-outline-sm" style="padding:4px 10px;font-size:.68rem" onclick="viewMessage(${r.id})" title="View"><i class="fas fa-eye"></i></button>
+                    <a class="btn-outline-sm" style="padding:4px 10px;font-size:.68rem" href="{{ url('admin/contact-messages/view') }}" title="View"><i class="fas fa-eye"></i></a>
                     <button class="btn-danger-sm" style="padding:4px 10px;font-size:.68rem" onclick="deleteMessage(${r.id})" title="Delete"><i class="fas fa-trash"></i></button>
                 </div>
             </td>
@@ -395,28 +395,84 @@ function getSelectedIds() {
 }
 
 /* ---- View Message ---- */
+// function viewMessage(id) {
+//     currentMsgId = id;
+//     fetch(`{{ url('admin/contact-messages/view') }}/${id}`, {
+//         headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF }
+//     })
+//     .then(r => r.json())
+//     .then(d => {
+//         const m = d.message;
+//         console.log(m.first_name);
+//         document.getElementById('md-name').textContent    = `${m.first_name} ${m.last_name}`;
+//         document.getElementById('md-email').textContent   = m.email;
+//         document.getElementById('md-phone').textContent   = m.phone || '—';
+//         document.getElementById('md-subject').textContent = m.enquiry_type || '—';
+//         document.getElementById('md-date').textContent    = formatDate(m.created_at);
+//         document.getElementById('md-message').textContent = m.message;
+//         const sMap = { new:'<span class="badge-status bs-new"><span class="bs-dot"></span>New</span>', read:'<span class="badge-status bs-active"><span class="bs-dot"></span>Read</span>', pending:'<span class="badge-status bs-pending"><span class="bs-dot"></span>Pending</span>' };
+//         document.getElementById('md-status').innerHTML = sMap[m.status] || sMap['new'];
+//         openModal('modal-view-message');
+   
+//         if (m.status === 'new') markStatus(id, 'read', false);
+//     })
+//     .catch(() => showToast('Could not load message.', 'error'));
+// }
+
+
 function viewMessage(id) {
     currentMsgId = id;
-    fetch(`{{ url('admin/contact-messages') }}/${id}`, {
-        headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF }
+
+    fetch(`/admin/contact-messages/view/${id}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     })
-    .then(r => r.json())
+    .then(async (r) => {
+        if (!r.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await r.json();
+    })
     .then(d => {
+        console.log(d); // 👈 debug first
+
         const m = d.message;
-        console.log(m.first_name);
-        document.getElementById('md-name').textContent    = `${m.first_name} ${m.last_name}`;
-        document.getElementById('md-email').textContent   = m.email;
-        document.getElementById('md-phone').textContent   = m.phone || '—';
-        document.getElementById('md-subject').textContent = m.enquiry_type || '—';
-        document.getElementById('md-date').textContent    = formatDate(m.created_at);
-        document.getElementById('md-message').textContent = m.message;
-        const sMap = { new:'<span class="badge-status bs-new"><span class="bs-dot"></span>New</span>', read:'<span class="badge-status bs-active"><span class="bs-dot"></span>Read</span>', pending:'<span class="badge-status bs-pending"><span class="bs-dot"></span>Pending</span>' };
-        document.getElementById('md-status').innerHTML = sMap[m.status] || sMap['new'];
+
+        if (!m) {
+            throw new Error('Message not found in response');
+        }
+
+        document.getElementById('md-name').textContent =
+            `${m.first_name ?? ''} ${m.last_name ?? ''}`;
+
+        document.getElementById('md-email').textContent = m.email ?? '—';
+        document.getElementById('md-phone').textContent = m.phone ?? '—';
+        document.getElementById('md-subject').textContent = m.enquiry_type ?? '—';
+        // document.getElementById('md-date').textContent = formatDate(m.created_at);
+        document.getElementById('md-message').textContent = m.message ?? '—';
+
+        const sMap = {
+            new: `<span class="badge-status bs-new"><span class="bs-dot"></span>New</span>`,
+            read: `<span class="badge-status bs-active"><span class="bs-dot"></span>Read</span>`,
+            pending: `<span class="badge-status bs-pending"><span class="bs-dot"></span>Pending</span>`
+        };
+
+        document.getElementById('md-status').innerHTML =
+            sMap[m.status] || sMap.new;
+
         openModal('modal-view-message');
-        // Auto-mark as read
-        if (m.status === 'new') markStatus(id, 'read', false);
+
+        if (m.status === 'new') {
+            markStatus(id, 'read', false);
+        }
     })
-    .catch(() => showToast('Could not load message.', 'error'));
+    .catch(err => {
+        console.error(err);
+        showToast('Could not load message.', 'error');
+    });
 }
 
 /* ---- Mark Status ---- */

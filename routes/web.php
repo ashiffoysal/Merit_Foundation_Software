@@ -121,6 +121,9 @@ Route::prefix('admin')->group(function () {
     // Page
     Route::get('/contact-messages', [ContactMessageController::class, 'index'])
         ->name('contact-messages.index');
+
+        
+        Route::get('/contact-messages/view/{id}', [ContactMessageController::class, 'view'])->name('backend.contact_messages.view');
  
     // AJAX DataTable
     Route::get('/contact-messages/data', [ContactMessageController::class, 'data'])

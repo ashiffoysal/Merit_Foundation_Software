@@ -257,5 +257,12 @@ class ContactMessageController extends Controller
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ]);
     }
-    
+
+
+public function view($id)
+{
+    $message = ContactMessage::find($id);
+    return view('backend.contact_messages.viewpage', compact('message'));
+    }
+        
 }

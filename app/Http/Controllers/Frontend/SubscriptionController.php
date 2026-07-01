@@ -5,9 +5,37 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Exceptions\IncompletePayment;
-
+use Stripe\Webhook;
 class SubscriptionController extends Controller
 {
+
+
+public function webhook(Request $request)
+{
+    $payload = $request->getContent();
+
+    $sig = $request->header('Stripe-Signature');
+
+    try {
+
+        $event = Webhook::constructEvent(
+            $payload,
+            $sig,
+            config('cashier.webhook.secret')
+        );
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 400);
+
+    }
+
+    // Process event...
+
+    return response()->json(['success' => true]);
+}
      // ─── SHOW PLANS PAGE ────────────────────────────────────────────────────
     public function showPlans()
     {

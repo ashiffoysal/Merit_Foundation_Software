@@ -79,7 +79,7 @@ class CheckoutController extends Controller
         $stripePriceId = 'price_1ThUIoIi1Z8eD8I6e9ZkWqHO';
         $quantity = 1;
         return $request->user()
-            ->newSubscription('default', 'price_1ThUIoIi1Z8eD8I6e9ZkWqHO')
+            ->newSubscription('default', 'price_1TnzAyIi1Z8eD8I6DLfDwkvg')
             ->checkout([
                     'success_url' => route('checkout-success').'?session_id={CHECKOUT_SESSION_ID}',
                     'cancel_url' => route('checkout-cancel'),
@@ -91,7 +91,7 @@ class CheckoutController extends Controller
     }
 
 
-    public function checkoutSuccess()
+    public function checkoutSuccess(Request $request)
     {
 
         $sessionId = $request->get('session_id');
@@ -108,7 +108,7 @@ class CheckoutController extends Controller
     
         $orderId = $session['metadata']['order_id'] ?? null;
         
-        return view('frontend.checkout.success',['order' => $order]);
+        return view('frontend.checkout.success',['orderId' => $orderId]);
     }
 
     public function checkoutCancel()
