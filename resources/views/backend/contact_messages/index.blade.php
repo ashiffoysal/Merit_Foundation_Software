@@ -276,7 +276,7 @@ function loadTable(page = 1) {
             '<tr><td colspan="9" class="tbl-empty"><i class="fas fa-exclamation-triangle"></i> Failed to load data.</td></tr>';
     });
 }
-
+const VIEW_URL = "{{ url('admin/contact-messages/view') }}";
 /* ---- Render Table Rows ---- */
 function renderTable(rows) {
     if (!rows.length) {
@@ -301,7 +301,7 @@ function renderTable(rows) {
             <td><span style="font-size:.72rem;color:var(--muted)">${formatDate(r.created_at)}</span></td>
             <td>
                 <div class="d-flex gap-1">
-                    <a class="btn-outline-sm" style="padding:4px 10px;font-size:.68rem" href="{{ url('admin/contact-messages/view') }}" title="View"><i class="fas fa-eye"></i></a>
+                    <a class="btn-outline-sm" style="padding:4px 10px;font-size:.68rem" href="${VIEW_URL}/${r.id}" title="View"><i class="fas fa-eye"></i></a>
                     <button class="btn-danger-sm" style="padding:4px 10px;font-size:.68rem" onclick="deleteMessage(${r.id})" title="Delete"><i class="fas fa-trash"></i></button>
                 </div>
             </td>

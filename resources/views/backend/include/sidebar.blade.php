@@ -26,7 +26,10 @@ a {
           <span>Messages</span>
         </div>
       </a>
-      <div class="sb-item" onclick="showView('users',this)"><i class="fas fa-users"></i><span>All Users</span></div>
+      <a class="sb-item" href="{{ route('user.index') }}">
+        <i class="fas fa-users"></i>
+        <span>All Users</span>
+      </a>
       <div class="sb-section">Operations</div>
       <a href="{{ route('admin.category.index') }}">
         <div class="sb-item">

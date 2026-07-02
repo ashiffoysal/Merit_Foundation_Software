@@ -259,10 +259,25 @@ class ContactMessageController extends Controller
     }
 
 
-public function view($id)
-{
+    public function view($id){
     $message = ContactMessage::find($id);
     return view('backend.contact_messages.viewpage', compact('message'));
+    }
+
+    public function notes(Request $request, $id){
+        $request->validate([
+            'notes' => 'nullable|string',
+        ]);
+
+        $message = ContactMessage::find($id);
+        if (!$message) {
+            return re()->json(['success' => false, 'message' => 'Message not found.'], 404);
+        }
+
+        $message->notes = $request->input('notes');
+        $message->save();
+
+        return redirect()->back()->with(['success' => true, 'message' => 'Notes updated successfully.']);
     }
         
 }

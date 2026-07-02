@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\BlogsController;
 use App\Http\Controllers\Backend\SeoController;
 use App\Http\Controllers\Backend\FeesCategoryController;
 use App\Http\Controllers\Backend\PlanController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -123,8 +124,10 @@ Route::prefix('admin')->group(function () {
         ->name('contact-messages.index');
 
         
-        Route::get('/contact-messages/view/{id}', [ContactMessageController::class, 'view'])->name('backend.contact_messages.view');
+    Route::get('/contact-messages/view/{id}', [ContactMessageController::class, 'view'])->name('backend.contact_messages.view');
  
+      Route::post('/contact-messages/notes/{id}', [ContactMessageController::class, 'notes'])->name('backend.contact_messages.notes');
+    
     // AJAX DataTable
     Route::get('/contact-messages/data', [ContactMessageController::class, 'data'])
         ->name('contact-messages.data');
@@ -181,6 +184,17 @@ Route::prefix('admin')->group(function () {
         Route::get('plans-edit/{id}',         [PlanController::class, 'edit'])->name('admin.plans.edit');
         Route::post('plans-update/{id}',         [PlanController::class, 'update'])->name('admin.plans.update');
         Route::delete('plans-delete/{id}',         [PlanController::class, 'destroy'])->name('admin.plans.destroy');
+    });
+});
+
+Route::prefix('admin')->group(function () {
+    Route::middleware('auth:admin')->group(function () {
+       
+        Route::get('user-index',         [UserController::class, 'index'])->name('user.index');
+        
+        Route::get('user-view/{id}',         [UserController::class, 'edit'])->name('admin.user.edit');
+        
+        Route::delete('user-delete/{id}',         [UserController::class, 'destroy'])->name('admin.user.destroy');
     });
 });
 

@@ -4,71 +4,169 @@
 <div class="container">
     <div class="page-header d-flex align-items-start justify-content-between">
         <div>
-            <h1>Contact Messages</h1>
-            <p>All incoming enquiries and contact submissions</p>
+            <h1>Contact Message #{{ $message->id }}</h1>
+            <p>Submitted on {{ optional($message->created_at)->format('d M Y, h:i A') ?? '—' }}</p>
         </div>
-        
+        <div>
+            <a href="{{ route('contact-messages.index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Messages
+            </a>
+        </div>
     </div>
 
-    {{-- Stats Row --}}
-  
+    <div class="row">
+        {{-- Main message details --}}
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header-custom">
+                    <div class="card-title">
+                        <i class="fas fa-envelope-open-text"></i> Message Details
+                    </div>
+                </div>
+                <div class="card-body-custom">
 
-    <div class="card">
-        <div class="card-header-custom">
-            <div class="card-title">
-                <i class="fas fa-comments"></i> View Messages
-                {{-- <span class="count-badge" id="totalBadge">0 total</span> --}}
+                    <table class="table table-borderless mb-4">
+                        <tr>
+                            <th style="width:180px;">Full Name</th>
+                            <td>{{ trim(($message->first_name ?? '').' '.($message->last_name ?? '')) ?: '—' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>
+                                @if($message->email)
+                                    <a href="mailto:{{ $message->email }}">{{ $message->email }}</a>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>
+                                @if($message->phone)
+                                    <a href="tel:{{ $message->phone }}">{{ $message->phone }}</a>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Enquiry Type</th>
+                            <td>
+                                @if($message->enquiry_type)
+                                    <span class="badge bg-info text-dark">{{ $message->enquiry_type }}</span>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>IP Address</th>
+                            <td>{{ $message->is_ip ?? '—' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                                <span class="badge {{ $message->status == 'new' ? 'bg-primary' : 'bg-secondary' }}">
+                                    {{ ucfirst($message->status) }}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h6 class="text-muted mb-2">Message</h6>
+                    <div class="p-3" style="background:var(--bg-light,#f8f9fa); border-radius:6px; white-space:pre-wrap;">
+                        {{ $message->message ?? 'No message content.' }}
+                    </div>
+                </div>
+            </div>
+
+            {{-- Internal notes --}}
+            <div class="card mt-3">
+                <div class="card-header-custom">
+                    <div class="card-title">
+                        <i class="fas fa-sticky-note"></i> Internal Notes
+                    </div>
+                </div>
+                <div class="card-body-custom">
+                    <form method="POST" action="{{ route('backend.contact_messages.notes', $message->id) }}">
+                        @csrf
+                        <textarea name="notes" rows="4" class="form-control mb-2" placeholder="Add internal notes...">{{ old('notes', $message->notes) }}</textarea>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fas fa-save"></i> Save Notes
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
 
-        {{-- Search & Filter Bar --}}
-    
-        <div class="card-body-custom">
-            <div class="table-wrap">
-                <table class="data-table" id="messagesTable">
-                    <thead>
-                        <tr>
-                            <th style="width:36px">
-                                <input type="checkbox" id="selectAll" style="accent-color:var(--gold)" onchange="toggleSelectAll(this)">
-                            </th>
-                            <th class="sortable" data-col="first_name" onclick="sortBy('first_name')">
-                                Name <i class="fas fa-sort sort-ico" id="sort-first_name"></i>
-                            </th>
-                            <th class="sortable" data-col="email" onclick="sortBy('email')">
-                                Email <i class="fas fa-sort sort-ico" id="sort-email"></i>
-                            </th>
-                            <th>Phone</th>
-                            <th class="sortable" data-col="subject" onclick="sortBy('subject')">
-                                Subject <i class="fas fa-sort sort-ico" id="sort-subject"></i>
-                            </th>
-                            <th>Message</th>
-                            <th class="sortable" data-col="status" onclick="sortBy('status')">
-                                Status <i class="fas fa-sort sort-ico" id="sort-status"></i>
-                            </th>
-                            <th class="sortable" data-col="created_at" onclick="sortBy('created_at')">
-                                Date <i class="fas fa-sort-down sort-ico active" id="sort-created_at"></i>
-                            </th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr><td colspan="9" class="tbl-loading"><span class="spinner-ring"></span> Loading...</td></tr>
-                    </tbody>
-                </table>
+        {{-- Sidebar: status & actions --}}
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header-custom">
+                    <div class="card-title"><i class="fas fa-info-circle"></i> Status</div>
+                </div>
+                <div class="card-body-custom">
+                    <p class="mb-2">
+                        <strong>Read:</strong>
+                        @if($message->is_read)
+                            <span class="badge bg-success">Yes</span>
+                        @else
+                            <span class="badge bg-warning text-dark">No</span>
+                        @endif
+                    </p>
+                    <p class="mb-2">
+                        <strong>Spam:</strong>
+                        @if($message->is_spam)
+                            <span class="badge bg-danger">Yes</span>
+                        @else
+                            <span class="badge bg-success">No</span>
+                        @endif
+                    </p>
+                    <p class="mb-0">
+                        <strong>Seen By:</strong> {{ $message->seen_by ?? '—' }}
+                    </p>
+                    <hr>
+                    <p class="mb-0" style="font-size:.8rem;color:var(--muted)">
+                        Last updated: {{ optional($message->updated_at)->diffForHumans() ?? '—' }}
+                    </p>
+                </div>
             </div>
 
-            {{-- Bulk Actions --}}
-            <div id="bulkBar" class="bulk-bar" style="display:none">
-                <span id="bulkCount">0 selected</span>
-                <button class="btn-outline-sm btn-sm" onclick="bulkAction('read')"><i class="fas fa-check"></i> Mark Read</button>
-                <button class="btn-outline-sm btn-sm" onclick="bulkAction('pending')"><i class="fas fa-clock"></i> Mark Pending</button>
-                <button class="btn-danger-sm btn-sm" onclick="bulkAction('delete')"><i class="fas fa-trash"></i> Delete</button>
-            </div>
+            <div class="card mt-3">
+                <div class="card-header-custom">
+                    <div class="card-title"><i class="fas fa-bolt"></i> Actions</div>
+                </div>
+                <div class="card-body-custom d-flex flex-column gap-2">
 
-            {{-- Pagination --}}
-            <div class="d-flex align-items-center justify-content-between mt-3 pt-2" style="border-top:1px solid var(--border)">
-                <span style="font-size:.75rem;color:var(--muted)" id="paginationInfo">—</span>
-                <div class="d-flex gap-1 flex-wrap" id="paginationLinks"></div>
+                    {{-- <form method="POST" action="{{ route('backend.contact_messages.toggleRead', $message->id) }}">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-outline-primary w-100 btn-sm">
+                            <i class="fas fa-envelope"></i>
+                            {{ $message->is_read ? 'Mark as Unread' : 'Mark as Read' }}
+                        </button>
+                    </form> --}}
+
+                    {{-- <form method="POST" action="{{ route('backend.contact_messages.toggleSpam', $message->id) }}">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-outline-warning w-100 btn-sm">
+                            <i class="fas fa-ban"></i>
+                            {{ $message->is_spam ? 'Unmark Spam' : 'Mark as Spam' }}
+                        </button>
+                    </form> --}}
+
+                    <form method="POST" action=""
+                          onsubmit="return confirm('Delete this message permanently?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger w-100 btn-sm">
+                            <i class="fas fa-trash"></i> Delete Message
+                        </button>
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
