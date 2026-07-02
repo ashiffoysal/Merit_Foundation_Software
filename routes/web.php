@@ -19,20 +19,26 @@ use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\SubscriptionController;
 use Illuminate\Http\Request;
-
-
-Route::get('/dashboard', function () {
-    return view('frontend.user_dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+use App\Http\Controllers\Backend\AdminSubscriptionController;
+ 
+// Inside your admin middleware group:
+Route::middleware(['auth', 'admin.auth'])->prefix('admin')->name('admin.')->group(function () {
+ 
+    // ... your existing user routes ...
+ 
+    // Subscription management routes
+    Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
+        Route::patch('/{id}/pause',      [AdminSubscriptionController::class, 'pause'])->name('pause');
+        Route::patch('/{id}/resume',     [AdminSubscriptionController::class, 'resume'])->name('resume');
+        Route::patch('/{id}/cancel',     [AdminSubscriptionController::class, 'cancel'])->name('cancel');
+        Route::patch('/{id}/cancel-now', [AdminSubscriptionController::class, 'cancelNow'])->name('cancelNow');
+    });
+ 
+});
 
 
 Route::middleware('auth')->group(function () {
+      Route::get('/dashboard',          [UserDashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard/profile',          [UserDashboardController::class, 'index'])->name('profile.index');
     Route::post('/dashboard/profile/update',  [UserDashboardController::class, 'update'])->name('profile.update');
     Route::post('/dashboard/profile/password',[UserDashboardController::class, 'updatePassword'])->name('profile.password');
@@ -90,14 +96,18 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/subscribe',        [SubscriptionController::class, 'showPlans'])->name('subscribe');
     Route::post('/subscribe',       [SubscriptionController::class, 'create'])->name('subscribe.create');
-    Route::post('/subscribe/pause', [SubscriptionController::class, 'pause'])->name('subscribe.pause');
-    Route::post('/subscribe/resume',[SubscriptionController::class, 'resume'])->name('subscribe.resume');
-    Route::post('/subscribe/cancel',[SubscriptionController::class, 'cancel'])->name('subscribe.cancel');
-    Route::post('/subscribe/update',[SubscriptionController::class, 'update'])->name('subscribe.update');
-    Route::get('/subscribe/success', [SubscriptionController::class, 'success'])->name('subscribe.success');
+    Route::post('/subscribe/pause/{id}', [SubscriptionController::class, 'pause'])->name('subscriptions.pause');
+    Route::post('/subscribe/resume/{id}',[SubscriptionController::class, 'resume'])->name('subscriptions.resume');
+    Route::post('/subscribe/cancel-now/{id}',[SubscriptionController::class, 'cancelNow'])->name('subscriptions.cancelNow');
+    Route::post('/subscribe/cancel/{id}',[SubscriptionController::class, 'cancel'])->name('subscriptions.cancel');
+    
+    Route::post('/subscribe/update',[SubscriptionController::class, 'update'])->name('subscriptions.update');
+    Route::get('/subscribe/success', [SubscriptionController::class, 'success'])->name('subscriptions.success');
 });
 
-Route::post('stripe/webhook', [SubscriptionController::class, 'webhook'])->name('subscribe.webhook');
+// At the top of web.php, outside any middleware group:
+Route::post('/stripe/webhook', [App\Http\Controllers\Frontend\WebhookController::class, 'handleWebhook'])
+     ->name('cashier.webhook');
 
 
 
@@ -220,6 +230,22 @@ Route::prefix('admin')->group(function () {
    
     }); 
 });
+
+
+
+Route::prefix('admin/users')->name('admin.users.')->group(function () {
+ 
+    Route::get('/',                        [UserController::class, 'index'])->name('index');
+    Route::get('/data',                    [UserController::class, 'data'])->name('data');     // AJAX
+    Route::get('/{id}',                    [UserController::class, 'show'])->name('show');     // AJAX modal
+    Route::patch('/{id}/toggle-active',    [UserController::class, 'toggleActive'])->name('toggle-active');
+    Route::patch('/{id}/verify-email',     [UserController::class, 'verifyEmail'])->name('verify-email');
+    Route::delete('/{id}',                 [UserController::class, 'destroy'])->name('destroy');
+    Route::patch('/{id}/restore',          [UserController::class, 'restore'])->name('restore');
+    Route::get('/{id}/subscriptions',      [UserController::class, 'subscriptions'])->name('subscriptions');
+ 
+});
+
 
 
 Route::post('/ajax-login', [UserLoginController::class, 'login'])->name('ajax.login');

@@ -6,6 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 use Stripe\Webhook;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Subscription;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Mail;
 class SubscriptionController extends Controller
 {
 
@@ -74,57 +84,102 @@ public function webhook(Request $request)
     }
 
     // ─── PAUSE SUBSCRIPTION ─────────────────────────────────────────────────
-    public function pause()
-    {
-        $user = auth()->user();
+public function pause($id)
+{
+    $subscription = Auth::user()->subscriptions()->findOrFail($id);
 
-        if (!$user->subscribed('default')) {
-            return back()->with('error', 'No active subscription found.');
-        }
-
-        // Pause at end of current billing period
-        $user->subscription('default')->pauseNow();
-        // OR pause at period end: ->pause()
-
-        return back()->with('success', 'Subscription paused successfully!');
+    if ($subscription->stripe_status !== 'active') {
+        return back()->with('error', 'Only active subscriptions can be paused.');
     }
 
-    // ─── RESUME SUBSCRIPTION ────────────────────────────────────────────────
-    public function resume()
-    {
-        $user = auth()->user();
+    try {
+        // Cashier v16 way — pauses payment collection on Stripe
+        \Stripe\Stripe::setApiKey(config('cashier.secret'));
 
-        if (!$user->subscription('default') || !$user->subscription('default')->paused()) {
-            return back()->with('error', 'No paused subscription found.');
-        }
+        \Stripe\Subscription::update($subscription->stripe_id, [
+            'pause_collection' => ['behavior' => 'mark_uncollectible'],
+        ]);
 
-        $user->subscription('default')->resume();
+        // Update local DB immediately (don't wait for webhook)
+        $subscription->stripe_status = 'paused';
+        $subscription->save();
 
-        return back()->with('success', 'Subscription resumed successfully!');
+        return back()->with('success', 'Subscription paused successfully.');
+
+    } catch (\Exception $e) {
+        Log::error('Pause error: ' . $e->getMessage());
+        return back()->with('error', 'Could not pause: ' . $e->getMessage());
+    }
+}
+
+   public function resume($id)
+{
+    $subscription = Auth::user()->subscriptions()->findOrFail($id);
+
+    if ($subscription->stripe_status !== 'paused' && !$subscription->onGracePeriod()) {
+        return back()->with('error', 'Subscription cannot be resumed.');
     }
 
-    // ─── CANCEL SUBSCRIPTION ────────────────────────────────────────────────
-    public function cancel(Request $request)
-    {
-        $user = auth()->user();
+    try {
+        \Stripe\Stripe::setApiKey(config('cashier.secret'));
 
-        if (!$user->subscribed('default')) {
-            return back()->with('error', 'No active subscription found.');
-        }
+        if ($subscription->stripe_status === 'paused') {
+            // Resume from paused state — remove pause_collection
+            \Stripe\Subscription::update($subscription->stripe_id, [
+                'pause_collection' => '',
+            ]);
 
-        if ($request->input('immediately') === 'true') {
-            // Cancel right now
-            $user->subscription('default')->cancelNow();
-            $message = 'Subscription cancelled immediately.';
+            $subscription->stripe_status = 'active';
+            $subscription->save();
+
         } else {
-            // Cancel at end of billing period (grace period)
-            $user->subscription('default')->cancel();
-            $message = 'Subscription will cancel at end of billing period.';
+            // Resume from grace period (was cancelled but still in period)
+            $subscription->resume();
         }
 
-        return back()->with('success', $message);
+        return back()->with('success', 'Subscription resumed successfully.');
+
+    } catch (\Exception $e) {
+        Log::error('Resume error: ' . $e->getMessage());
+        return back()->with('error', 'Could not resume: ' . $e->getMessage());
+    }
+}
+
+// ─── CANCEL AT PERIOD END ────────────────────────────────────────────────────
+public function cancel($id)
+{
+    $subscription = Auth::user()->subscriptions()->findOrFail($id);
+
+    if (!$subscription->active()) {
+        return back()->with('error', 'No active subscription to cancel.');
     }
 
+    try {
+        $subscription->cancel(); // Cashier v16 — cancels at period end ✅
+
+        return back()->with('success', 'Subscription will cancel at period end.');
+
+    } catch (\Exception $e) {
+        Log::error('Cancel error: ' . $e->getMessage());
+        return back()->with('error', 'Could not cancel: ' . $e->getMessage());
+    }
+}
+
+// ─── CANCEL IMMEDIATELY ──────────────────────────────────────────────────────
+public function cancelNow($id)
+{
+    $subscription = Auth::user()->subscriptions()->findOrFail($id);
+
+    try {
+        $subscription->cancelNow(); // Cashier v16 ✅
+
+        return back()->with('success', 'Subscription cancelled immediately.');
+
+    } catch (\Exception $e) {
+        Log::error('CancelNow error: ' . $e->getMessage());
+        return back()->with('error', 'Could not cancel: ' . $e->getMessage());
+    }
+}
     // ─── UPDATE / SWAP PLAN ─────────────────────────────────────────────────
     public function update(Request $request)
     {

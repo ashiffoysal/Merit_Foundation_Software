@@ -14,6 +14,8 @@ use App\Mail\RegisterVerifyMail;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 
+use Laravel\Cashier\Exceptions\IncompletePayment;
+
 class UserDashboardController extends Controller
 {
     // logout
@@ -97,5 +99,16 @@ class UserDashboardController extends Controller
             'success' => true,
             'message' => 'Password updated successfully.',
         ]);
+    }
+
+
+
+    public function dashboard(){
+
+        $user          = auth()->user();
+        $subscriptions = $user->subscriptions()->orderBy('created_at', 'desc')->get();
+        $setupIntent   = $user->createSetupIntent();
+
+        return view('frontend.user_dashboard.index', compact('user', 'subscriptions', 'setupIntent'));
     }
 }

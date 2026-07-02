@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbpn\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Cashier;
+use App\Models\User;
 
 
 class CheckoutController extends Controller
@@ -74,45 +75,71 @@ class CheckoutController extends Controller
 
     // 
 
-    public function checkoutreal(Request $request){
-        $package_id=1;
-        $stripePriceId = 'price_1ThUIoIi1Z8eD8I6e9ZkWqHO';
-        $quantity = 1;
+
+    public function checkoutreal(Request $request)
+    {
+        $package_id    = 1;
+        $stripePriceId = 'price_1TnzAyIi1Z8eD8I6DLfDwkvg'; // your real price ID
+
         return $request->user()
-            ->newSubscription('default', 'price_1TnzAyIi1Z8eD8I6DLfDwkvg')
+            ->newSubscription('default', $stripePriceId)
             ->checkout([
-                    'success_url' => route('checkout-success').'?session_id={CHECKOUT_SESSION_ID}',
-                    'cancel_url' => route('checkout-cancel'),
-                    'metadata' => [
-                        'plan_id' => $package_id,
-                        'user_id' => Auth::user()->id,
-                    ],
+                'success_url' => route('checkout-success') . '?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url'  => route('checkout-cancel'),
+                'metadata'    => [
+                    'plan_id' => $package_id,
+                    'user_id' => Auth::id(),
+                ],
             ]);
     }
 
-
+    // ─── SUCCESS PAGE ────────────────────────────────────────────────────────
     public function checkoutSuccess(Request $request)
     {
-
         $sessionId = $request->get('session_id');
-    
-        if ($sessionId === null) {
-            return;
+
+        if (!$sessionId) {
+            return redirect()->route('home')->with('error', 'Invalid session.');
         }
-    
-        $session = Cashier::stripe()->checkout->sessions->retrieve($sessionId);
-    
+
+        // Retrieve session from Stripe
+        $session = Cashier::stripe()->checkout->sessions->retrieve($sessionId, [
+            'expand' => ['subscription', 'customer'],
+        ]);
+
         if ($session->payment_status !== 'paid') {
-            return;
+            return redirect()->route('home')->with('error', 'Payment not completed.');
         }
-    
-        $orderId = $session['metadata']['order_id'] ?? null;
-        
-        return view('frontend.checkout.success',['orderId' => $orderId]);
+
+        // Sync subscription to DB manually (in case webhook is slow)
+        $user = Auth::user();
+
+        if ($session->subscription && $user) {
+            // Update stripe_id on user if not set
+            if (!$user->stripe_id && $session->customer) {
+                $user->stripe_id = is_string($session->customer)
+                    ? $session->customer
+                    : $session->customer->id;
+                $user->save();
+            }
+
+            // Sync the subscription from Stripe to your DB
+            $user->updateStripeCustomer();
+        }
+
+        $planId = $session['metadata']['plan_id'] ?? null;
+
+        return view('frontend.checkout.success', [
+            'orderId' => $planId,
+            'session' => $session,
+        ]);
     }
 
+    // ─── CANCEL PAGE ─────────────────────────────────────────────────────────
     public function checkoutCancel()
     {
         return view('frontend.checkout.cancel');
     }
+
+ 
 }

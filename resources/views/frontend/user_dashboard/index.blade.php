@@ -419,12 +419,133 @@
       <!-- DOCUMENTS PANEL -->
       <div id="dash-documents" class="dash-panel">
         <div class="profile-section">
-          <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Documents</div>
+          <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Plans</div>
           <div class="row g-3">
+          
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Plan Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($subscriptions as $subscription)
+        <tr>
+            {{-- Plan Name --}}
+            <td>{{ $subscription->type ?? $subscription->name ?? 'default' }}</td>
+
+            {{-- Start Date --}}
+            <td>
+                {{ $subscription->created_at 
+                    ? $subscription->created_at->format('d M Y') 
+                    : '—' }}
+            </td>
+
+            {{-- End Date --}}
+            <td>
+                @if($subscription->ends_at)
+                    {{ $subscription->ends_at->format('d M Y') }}
+                @elseif($subscription->trial_ends_at)
+                    Trial ends {{ $subscription->trial_ends_at->format('d M Y') }}
+                @else
+                    Ongoing
+                @endif
+            </td>
+@php $status = $subscription->stripe_status; @endphp
+            {{-- Status Badge --}}
+            <td>
+                @if($subscription->onGracePeriod())
+                    <span class="badge bg-warning text-dark">Cancels Soon</span>
+                @elseif($subscription->stripe_status === 'paused')
+                    <span class="badge bg-secondary">Paused</span>
+                @elseif($subscription->active())
+                    <span class="badge bg-success">Active</span>
+                @elseif($subscription->canceled())
+                    <span class="badge bg-danger">Cancelled</span>
+                @else
+                    <span class="badge bg-light text-dark">{{ $subscription->stripe_status }}</span>
+                @endif
+            </td>
+
+            {{-- Action Buttons --}}
+            <td>
+                @if($subscription->stripe_status === 'paused')
+                    {{-- RESUME --}}
+                    <form method="POST" action="{{ route('subscriptions.resume', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-success" 
+                                onclick="return confirm('Resume this subscription?')">
+                            ▶ Resume
+                        </button>
+                    </form>
+
+                @elseif($subscription->active() && !$subscription->onGracePeriod())
+                    {{-- PAUSE --}}
+                    <form method="POST" action="{{ route('subscriptions.pause', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-warning"
+                                onclick="return confirm('Pause this subscription?')">
+                            ⏸ Pause
+                        </button>
+                    </form>
+
+                    {{-- CANCEL AT END --}}
+                    <form method="POST" action="{{ route('subscriptions.cancel', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-secondary"
+                                onclick="return confirm('Cancel at period end?')">
+                            Cancel
+                        </button>
+                    </form>
+
+                    {{-- CANCEL NOW --}}
+                    <form method="POST" action="{{ route('subscriptions.cancelNow', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-danger"
+                                onclick="return confirm('Cancel IMMEDIATELY? This cannot be undone!')">
+                            Cancel Now
+                        </button>
+                    </form>
+
+                @elseif($subscription->onGracePeriod())
+                    {{-- UNDO CANCEL (resume during grace period) --}}
+                    <form method="POST" action="{{ route('subscriptions.resume', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-outline-success"
+                                onclick="return confirm('Undo cancellation and reactivate?')">
+                            ↩ Undo Cancel
+                        </button>
+                    </form>
+                    <span class="text-muted small ms-1">
+                        Ends {{ $subscription->ends_at->format('d M Y') }}
+                    </span>
+
+                @else
+                    <span class="text-muted small">No actions available</span>
+                @endif
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="5" class="text-center text-muted py-4">
+                No subscriptions found. Subscribe above to get started.
+            </td>
+        </tr>
+        @endforelse
+    </tbody>
+</table>
+           
+             <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Class Time and Date</div>
             <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">October Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Oct 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
-            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">September Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Sep 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
+            {{-- <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">September Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Sep 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
             <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(13,107,99,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-invoice" style="color:var(--teal)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">Donation Receipt — Nov 2025</div><div style="font-size:.72rem;color:var(--muted)">PDF · 1 Nov 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
-            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(15,31,92,.07);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-certificate" style="color:var(--navy)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">Gift Aid Declaration</div><div style="font-size:.72rem;color:var(--muted)">PDF · 1 Jan 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
+            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(15,31,92,.07);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-certificate" style="color:var(--navy)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">Gift Aid Declaration</div><div style="font-size:.72rem;color:var(--muted)">PDF · 1 Jan 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div> --}}
+              <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Teacher Name</div>
+            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">October Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Oct 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
           </div>
         </div>
       </div>

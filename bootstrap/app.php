@@ -1,4 +1,7 @@
-<?php
+
+
+
+    <?php
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -11,6 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // ── CSRF exclusions ──────────────────────────────────────────────────
+        $middleware->validateCsrfTokens(except: [
+            'stripe/webhook',
+        ]);
+
+        // ── Route middleware aliases ─────────────────────────────────────────
         $middleware->alias([
             'admin.auth' => \App\Http\Middleware\AuthenticateAdmin::class,
             'admin.role' => \App\Http\Middleware\CheckAdminRole::class,
