@@ -21,7 +21,7 @@
         <a href="{{ route('home') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Home</a>
         <a href="{{ route('about') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>About Us</a>
         <a href="{{ route('book.lesson') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Book Lesson</a>
-        <a href="{{ route('donate') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Donate</a>
+        {{-- <a href="{{ route('donate') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Donate</a> --}}
         <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding</a>
         <a href="{{ route('contact') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Contact</a>
       </div>

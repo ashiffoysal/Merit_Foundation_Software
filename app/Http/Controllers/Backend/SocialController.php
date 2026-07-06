@@ -10,8 +10,8 @@ class SocialController extends Controller
 {
     public function index()
     {
-        $socials = Social::first();
-        return view('backend.social.index', compact('socials'));
+        $social = Social::first();
+        return view('backend.social.index', compact('social'));
     }
 public function update(Request $request)
 {

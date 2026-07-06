@@ -68,7 +68,7 @@ Route::get('/userlogout', [UserDashboardController::class, 'logout'])->name('log
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
-Route::get('/donate', [FrontendController::class, 'donate'])->name('donate');
+// Route::get('/donate', [FrontendController::class, 'donate'])->name('donate');
 Route::get('/book-lesson', [FrontendController::class, 'bookLesson'])->name('book.lesson');
 Route::get('/contact', [FrontendController::class, 'contactUs'])->name('contact');
 Route::post('/contact', [FrontendController::class, 'contactSubmt'])->name('contact.submit');
