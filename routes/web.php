@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\SubscriptionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\AdminSubscriptionController;
+use App\Http\Controllers\Backend\SocialController;
  
 // Inside your admin middleware group:
 Route::middleware(['auth', 'admin.auth'])->prefix('admin')->name('admin.')->group(function () {
@@ -42,6 +43,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/profile',          [UserDashboardController::class, 'index'])->name('profile.index');
     Route::post('/dashboard/profile/update',  [UserDashboardController::class, 'update'])->name('profile.update');
     Route::post('/dashboard/profile/password',[UserDashboardController::class, 'updatePassword'])->name('profile.password');
+});
+
+
+
+Route::middleware('auth:admin')->group(function () {
+      Route::get('admin/social-update', [SocialController::class, 'index'])->name('admin.social.update');
+    Route::post('admin/settings-social-update', [SocialController::class, 'update'])->name('admin.settings.social.update');
+      
 });
 
 

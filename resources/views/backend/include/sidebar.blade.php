@@ -102,6 +102,12 @@ a {
           <span>Settings</span>
         </div>
       </a>
+      <a href="{{ route('admin.social.update') }}">
+        <div class="sb-item">
+          <i class="fas fa-share-alt"></i>
+          <span>Social Media</span>
+        </div>
+      </a>
     </div>
     <div class="sidebar-footer">
       <div class="sb-admin-row">
