@@ -195,7 +195,7 @@ background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), tra
                   <div class="news-card-img-bg" style="background:{{ $item->image ? 'url(' . asset($item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"></div>
                   <div class="news-card-img-overlay"></div>
                   <div class="nc-cat-tag">{{ $item->category->category_name }}</div>
-                  <div class="nc-read-time"><i class="fas fa-clock"></i>5 min</div>
+                  <div class="nc-read-time"><i class="fas fa-clock"></i></div>
                   <i class="fas fa-graduation-cap" style="font-size:3rem;color:rgba(255,255,255,.15);position:relative;z-index:1"></i>
                 </div>
                 <div class="news-card-body">

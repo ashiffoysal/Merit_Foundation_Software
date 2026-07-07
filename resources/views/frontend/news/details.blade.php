@@ -46,7 +46,8 @@
             <h4 class="serif" style="font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:24px">Related Articles</h4>
             <div class="row g-3">
               @foreach ($recentBlogs as $item)
-              <div class="col-md-4"><a href="{{ url('news/') }}"></a><div class="related-card" onclick="showPage('news-detail')"><div class="related-img" style="background:linear-gradient(135deg,var(--teal),var(--navy))"><i class="fas fa-heart" style="font-size:2.5rem;color:rgba(255,255,255,.12)"></i></div><div class="related-body"><div class="related-cat">Impact</div><div class="related-h">Fatima's Story: From Orphan to Medical Student</div></div></div></div>
+              <div class="col-md-4">
+                <a href="{{ url('news/' . $item->slug) }}"><div class="related-card"><div class="related-img" style="background:linear-gradient(135deg,var(--teal),var(--navy))"><i class="fas fa-heart" style="font-size:2.5rem;color:rgba(255,255,255,.12)"></i></div><div class="related-body"><div class="related-cat">Impact</div><div class="related-h">Fatima's Story: From Orphan to Medical Student</div></div></div></div></a>
               @endforeach
             </div>
           </div>
@@ -59,9 +60,9 @@
               <div style="position:absolute;inset:0;background:url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='.025'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")"></div>
               <div style="position:relative">
                 <i class="fas fa-heart" style="font-size:1.5rem;color:var(--gold);margin-bottom:14px;display:block"></i>
-                <h5 class="serif" style="font-size:1.2rem;color:var(--white);margin-bottom:10px">Help Us Reach 10,000</h5>
-                <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:18px;line-height:1.65">Your donation today contributes to our next milestone — double the lives changed.</p>
-                <a href="{{ url('donate') }}" class="btn-gold" style="width:100%;justify-content:center"><i class="fas fa-heart"></i>Donate Now</a>
+                <h5 class="serif" style="font-size:1.2rem;color:var(--white);margin-bottom:10px">Support Quran Education</h5>
+                <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:18px;line-height:1.65">Your generous donation helps provide quality Quran lessons, Islamic education, and learning resources for students of all ages.</p>
+                {{-- <a href="{{ url('donate') }}" class="btn-gold" style="width:100%;justify-content:center"><i class="fas fa-heart"></i>Book Lesson Now</a> --}}
                 <a href="{{ url('book-lesson') }}" class="btn-outline-white" style="width:100%;justify-content:center;margin-top:10px;font-size:.72rem;padding:10px">Book a Lesson</a>
               </div>
             </div>
