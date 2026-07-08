@@ -83,7 +83,7 @@ Route::get('/terms-and-conditions', [FrontendController::class, 'termsAndConditi
 Route::get('/news', [FrontendController::class, 'news'])->name('news');
 // news details
 Route::get('/news/{slug}', [FrontendController::class, 'newsDetails'])->name('news.details');
-Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
+// Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
 
 
 Route::middleware('auth')->group(function () {

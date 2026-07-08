@@ -166,7 +166,7 @@ background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), tra
             <p class="ps-p">If you have any questions, concerns, or wish to exercise your data rights:</p>
             <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:20px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
               <div style="flex:1"><h6 style="font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:12px">Data Protection Officer</h6><p style="font-size:.82rem;color:var(--muted);margin-bottom:6px;display:flex;gap:9px;align-items:center"><i class="fas fa-envelope" style="color:var(--gold)"></i>{{ $companyInfo ? $companyInfo->safeguarding_email : '' }}</p><p style="font-size:.82rem;color:var(--muted);display:flex;gap:9px;align-items:center"><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i>Merit Education Foundation, London, UK</p></div>
-              <button class="btn-navy btn-sm" onclick="showPage('page-contact')"><i class="fas fa-paper-plane"></i>Send Message</button>
+              <a class="btn-navy btn-sm" href="{{ route('contact') }}"><i class="fas fa-paper-plane"></i>Send Message</a>
             </div>
             <p class="ps-p mt-3">You also have the right to lodge a complaint with the <strong>Information Commissioner's Office (ICO)</strong> at ico.org.uk if you are unhappy with how we handle your data.</p>
           </div>

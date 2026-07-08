@@ -9,11 +9,11 @@
         <p class="footer-tagline">"Education for All, Opportunity for Every Child"</p>
         <p class="footer-desc">A UK-based education charity combining expert online Quran teaching with a global mission to fund education for disadvantaged children.</p>
         <div class="footer-soc">
-          <div class="footer-soc-btn"><i class="fab fa-facebook-f"></i></div>
-          <div class="footer-soc-btn"><i class="fab fa-instagram"></i></div>
-          <div class="footer-soc-btn"><i class="fab fa-twitter"></i></div>
-          <div class="footer-soc-btn"><i class="fab fa-linkedin-in"></i></div>
-          <div class="footer-soc-btn"><i class="fab fa-youtube"></i></div>
+          <div class="footer-soc-btn"><a href="{{ $social->facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a></div>
+          <div class="footer-soc-btn"><a href="{{ $social->instagram }}" target="_blank"><i class="fab fa-instagram"></i></a></div>
+          <div class="footer-soc-btn"><a href="{{ $social->twitter }}" target="_blank"><i class="fab fa-twitter"></i></a></div>
+          <div class="footer-soc-btn"><a href="{{ $social->linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a></div>
+          <div class="footer-soc-btn"><a href="{{ $social->youtube }}" target="_blank"><i class="fab fa-youtube"></i></a></div>
         </div>
       </div>
       <div class="col-lg-2 col-6">
@@ -23,15 +23,16 @@
         <a href="{{ route('book.lesson') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Book Lesson</a>
         {{-- <a href="{{ route('donate') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Donate</a> --}}
         <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding</a>
-        <a href="{{ route('contact') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Contact</a>
+   
       </div>
       <div class="col-lg-2 col-6">
         <div class="footer-col-title">Legal</div>
         <a href="{{ route('privacy.policy') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Privacy Policy</a>
         <a href="{{ route('terms.and.conditions') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Terms & Conditions</a>
         <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding Policy</a>
-        <a href="{{ route('cookie.policy') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Cookie Policy</a>
+        {{-- <a href="{{ route('cookie.policy') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Cookie Policy</a> --}}
         {{-- <div class="footer-link"><i class="fas fa-chevron-right"></i>Gift Aid Declaration</div> --}}
+             <a href="{{ route('contact') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Contact</a>
       </div>
       <div class="col-lg-4">
         <div class="footer-col-title">Contact & Newsletter</div>

@@ -12,14 +12,18 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\FeesCategory;
 use App\Models\Plan;
 use App\Models\BookLesson;
+use Stevebauman\Location\Facades\Location;
 
 class FrontendController extends Controller
 {
     // home page
     public function index()
     {
+        
 
-        return view('frontend.home.index');
+        $position = Location::get(request()->ip());
+
+        return view('frontend.home.index',compact('position'));
     }
     // about page
     public function about()

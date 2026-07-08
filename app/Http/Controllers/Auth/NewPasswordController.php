@@ -29,32 +29,79 @@ class NewPasswordController extends Controller
      *
      * @throws ValidationException
      */
-   public function store(Request $request)
-{
-    $request->validate([
-        'token' => 'required',
-        'email' => 'required|email',
-        'password' => 'required|confirmed|min:8',
-    ]);
+//    public function store(Request $request)
+// {
+//     $request->validate([
+//         'token' => 'required',
+//         'email' => 'required|email',
+//         'password' => 'required|confirmed|min:8',
+//     ]);
 
-    $user = User::where('email', $request->email)
-        ->where('password_reset_token', $request->token)
-        ->first();
+//     $user = User::where('email', $request->email)
+//         ->where('password_reset_token', $request->token)
+//         ->first();
 
-    if (!$user) {
-        return back()->withErrors([
-            'email' => 'Invalid or expired reset token.'
+//     if (!$user) {
+//         return back()->withErrors([
+//             'email' => 'Invalid or expired reset token.'
+//         ]);
+//     }
+
+//     $user->update([
+//         'password' => Hash::make($request->password),
+//         'password_reset_token' => null,
+//         'password_reset_sent_at' => null,
+//         'remember_token' => Str::random(60),
+//     ]);
+
+//     return redirect()->route('login')
+//         ->with('success', 'Password reset successfully.');
+// }
+ public function store(Request $request)
+    {
+        $request->validate([
+            'token'    => 'required',
+            'email'    => 'required|email',
+            'password' => 'required|confirmed|min:8',
         ]);
+
+        $user = User::where('email', $request->email)
+                    ->where('password_reset_token', $request->token)
+                    ->whereNotNull('password_reset_sent_at')
+                    ->where('password_reset_sent_at', '>=', now()->subMinutes(60))
+                    ->first();
+
+        if (!$user) {
+            // AJAX-friendly error response
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Invalid or expired reset link. Please request a new one.',
+                    'errors'  => [
+                        'email' => ['Invalid or expired reset token.']
+                    ]
+                ], 422);
+            }
+
+            return back()->withErrors([
+                'email' => 'Invalid or expired reset token.'
+            ]);
+        }
+
+        $user->update([
+            'password'               => Hash::make($request->password),
+            'password_reset_token'   => null,
+            'password_reset_sent_at' => null,
+            'remember_token'         => Str::random(60),
+        ]);
+
+        // AJAX-friendly success response
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Password reset successfully.',
+            ], 200);
+        }
+
+        return redirect()->route('login')
+                         ->with('success', 'Password reset successfully.');
     }
-
-    $user->update([
-        'password' => Hash::make($request->password),
-        'password_reset_token' => null,
-        'password_reset_sent_at' => null,
-        'remember_token' => Str::random(60),
-    ]);
-
-    return redirect()->route('login')
-        ->with('success', 'Password reset successfully.');
-}
 }

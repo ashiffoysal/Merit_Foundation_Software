@@ -454,7 +454,9 @@
     <div class="mef-left">
       <div class="mef-pill">
         <div class="mef-pill-dot"></div>
-        UK Registered Charity
+        UK Registered Charity 
+        
+        
       </div>
 
       <h1 class="mef-h1">Education<br>for <em>Every</em><br>Child</h1>

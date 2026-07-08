@@ -11,7 +11,7 @@
       <h1 class="article-h1">{{ $blog->title }}</h1>
       <div class="article-meta-bar">
         <div class="am-item"><i class="fas fa-calendar"></i><strong>{{ $blog->created_at->format('d M Y') }}</strong></div>
-        <div class="am-item"><i class="fas fa-user"></i><strong>Admin</strong></div>
+        <div class="am-item"><i class="fas fa-user"></i><strong>{{ $companyInfo->organisation_name }}</strong></div>
        
       </div>
     </div>
@@ -47,11 +47,15 @@
             <div class="row g-3">
               @foreach ($recentBlogs as $item)
               <div class="col-md-4">
-                <a href="{{ url('news/' . $item->slug) }}"><div class="related-card"><div class="related-img" style="background:linear-gradient(135deg,var(--teal),var(--navy))"><i class="fas fa-heart" style="font-size:2.5rem;color:rgba(255,255,255,.12)"></i></div><div class="related-body"><div class="related-cat">Impact</div><div class="related-h">Fatima's Story: From Orphan to Medical Student</div></div></div></div></a>
+                <a href="{{ url('news/' . $item->slug) }}"><div class="related-card"><div class="related-img" style="background:{{ $item->featured_image ? 'url(' . asset('storage/' . $item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"><i class="fas fa-heart" style="font-size:2.5rem;color:rgba(255,255,255,.12)"></i></div><div class="related-body"><div class="related-cat">Impact</div><div class="related-h">Fatima's Story: From Orphan to Medical Student</div></div></div></a>
+              </div>
               @endforeach
             </div>
           </div>
         </div>
+
+
+
 
         <!-- Sticky Sidebar -->
         <div class="col-lg-4">

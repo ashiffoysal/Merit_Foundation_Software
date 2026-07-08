@@ -58,11 +58,13 @@
                                 <div class="ci-val">Mon – Fri: 9:00 AM – 6:00 PM GMT</div>
                             </div>
                         </div>
-                        <div class="ci-social"><a class="ci-soc-btn"><i class="fab fa-facebook-f"></i></a><a
-                                class="ci-soc-btn"><i class="fab fa-instagram"></i></a><a class="ci-soc-btn"><i
-                                    class="fab fa-twitter"></i></a><a class="ci-soc-btn"><i
-                                    class="fab fa-linkedin-in"></i></a><a class="ci-soc-btn"><i
-                                    class="fab fa-youtube"></i></a></div>
+                        <div class="ci-social">
+                            <a href="{{ $social ? $social->facebook : '#' }}" class="ci-soc-btn"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{ $social ? $social->instagram : '#' }}" class="ci-soc-btn"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ $social ? $social->twitter : '#' }}" class="ci-soc-btn"><i class="fab fa-twitter"></i></a>
+                            <a href="{{ $social ? $social->linkedin : '#' }}" class="ci-soc-btn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="{{ $social ? $social->youtube : '#' }}" class="ci-soc-btn"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-7" data-r="right">

@@ -34,7 +34,7 @@
               <p style="font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:20px;line-height:1.7">Contact our Designated Safeguarding Lead immediately. All reports are treated confidentially and seriously.</p>
               <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:16px;margin-bottom:12px"><div style="font-size:.65rem;letter-spacing:2px;color:rgba(255,255,255,.35);margin-bottom:4px;text-transform:uppercase">DSL Email</div><div style="font-size:.85rem;color:var(--white);font-weight:500">{{ $companyInfo ? $companyInfo->safeguarding_email : '' }}</div></div>
               <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:16px;margin-bottom:16px"><div style="font-size:.65rem;letter-spacing:2px;color:rgba(255,255,255,.35);margin-bottom:4px;text-transform:uppercase">Phone</div><div style="font-size:.85rem;color:var(--white);font-weight:500">{{ $companyInfo ? $companyInfo->phone : '' }}</div></div>
-              <button class="btn-gold" style="width:100%;justify-content:center" onclick="showPage('contact')"><i class="fas fa-envelope"></i>Contact Us</button>
+              <a class="btn-gold" style="width:100%;justify-content:center" href="{{ route('contact') }}"><i class="fas fa-envelope"></i>Contact Us</a>
             </div>
           </div>
           <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px">

@@ -192,7 +192,7 @@ background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), tra
                 <div class="col-md-6" data-r="up">
               <div class="news-card" onclick="showPage('news-detail')">
                 <div class="news-card-img">
-                  <div class="news-card-img-bg" style="background:{{ $item->image ? 'url(' . asset($item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"></div>
+                  <div class="news-card-img-bg" style="background:{{ $item->featured_image ? 'url(' . asset('storage/' . $item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"></div>
                   <div class="news-card-img-overlay"></div>
                   <div class="nc-cat-tag">{{ $item->category->category_name }}</div>
                   <div class="nc-read-time"><i class="fas fa-clock"></i></div>
@@ -225,12 +225,27 @@ background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), tra
         <div class="col-lg-4" data-r="right">
           <div class="sidebar-widget">
             <div class="sw-title">Recent Articles</div>
-            @foreach ($mostRecent as $item)
+            {{-- @foreach ($mostRecent as $item)
             <a class="recent-item" href="{{ url('news/' . $item->slug) }}">
-              <div class="ri-img" style="background:{{ $item->image ? 'url(' . asset($item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"></div>
+              <div class="ri-img" style="background:{{ $item->featured_image ? 'url('storage/blogs/' . asset($item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"></div>
               <div><div class="ri-date">{{ $item->created_at->format('d M Y') }}</div><div class="ri-h">{{ $item->title }}</div></div>
             </a>
-            @endforeach
+            @endforeach --}}
+            @foreach ($mostRecent as $item)
+    <a class="recent-item" href="{{ url('news/' . $item->slug) }}">
+        <div
+            class="ri-img"
+            style="background: {{ $item->featured_image
+                ? 'url(' . asset('storage/' . $item->featured_image) . ') center/cover no-repeat'
+                : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}">
+        </div>
+
+        <div>
+            <div class="ri-date">{{ $item->created_at->format('d M Y') }}</div>
+            <div class="ri-h">{{ $item->title }}</div>
+        </div>
+    </a>
+@endforeach
            
             
           </div>

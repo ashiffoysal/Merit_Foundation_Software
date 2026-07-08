@@ -1,5 +1,7 @@
 @php
-           $feesCategory = App\Models\FeesCategory::with('plans')
+          $ip=request()->ip();
+
+          $feesCategory = App\Models\FeesCategory::with('plans')
                     ->latest()
                     ->get();
     $allPlans=App\Models\Plan::with('category')->orderBy('sort_order')->get();
@@ -1421,7 +1423,7 @@
             <div class="text-center mb-5" data-r="up">
                 <div class="eyebrow justify-content-center">
                     <div class="eyebrow-line"></div>
-                    <span class="eyebrow-txt">What We Offer</span>
+                    <span class="eyebrow-txt">What We Offer </span>
                     <div class="eyebrow-line"></div>
                 </div>
                 <h2 class="sec-h">Structured, Expert <em>Quran Learning</em></h2>
@@ -1466,7 +1468,7 @@
             <div class="text-center mb-2" data-r="up">
                 <div class="eyebrow justify-content-center">
                     <div class="eyebrow-line"></div>
-                    <span class="eyebrow-txt">Subscription Plans</span>
+                    <span class="eyebrow-txt">Subscription Plans {{ $ip }}</span>
                     <div class="eyebrow-line"></div>
                 </div>
                 <h2 class="sec-h">Choose Your <em>Learning Plan</em></h2>
@@ -1505,10 +1507,10 @@
                         <div class="si-item">
                             <i class="fas fa-video"></i> Zoom or Teams
                         </div>
-                        <div class="si-sep"></div>
+                        {{-- <div class="si-sep"></div>
                         <div class="si-item">
                             <i class="fas fa-user-shield"></i> DBS-checked tutors
-                        </div>
+                        </div> --}}
                         <div class="si-sep"></div>
                         <div class="si-item">
                             <i class="fas fa-gift"></i> Free trial included

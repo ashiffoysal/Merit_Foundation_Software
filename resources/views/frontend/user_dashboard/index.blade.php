@@ -64,7 +64,7 @@
           </div>
         </div>
       </div>
-{{-- 
+        {{-- 
       <!-- LESSONS PANEL -->
       <div id="dash-lessons" class="dash-panel">
         <div class="profile-section">
@@ -117,7 +117,7 @@
           </div>
         </div>
       </div>
- --}}
+       --}}
       <!-- PROFILE PANEL -->
       {{-- resources/views/dashboard/profile.blade.php --}}
 

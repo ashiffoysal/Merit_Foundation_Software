@@ -78,6 +78,7 @@ class CheckoutController extends Controller
 
     public function checkoutreal(Request $request)
     {
+       return $request;
         $package_id    = 1;
         $stripePriceId = 'price_1TnzAyIi1Z8eD8I6DLfDwkvg'; // your real price ID
 

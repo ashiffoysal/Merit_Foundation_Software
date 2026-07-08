@@ -78,7 +78,7 @@ class BlogsController extends Controller
     {
         $blog = Blog::findOrFail($id);  
         $request->validate([
-            'title' => ['required', 'string', 'max:255', Rule::unique('blogs')->ignore($blog->id)],
+            'title' => ['required', 'string', 'max:255'],
             'category_id' => 'required|exists:blogs_categories,id',
             'short_description' => 'required|string',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
