@@ -11,6 +11,10 @@ use Carbpn\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Cashier;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
+Use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class CheckoutController extends Controller
@@ -84,24 +88,29 @@ public function checkoutstore(Request $request)
     {
 
        
-        $package_id    = 1;
-        $stripePriceId = 'price_1TnzAyIi1Z8eD8I6DLfDwkvg'; // your real price ID
+    $package_id = $plan; // Assuming $plan is the ID of the selected package
+    $plan = Plan::findOrFail($package_id);
+    // Your Stripe Price ID
+    $stripePriceId = $plan->stripe_price_id;
 
-        return $request->user()
-            ->newSubscription('default', $stripePriceId)
-            ->checkout([
-                'success_url' => route('checkout-success') . '?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url'  => route('checkout-cancel'),
-                'metadata'    => [
-                    'plan_id' => $package_id,
-                    'user_id' => Auth::id(),
-                ],
-            ]);
+    return $request->user()
+        ->newSubscription('{{ $plan->name }}', $stripePriceId)
+        ->checkout([
+            'success_url' => route('checkout-success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url'  => route('checkout-cancel'),
+
+            'metadata' => [
+                'plan_id' => $package_id,
+                'user_id' => $request->user()->id,
+            ],
+        ]);
     }
 
     // ─── SUCCESS PAGE ────────────────────────────────────────────────────────
     public function checkoutSuccess(Request $request)
     {
+         return view('frontend.checkout.success');
+
         $sessionId = $request->get('session_id');
 
         if (!$sessionId) {

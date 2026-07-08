@@ -96,12 +96,13 @@ Route::middleware('auth')->group(function () {
      Route::get('checkout/{plan}', [CheckoutController::class, 'checkoutreal'])->name('checkout.real'); 
 
      
-     Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout-success'); 
+    //  Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout-success'); 
 
      
      Route::get('checkout/cancel', [CheckoutController::class, 'checkoutCancel'])->name('checkout-cancel'); 
 });
-
+  Route::get('checkout/cancel', [CheckoutController::class, 'checkoutCancel'])->name('checkout-cancel'); 
+ Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout-success'); 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/subscribe',        [SubscriptionController::class, 'showPlans'])->name('subscribe');
