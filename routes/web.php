@@ -88,11 +88,12 @@ Route::get('/news/{slug}', [FrontendController::class, 'newsDetails'])->name('ne
 
 Route::middleware('auth')->group(function () {
 
-     Route::get('book-lesson/form', [CheckoutController::class, 'checkout'])->name('checkout'); 
-    // Route::post('book-lesson/store', [CheckoutController::class, 'checkoutstore'])->name('checkout.store');
+     Route::get('book-lesson/form/{plan}', [CheckoutController::class, 'checkout'])->name('checkout'); 
+
+     Route::post('book-lesson/store', [CheckoutController::class, 'checkoutstore'])->name('checkout.store');
 
 
-     Route::get('checkout/real', [CheckoutController::class, 'checkoutreal'])->name('checkout.real'); 
+     Route::get('checkout/{plan}', [CheckoutController::class, 'checkoutreal'])->name('checkout.real'); 
 
      
      Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout-success'); 

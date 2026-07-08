@@ -121,7 +121,7 @@ section{padding:90px 0}
                 <div class="col-md-6">
                     <div class="field-group">
                       <label class="field-label">Parent / Guardian Name *</label>
-                      <input type="text" class="field-input" name="parent_name" placeholder="Your full name">
+                      <input type="text" class="field-input" name="parent_name" placeholder="Your full name" value="{{ Auth::user() ? Auth::user()->name : '' }}">
                       <span class="text-danger error-text parent_name_error"></span>
                     </div>
                  
@@ -129,21 +129,21 @@ section{padding:90px 0}
                 <div class="col-md-6">
                   <div class="field-group">
                     <label class="field-label">Email *</label>
-                    <input type="email" class="field-input" name="email" placeholder="you@email.com">
+                    <input type="email" class="field-input" name="email" placeholder="you@email.com" value="{{ Auth::user() ? Auth::user()->email : '' }}">
                     <span class="text-danger error-text email_error"></span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="field-group">
                     <label class="field-label">Phone *</label>
-                    <input type="tel" class="field-input" name="phone" placeholder="+44 7000 000000">
+                    <input type="tel" class="field-input" name="phone" placeholder="+44 7000 000000" value="{{ Auth::user() ? Auth::user()->phone : '' }}">
                     <span class="text-danger error-text phone_error"></span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="field-group">
                     <label class="field-label">Emergency Phone *</label>
-                    <input type="tel" class="field-input" name="emergency_phone" placeholder="+44 7000 000000">
+                    <input type="tel" class="field-input" name="emergency_phone" placeholder="+44 7000 000000" value="{{ Auth::user() ? Auth::user()->emergency_phone : '' }}">
                     <span class="text-danger error-text emergency_phone_error"></span>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ section{padding:90px 0}
                       <option value="">Select level...</option>
                       @foreach ($allPackage as $package)
 
-                        <option value="{{ $package->id }}" >{{ $package->name }} {{ $package->duration }}</option>
+                        <option value="{{ $package->id }}" @if($package->id==$plan) selected @endif>{{ $package->name }} {{ $package->duration }}</option>
                         
                       @endforeach
                       
@@ -314,24 +314,17 @@ section{padding:90px 0}
 
 <script>
         $(document).ready(function() {
-
             $('#book-lesson-form').submit(function(e) {
                 e.preventDefault();
-
                 $('.error-text').text('');
-
                 $.ajax({
                     url: "{{ route('checkout.store') }}",
                     type: "POST",
                     data: $(this).serialize(),
                     success: function(response) {
-
-                        if (response.status == 'success') {
-                            $('#book-lesson-form')[0].reset();
-
-                            $('#book-form-body').hide();
-                            $('#book-success').show();
-                        }
+                          //console.log(response.redirect);
+                          window.location.href = response.redirect;
+                        
                     },
                     error: function(xhr) {
 
@@ -348,5 +341,5 @@ section{padding:90px 0}
             });
 
         });
-    </script>
+</script>
 @endsection
