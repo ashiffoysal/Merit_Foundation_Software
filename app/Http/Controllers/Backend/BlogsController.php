@@ -104,9 +104,7 @@ class BlogsController extends Controller
         $blog->meta_keywords = $request->meta_keywords;
         if ($request->hasFile('featured_image')) {
             // Delete old image if exists
-            if ($blog->featured_image && Storage::disk('public')->exists($blog->featured_image)) {
-                Storage::disk('public')->delete($blog->featured_image); 
-            }
+            
             $path = $request->file('featured_image')->store('blogs', 'public');
             $blog->featured_image = $path;  
         }

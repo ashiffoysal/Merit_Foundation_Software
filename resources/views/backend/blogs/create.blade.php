@@ -281,12 +281,12 @@
     </form>
 </div>
 
-@push('styles')
+
     {{-- CKEditor 5 (Classic build via CDN) --}}
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css">
-@endpush
 
-@push('scripts')
+
+
 {{-- CKEditor 5 Classic build --}}
 <script src="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.umd.js"></script>
 
@@ -377,6 +377,6 @@
         }
     }
 </script>
-@endpush
+
 
 @endsection

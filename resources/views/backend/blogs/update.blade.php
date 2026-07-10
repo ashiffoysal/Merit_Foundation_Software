@@ -304,12 +304,12 @@
     </form>
 </div>
 
-@push('styles')
+
     {{-- CKEditor 5 --}}
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css">
-@endpush
 
-@push('scripts')
+
+
 <script src="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.umd.js"></script>
 
 <script>
@@ -399,6 +399,6 @@
         }
     }
 </script>
-@endpush
+
 
 @endsection
