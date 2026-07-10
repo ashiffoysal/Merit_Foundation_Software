@@ -102,6 +102,22 @@ a {
           <span>Settings</span>
         </div>
       </a>
+
+<a href="{{ route('subscriptions.index') }}">
+        <div class="sb-item">
+          <i class="fas fa-cog"></i>
+          <span>Subscriptions User</span>
+        </div>
+      </a>
+
+      
+<a href="{{ route('transactions.index') }}">
+        <div class="sb-item">
+          <i class="fas fa-cog"></i>
+          <span>Transactions</span>
+        </div>
+      </a>
+
       <a href="{{ route('admin.social.update') }}">
         <div class="sb-item">
           <i class="fas fa-share-alt"></i>

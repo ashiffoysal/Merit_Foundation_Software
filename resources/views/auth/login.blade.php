@@ -146,7 +146,7 @@
             <label style="font-size:.78rem;color:var(--muted);display:flex;align-items:flex-start;gap:9px;line-height:1.5;cursor:pointer">
               <input type="checkbox" name="terms" id="reg-terms" style="accent-color:var(--navy);width:15px;height:15px;margin-top:2px;flex-shrink:0">
               I agree to the
-              <span style="color:var(--gold);cursor:pointer" onclick="showPage('privacy')">Privacy Policy</span> and Terms &amp; Conditions
+              <a style="color:var(--gold);cursor:pointer" href="{{ url('/privacy-policy') }}" target="_blank">Privacy Policy</a> and <a style="color:var(--gold);cursor:pointer" href="{{ url('/terms-and-conditions') }}" target="_blank">Terms &amp; Conditions</a>
             </label>
             <span class="field-error" id="err-reg-terms"></span>
           </div>
@@ -169,7 +169,7 @@
         </p>
       </div>
 
-      <div class="login-back" onclick="showPage('news')"><i class="fas fa-arrow-left"></i>Back to website</div>
+      <a href="{{ url('/') }}" class="login-back" ><i class="fas fa-arrow-left"></i>Back to website</a>
     </div>
   </div>
 </div>

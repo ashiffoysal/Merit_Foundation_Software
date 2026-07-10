@@ -22,6 +22,8 @@ class User extends Authenticatable
         'avatar',
     ];
 
+
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -39,5 +41,37 @@ class User extends Authenticatable
     public function getNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+
+
+      public function getFullNameAttribute(): string
+    {
+        return trim("{$this->name} {$this->last_name}");
+    }
+ 
+    /**
+     * A user can have many transactions.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'user_id');
+    }
+ 
+    /**
+     * A user can have many subscriptions.
+     */
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'user_id');
+    }
+ 
+    /**
+     * The user's most recent subscription (used to infer a "plan"
+     * for a transaction, since transactions has no subscription_id FK).
+     */
+    public function latestSubscription()
+    {
+        return $this->hasOne(Subscription::class, 'user_id')->latestOfMany();
     }
 }

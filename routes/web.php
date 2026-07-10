@@ -22,7 +22,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\AdminSubscriptionController;
 use App\Http\Controllers\Backend\SocialController;
 use App\Http\Controllers\Frontend\MakehubController;
- 
+use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\SubscriptionController as BackendSubscriptionController;
+
+
 // Inside your admin middleware group:
 Route::middleware(['auth', 'admin.auth'])->prefix('admin')->name('admin.')->group(function () {
  
@@ -142,6 +145,14 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard',           [DashboardController::class, 'index'])->name('admin.dashboard.index');
+
+        Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+        Route::get('/transactions/data', [TransactionController::class, 'getData'])->name('transactions.data');
+        
+        Route::get('/subscriptions', [BackendSubscriptionController::class, 'index'])->name('subscriptions.index');
+        Route::get('/subscriptions/data', [BackendSubscriptionController::class, 'getData'])->name('subscriptions.data');
+
+
         Route::get('/company-information', [CompanyInformationController::class, 'index'])->name('admin.company-information.index');
         Route::post('/company-information', [CompanyInformationController::class, 'Update'])->name('admin.company-information.index');
     // Page

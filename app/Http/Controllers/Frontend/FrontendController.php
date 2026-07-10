@@ -13,6 +13,8 @@ use App\Models\FeesCategory;
 use App\Models\Plan;
 use App\Models\BookLesson;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessageMail;
 
 class FrontendController extends Controller
 {
@@ -115,7 +117,7 @@ class FrontendController extends Controller
                 'errors' => $validator->errors()
             ],422);
         }
-  $insert=ContactMessage::insertGetId([
+        $insert=ContactMessage::insertGetId([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
@@ -125,6 +127,8 @@ class FrontendController extends Controller
             'created_at' => Carbon::now(),
             
         ]);
+        $data=ContactMessage::find($insert);
+        Mail::to('info@meriteducationfoundation.org')->send(new ContactMessageMail($data));
 
         return response()->json([
             'status' => 'success',
