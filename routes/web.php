@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\SubscriptionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Backend\AdminSubscriptionController;
 use App\Http\Controllers\Backend\SocialController;
+use App\Http\Controllers\Frontend\MakehubController;
  
 // Inside your admin middleware group:
 Route::middleware(['auth', 'admin.auth'])->prefix('admin')->name('admin.')->group(function () {
@@ -96,13 +97,16 @@ Route::middleware('auth')->group(function () {
      Route::get('checkout/{plan}', [CheckoutController::class, 'checkoutreal'])->name('checkout.real'); 
 
      
-    //  Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout-success'); 
+    
 
-     
-     Route::get('checkout/cancel', [CheckoutController::class, 'checkoutCancel'])->name('checkout-cancel'); 
+ 
+
 });
-  Route::get('checkout/cancel', [CheckoutController::class, 'checkoutCancel'])->name('checkout-cancel'); 
- Route::get('checkout/success', [CheckoutController::class, 'checkoutSuccess'])->name('checkout-success'); 
+
+
+    Route::get('subs-checkout/cancel', [MakehubController::class, 'checkoutCancel'])->name('checkout-cancel'); 
+    Route::get('subs-checkout/success', [MakehubController::class, 'checkoutSuccess'])->name('checkout-success'); 
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/subscribe',        [SubscriptionController::class, 'showPlans'])->name('subscribe');

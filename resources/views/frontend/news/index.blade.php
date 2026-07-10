@@ -189,29 +189,48 @@ background:radial-gradient(ellipse 70% 80% at 40% 50%, rgb(26 122 79 / 85%), tra
           <!-- News Grid -->
           <div class="row g-4">
             @foreach ($allBlogs as $item)
-                <div class="col-md-6" data-r="up">
-              <div class="news-card" onclick="showPage('news-detail')">
-                <div class="news-card-img">
-                  <div class="news-card-img-bg" style="background:{{ $item->featured_image ? 'url(' . asset('storage/' . $item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"></div>
-                  <div class="news-card-img-overlay"></div>
-                  <div class="nc-cat-tag">{{ $item->category->category_name }}</div>
-                  <div class="nc-read-time"><i class="fas fa-clock"></i></div>
-                  <i class="fas fa-graduation-cap" style="font-size:3rem;color:rgba(255,255,255,.15);position:relative;z-index:1"></i>
-                </div>
-                <div class="news-card-body">
-                  <div class="nc-date">{{ $item->created_at->format('d M Y') }}</div>
-                  <h4 class="nc-h">{{ $item->title }}</h4>
-                  <p class="nc-p">{{ Str::limit($item->short_description, 150) }}</p>
-                    <a href="{{ url('news/' . $item->slug) }}"><div class="nc-footer">
-                    <div class="nc-author"><div class="nc-av" style="background:var(--teal)"></div><span class="nc-author-name">Admin</span></div>
-                    <div class="btn-gold btn-sm mt-4" style="pointer-events:none" href="{{ url('news/' . $item->slug) }}"><i class="fas fa-arrow-right"></i>Read Full Story</div>
-                  </div>
-                  </a>
-                </div>
-              </div>
+<div class="col-md-6" data-r="up">
+    <div class="news-card" onclick="showPage('news-detail')">
+        <div class="news-card-img">
+            <div class="news-card-img-bg"
+                style="background: {{ $item->featured_image ? 'url(' . asset($item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }};
+                       background-size: cover;
+                       background-position: center;">
             </div>
-            @endforeach
-            
+
+            <div class="news-card-img-overlay"></div>
+            <div class="nc-cat-tag">{{ $item->category->category_name }}</div>
+            <div class="nc-read-time">
+                <i class="fas fa-clock"></i>
+            </div>
+
+            @if(!$item->featured_image)
+                <i class="fas fa-graduation-cap"
+                   style="font-size:3rem;color:rgba(255,255,255,.15);position:relative;z-index:1"></i>
+            @endif
+        </div>
+
+        <div class="news-card-body">
+            <div class="nc-date">{{ $item->created_at->format('d M Y') }}</div>
+            <h4 class="nc-h">{{ $item->title }}</h4>
+            <p class="nc-p">{{ Str::limit($item->short_description, 150) }}</p>
+
+            <a href="{{ url('news/' . $item->slug) }}">
+                <div class="nc-footer">
+                    <div class="nc-author">
+                        <div class="nc-av" style="background:var(--teal)"></div>
+                        <span class="nc-author-name">Admin</span>
+                    </div>
+
+                    <div class="btn-gold btn-sm mt-4" style="pointer-events:none">
+                        <i class="fas fa-arrow-right"></i> Read Full Story
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+@endforeach
           
           </div>
 

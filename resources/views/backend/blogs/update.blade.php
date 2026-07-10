@@ -233,7 +233,7 @@
                                         <i class="fas fa-info-circle me-1"></i> Current image:
                                     </p>
                                     <img id="image-preview"
-                                         src="{{ asset('storage/' . $blog->featured_image) }}"
+                                         src="{{ asset($blog->featured_image) }}"
                                          alt="Current Featured Image"
                                          style="width:100%; border-radius:8px; object-fit:cover; max-height:200px;">
                                 </div>

@@ -57,10 +57,18 @@ class BlogsController extends Controller
         $blog->meta_description = $request->meta_description;
         $blog->meta_keywords = $request->meta_keywords;
         $blog->published_at = Carbon::now()->toDateTimeString();
-        if ($request->hasFile('featured_image')) {
-            $path = $request->file('featured_image')->store('blogs', 'public');
-            $blog->featured_image = $path;
-        }
+       if ($request->hasFile('featured_image')) {
+        $image = $request->file('featured_image');
+
+        // Generate a unique filename
+        $filename = time() . '_' . $image->getClientOriginalName();
+
+        // Move the file to public/uploads
+        $image->move(('uploads'), $filename);
+
+        // Save the relative path or filename to the database
+        $blog->featured_image = 'uploads/' . $filename;
+    }
         $blog->save();
         return redirect()->route('admin.blogs.index')
                          ->with('success', 'Blog created successfully.');
@@ -102,12 +110,18 @@ class BlogsController extends Controller
         $blog->meta_title = $request->meta_title;
         $blog->meta_description = $request->meta_description;
         $blog->meta_keywords = $request->meta_keywords;
-        if ($request->hasFile('featured_image')) {
-            // Delete old image if exists
-            
-            $path = $request->file('featured_image')->store('blogs', 'public');
-            $blog->featured_image = $path;  
-        }
+          if ($request->hasFile('featured_image')) {
+        $image = $request->file('featured_image');
+
+        // Generate a unique filename
+        $filename = time() . '_' . $image->getClientOriginalName();
+
+        // Move the file to public/uploads
+        $image->move(('uploads'), $filename);
+
+        // Save the relative path or filename to the database
+        $blog->featured_image = 'uploads/' . $filename;
+    }
         $blog->save();
         return redirect()->route('admin.blogs.index')
                          ->with('success', 'Blog updated successfully.');

@@ -1,7 +1,13 @@
 @extends('layouts.backend')
 @section('content')
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.8/css/dataTables.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/2.3.8/js/dataTables.js"></script>
 <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+    
     <div class="page-header d-flex align-items-center justify-content-between">
         <div>
             <h1>Blogs</h1>
@@ -40,7 +46,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>
                                 @if($blog->featured_image)
-                                    <img src="{{ asset('storage/' . $blog->featured_image) }}"
+                                    <img src="{{ asset('/' . $blog->featured_image) }}"
                                          alt="{{ $blog->title }}"
                                          style="width:52px; height:40px; object-fit:cover; border-radius:6px;">
                                 @else
@@ -110,9 +116,14 @@
         </div>
     </div>
 </div>
+ </div>
+</div>
 
-
-
+<script>
+    $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
 
 

@@ -2,6 +2,7 @@
 @section('title', 'Success- Merit Education Foundation')
 @section('content')
 <style>
+ 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -318,7 +319,9 @@
     padding-top: 8px;
   }
   .page-footer a { color: var(--gold); text-decoration: none; }
-
+ footer.site-footer {
+    width: 100%;
+}
   /* Responsive */
   @media (max-width: 560px) {
     .hero-header { padding: 36px 24px 44px; }
@@ -418,10 +421,7 @@
   </div>
 
   <!-- Footer -->
-  <div class="page-footer">
-    Merit Education Foundation · UK Registered Charity No. 000000 · Safeguarding First<br>
-    <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Contact Us</a> &nbsp;·&nbsp; <a href="#">Terms &amp; Conditions</a>
-  </div>
+
 </div>
 
 <script>

@@ -45,11 +45,30 @@
           <div class="mt-5" data-r="up">
             <h4 class="serif" style="font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:24px">Related Articles</h4>
             <div class="row g-3">
-              @foreach ($recentBlogs as $item)
-              <div class="col-md-4">
-                <a href="{{ url('news/' . $item->slug) }}"><div class="related-card"><div class="related-img" style="background:{{ $item->featured_image ? 'url(' . asset('storage/' . $item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }}"><i class="fas fa-heart" style="font-size:2.5rem;color:rgba(255,255,255,.12)"></i></div><div class="related-body"><div class="related-cat">Impact</div><div class="related-h">Fatima's Story: From Orphan to Medical Student</div></div></div></a>
-              </div>
-              @endforeach
+       @foreach ($recentBlogs as $item)
+<div class="col-md-4">
+    <a href="{{ url('news/' . $item->slug) }}">
+        <div class="related-card">
+            <div class="related-img"
+                style="
+                    background: {{ $item->featured_image ? 'url(' . asset($item->featured_image) . ')' : 'linear-gradient(135deg,#0D6B63,#0F1F5C)' }};
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                ">
+                @if(!$item->featured_image)
+                    <i class="fas fa-heart" style="font-size:2.5rem;color:rgba(255,255,255,.12)"></i>
+                @endif
+            </div>
+
+            <div class="related-body">
+                <div class="related-cat">{{ $item->category->category_name ?? 'News' }}</div>
+                <div class="related-h">{{ $item->title }}</div>
+            </div>
+        </div>
+    </a>
+</div>
+@endforeach
             </div>
           </div>
         </div>
