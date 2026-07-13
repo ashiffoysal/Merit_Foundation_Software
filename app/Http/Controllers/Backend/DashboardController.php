@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Transaction;
 use App\Models\Subscription;
 use Carbon\Carbon;
+use App\Models\BookLesson;
 
 class DashboardController extends Controller
 {
@@ -132,6 +133,15 @@ class DashboardController extends Controller
             'students',
             'donations'
         ));
+    }
+
+
+
+    // All Leads view
+    public function allLLeads()
+    {
+        $allleads = BookLesson::orderByDesc('created_at')->get();
+        return view('backend.all_leads.index', compact('allleads'));
     }
  
 }

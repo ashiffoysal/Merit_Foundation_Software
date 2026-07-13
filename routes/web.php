@@ -24,6 +24,7 @@ use App\Http\Controllers\Backend\SocialController;
 use App\Http\Controllers\Frontend\MakehubController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\SubscriptionController as BackendSubscriptionController;
+use App\Http\Controllers\Backend\BookLessonController;
 
 
 // Inside your admin middleware group:
@@ -135,7 +136,17 @@ Route::get('user/cancel', [SubscriptionController::class, 'cancel']);
 // fluent-safe-chaste-quaint
 // acct_1LZ7mIIi1Z8eD8I6
 
-
+Route::prefix('admin')->name('admin.')->group(function () {
+ 
+    // Export must be registered BEFORE the resource route to avoid
+    // "export" being interpreted as a {book_lesson} id.
+    Route::get('book-lessons/export', [BookLessonController::class, 'export'])
+        ->name('book-lessons.export');
+ 
+    Route::resource('book-lessons', BookLessonController::class)
+        ->only(['index', 'show', 'edit', 'update', 'destroy']);
+});
+ 
 
 // Admin routes
 Route::prefix('admin')->group(function () {
@@ -145,7 +156,7 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard',           [DashboardController::class, 'index'])->name('admin.dashboard.index');
-
+  
         Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
         Route::get('/transactions/data', [TransactionController::class, 'getData'])->name('transactions.data');
         
