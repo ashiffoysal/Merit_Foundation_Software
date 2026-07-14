@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionPauseMail;
+use App\Mail\SubscriptionResumeMail;
+use App\Mail\SubscriptionCancelledMail;
+
 class SubscriptionController extends Controller
 {
 
@@ -103,7 +107,7 @@ public function pause($id)
         // Update local DB immediately (don't wait for webhook)
         $subscription->stripe_status = 'paused';
         $subscription->save();
-
+        Mail::send(new SubscriptionPauseMail(Auth::user(), $subscription));
         return back()->with('success', 'Subscription paused successfully.');
 
     } catch (\Exception $e) {
@@ -136,7 +140,7 @@ public function pause($id)
             // Resume from grace period (was cancelled but still in period)
             $subscription->resume();
         }
-
+         Mail::send(new SubscriptionResumeMail(Auth::user(), $subscription));
         return back()->with('success', 'Subscription resumed successfully.');
 
     } catch (\Exception $e) {
@@ -156,7 +160,7 @@ public function cancel($id)
 
     try {
         $subscription->cancel(); // Cashier v16 — cancels at period end ✅
-
+        Mail::send(new SubscriptionCancelledMail(Auth::user(), $subscription));
         return back()->with('success', 'Subscription will cancel at period end.');
 
     } catch (\Exception $e) {
@@ -172,7 +176,7 @@ public function cancelNow($id)
 
     try {
         $subscription->cancelNow(); // Cashier v16 ✅
-
+        Mail::send(new SubscriptionCancelledMail(Auth::user(), $subscription));
         return back()->with('success', 'Subscription cancelled immediately.');
 
     } catch (\Exception $e) {

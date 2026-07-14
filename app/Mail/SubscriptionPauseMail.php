@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Mail;
-
+ 
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -14,22 +14,22 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Laravel\Cashier\Cashier;
 
-class SubscriptionCancelledMail extends Mailable
+class SubscriptionPauseMail extends Mailable
 {
-   use Queueable, SerializesModels;
+    use Queueable, SerializesModels;
  
     public User $user;
     public Subscription $subscription;
  
     // ---- Resolved, ready-to-print values passed straight to the view ----
     public string $planName;
-    public string $cancelDate;
+    public string $pauseDate;
     public string $billingStatus;
  
     /**
-     * @param User $user The subscriber whose subscription was cancelled.
+     * @param User $user The subscriber whose subscription was paused.
      * @param Subscription $subscription The Cashier subscription row
-     *        that was just cancelled (subscription->stripe_status === 'cancelled').
+     *        that was just paused (subscription->stripe_status === 'paused').
      */
     public function __construct(User $user, Subscription $subscription)
     {
@@ -73,7 +73,7 @@ class SubscriptionCancelledMail extends Mailable
             ? $this->subscription->updated_at->format('d M Y')
             : now()->format('d M Y');
  
-        $this->billingStatus = 'Cancelled ';
+        $this->billingStatus = 'On Hold — No Charges';
     }
  
     /**
@@ -83,7 +83,7 @@ class SubscriptionCancelledMail extends Mailable
     {
         return new Envelope(
             to: [new Address($this->user->email, trim($this->user->name . ' ' . $this->user->last_name))],
-            subject: 'Your Subscription Has Been Cancelled',
+            subject: 'Your Subscription Has Been Paused',
         );
     }
  
@@ -93,7 +93,7 @@ class SubscriptionCancelledMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.cancelsubscription',
+            view: 'mails.pausemail',
             // text: 'emails.subscription.pause-text',
             with: [
                 'user' => $this->user,

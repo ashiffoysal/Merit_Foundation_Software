@@ -395,7 +395,7 @@
 
       <!-- CTAs -->
       <div class="btn-row">
-        <a href="#" class="btn-gold"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
+        <a href="{{ url('/dashboard') }}" class="btn-gold"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
         <a href="#" class="btn-outline"><i class="fas fa-download"></i> Download Receipt</a>
       </div>
     </div>
@@ -409,14 +409,7 @@
         <div class="step-num">1</div>
         <div class="step-text"><strong>Receipt email</strong> — A detailed receipt will arrive in your inbox within the next few minutes. Check your spam folder if you don't see it.</div>
       </li>
-      <li class="next-step">
-        <div class="step-num">2</div>
-        <div class="step-text"><strong>Gift Aid declaration</strong> — If you're a UK taxpayer, we'll contact you within 48 hours to confirm your Gift Aid declaration and maximise your donation's impact.</div>
-      </li>
-      <li class="next-step">
-        <div class="step-num">3</div>
-        <div class="step-text"><strong>Impact report</strong> — Every quarter we send donors a report showing exactly how contributions like yours have supported Quran education and lessons across the UK.</div>
-      </li>
+
     </ul>
   </div>
 

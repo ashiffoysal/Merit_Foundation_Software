@@ -11,18 +11,12 @@ use Illuminate\Support\Facades\Log;
 
 class SubscriptionController extends Controller
 {
-    /**
-     * Show the subscriptions page (view only — data is loaded via AJAX).
-     */
+
     public function index()
     {
         return view('backend.subscriptionuser.index');
     }
- 
-    /**
-     * Server-side DataTables endpoint for subscriptions.
-     * subscriptions.user_id -> users.id (explicit FK, direct join)
-     */
+
     public function getData(Request $request)
     {
         $query = Subscription::query()

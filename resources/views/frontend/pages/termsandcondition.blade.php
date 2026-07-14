@@ -474,18 +474,18 @@ body{font-family:'DM Sans',sans-serif;color:var(--txt);background:var(--white);o
               <div class="toc-item" onclick="scrollTo('t12',this)"><span class="toc-item-num">12</span>Governing Law</div>
               <div class="toc-item" onclick="scrollTo('t13',this)"><span class="toc-item-num">13</span>Contact</div>
             </div>
-            <div class="toc-meta-box">
+            {{-- <div class="toc-meta-box">
               <div class="tmb-row"><span class="tmb-label">Document</span><span class="tmb-val">Terms & Conditions</span></div>
               <div class="tmb-row"><span class="tmb-label">Jurisdiction</span><span class="tmb-val">England & Wales</span></div>
               <div class="tmb-row"><span class="tmb-label">Charity No.</span><span class="tmb-val">1234567</span></div>
               <div class="tmb-row"><span class="tmb-label">Registered</span><span class="tmb-val">England & Wales</span></div>
-            </div>
+            </div> --}}
             <div class="switch-doc-card">
               <div class="sdc-title">Other Legal Pages</div>
-              <div class="sdc-link" onclick="showPage('refund')"><i class="fas fa-chevron-right"></i>Refund Policy</div>
-              <div class="sdc-link" onclick="showPage('cookie')"><i class="fas fa-chevron-right"></i>Cookie Policy</div>
-              <div class="sdc-link"><i class="fas fa-chevron-right"></i>Privacy Policy</div>
-              <div class="sdc-link"><i class="fas fa-chevron-right"></i>Safeguarding Policy</div>
+              {{-- <a class="sdc-link" href="{{ url('/refund-policy') }}" target="_blank"><i class="fas fa-chevron-right"></i>Refund Policy</a> --}}
+              <a class="sdc-link" href="{{ url('/cookie-policy') }}" target="_blank"><i class="fas fa-chevron-right"></i>Cookie Policy</a>
+              <a class="sdc-link" href="{{ url('/privacy-policy') }}" target="_blank"><i class="fas fa-chevron-right"></i>Privacy Policy</a>
+              <a class="sdc-link" href="{{ url('/safeguarding-policy') }}" target="_blank"><i class="fas fa-chevron-right"></i>Safeguarding Policy</a>
             </div>
           </div>
         </div>
@@ -589,14 +589,14 @@ body{font-family:'DM Sans',sans-serif;color:var(--txt);background:var(--white);o
               </div>
               <div class="ls-body">
                 <p>Lesson fees are charged as follows and are subject to change with 30 days' prior notice to existing students:</p>
-                <table class="policy-table">
+                {{-- <table class="policy-table">
                   <thead><tr><th>Session Type</th><th>Duration</th><th>Fee</th><th>Notes</th></tr></thead>
                   <tbody>
                     <tr><td>Standard</td><td>30 minutes</td><td>£15 per session</td><td>Ideal for younger students & beginners</td></tr>
                     <tr><td>Popular</td><td>45 minutes</td><td>£25 per session</td><td>Most popular — regular learners</td></tr>
                     <tr><td>Intensive</td><td>60 minutes</td><td>£40 per session</td><td>Advanced Tajweed & Hifz students</td></tr>
                   </tbody>
-                </table>
+                </table> --}}
                 <ul class="policy-list">
                   <li><i class="fas fa-circle"></i><span><strong>Payment Methods:</strong> We accept all major credit/debit cards, PayPal, and bank transfer (BACS). All payments are processed via secure, encrypted payment gateways.</span></li>
                   <li><i class="fas fa-circle"></i><span><strong>VAT:</strong> All prices stated are inclusive of any applicable taxes. Merit Education Foundation's educational services may be exempt from VAT under UK law.</span></li>

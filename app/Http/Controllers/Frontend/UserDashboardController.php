@@ -72,9 +72,7 @@ class UserDashboardController extends Controller
         ]);
     }
 
-    /**
-     * Update password (POST /profile/password)
-     */
+   
     public function updatePassword(Request $request)
     {
         $user = Auth::user();
@@ -108,7 +106,13 @@ class UserDashboardController extends Controller
         $user          = auth()->user();
         $subscriptions = $user->subscriptions()->orderBy('created_at', 'desc')->get();
         $setupIntent   = $user->createSetupIntent();
+        if($setupIntent) {
+            $setupIntent = $setupIntent->client_secret;
+            return view('frontend.user_dashboard.index', compact('user', 'subscriptions', 'setupIntent'));
+        }else{
+            return view('frontend.user_dashboard.index', compact('user', 'subscriptions'));
+        }
 
-        return view('frontend.user_dashboard.index', compact('user', 'subscriptions', 'setupIntent'));
+        // return view('frontend.user_dashboard.index', compact('user', 'subscriptions', 'setupIntent'));
     }
 }

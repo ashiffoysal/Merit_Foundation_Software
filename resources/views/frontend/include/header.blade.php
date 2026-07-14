@@ -39,7 +39,13 @@
     <a href="{{ url('/contact') }}" ><span class="mobile-link">Contact</span></a>
     <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)">
       <a href="{{ url('/book-lesson') }}" class="btn-gold"  style="flex:1;justify-content:center;">Book Lesson</a>
-      <a href="{{ url('/donate') }}"  class="btn-navy"  style="flex:1;justify-content:center;"><i class="fas fa-heart"></i>Donate</a>
+      @auth
+          <a class="btn-gold" href="{{ url('/dashboard') }}" style="padding:9px 20px;font-size:.72rem;"><i class="fas fa-heart"></i>Dashboard</a>
+        @else
+        
+         <a class="btn-gold" href="{{ url('/login') }}" style="padding:9px 20px;font-size:.72rem;"><i class="fas fa-heart"></i>Login</a>
+
+        @endauth
     </div>
   </div>
 </nav>

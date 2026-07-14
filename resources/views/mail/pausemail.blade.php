@@ -55,14 +55,7 @@
                       <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td valign="middle" style="padding-right:10px;">
-                            <!--[if !mso]><!-->
-                            <img src="{{logo_url}}" width="34" height="34" alt="{{company_name}}" style="display:block; border-radius:6px; background-color:#D4AF37;">
-                            <!--<![endif]-->
-                            <!--[if mso]>
-                            <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-                              <td width="34" height="34" align="center" valign="middle" style="background-color:#D4AF37; border-radius:6px; font-family:Georgia, 'Times New Roman', serif; font-size:16px; color:#1B3A2F; font-weight:bold;">M</td>
-                            </tr></table>
-                            <![endif]-->
+                           
                           </td>
                           <td valign="middle">
                             <table role="presentation" cellpadding="0" cellspacing="0" border="0">
@@ -113,7 +106,7 @@
             <tr>
               <td align="center" class="fluid-padding" style="padding:16px 48px 0 48px;">
                 <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:24px; color:#4A4E44; text-align:center;">
-                  Hi {{customer_name}}, as requested, we've paused your subscription. Your seat is being held —
+                  Hi  {{ $user->name }}, as requested, we've paused your subscription. Your seat is being held —
                   nothing else needs to happen on your end, and you can pick up exactly where you left off
                   whenever you're ready.
                 </p>
@@ -138,7 +131,7 @@
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td class="detail-label" width="140" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#8A8D82; font-weight:bold;">Plan</td>
-                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F; font-weight:bold;">{{plan_name}}</td>
+                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F; font-weight:bold;">{{ $planName }}</td>
                         </tr>
                       </table>
                     </td>
@@ -150,7 +143,7 @@
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td class="detail-label" width="140" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#8A8D82; font-weight:bold;">Pause Effective</td>
-                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F;">{{pause_date}}</td>
+                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F;">{{ $pauseDate }}</td>
                         </tr>
                       </table>
                     </td>
@@ -226,7 +219,7 @@
                             <a href="{{resume_subscription_url}}" style="v-text-anchor:middle; display:inline-block; padding:15px 32px; background-color:#1B3A2F; color:#FFFFFF; font-family:Arial,sans-serif; font-size:14px; font-weight:bold; text-decoration:none; border-radius:30px;">Resume Subscription</a>
                             <![endif]-->
                             <!--[if !mso]><!-->
-                            <a href="{{resume_subscription_url}}" target="_blank" style="display:inline-block; padding:15px 32px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#FFFFFF; text-decoration:none; border-radius:30px;">
+                            <a href="{{ route('subscriptions.resume', $subscription->id) }}" target="_blank" style="display:inline-block; padding:15px 32px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#FFFFFF; text-decoration:none; border-radius:30px;">
                               Resume Subscription
                             </a>
                             <!--<![endif]-->
@@ -238,7 +231,7 @@
                       <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="cta-button">
                         <tr>
                           <td align="center" style="border-radius:30px; border:1.5px solid #1B3A2F;">
-                            <a href="{{manage_subscription_url}}" target="_blank" style="display:inline-block; padding:13.5px 30px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#1B3A2F; text-decoration:none; border-radius:30px;">
+                            <a href="{{ url('/dashboard') }}" target="_blank" style="display:inline-block; padding:13.5px 30px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#1B3A2F; text-decoration:none; border-radius:30px;">
                               Manage Subscription
                             </a>
                           </td>
@@ -262,8 +255,8 @@
               <td align="center" class="fluid-padding" style="padding:24px 48px 36px 48px;">
                 <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; color:#4A4E44; text-align:center;">
                   Changed your mind, or have a question about pausing? Our team is happy to help at
-                  <a href="mailto:{{support_email}}" style="color:#1B6E4F; text-decoration:underline;">{{support_email}}</a>
-                  or <a href="tel:{{support_phone}}" style="color:#1B6E4F; text-decoration:underline;">{{support_phone}}</a>.
+                  <a href="mailto:{{$companyInfo->primary_email}}" style="color:#1B6E4F; text-decoration:underline;">{{$companyInfo->primary_email}}</a>
+                  or <a href="tel:{{$companyInfo->phone}}" style="color:#1B6E4F; text-decoration:underline;">{{$companyInfo->	phone}}</a>.
                 </p>
               </td>
             </tr>
@@ -294,40 +287,40 @@
                     <td align="center" style="padding:32px 24px 8px 24px;">
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;">
                         <tr>
-                          <td align="center" style="font-family:Georgia, 'Times New Roman', serif; font-size:16px; color:#FFFFFF; font-weight:bold; padding-bottom:4px;">{{company_name}}</td>
+                          <td align="center" style="font-family:Georgia, 'Times New Roman', serif; font-size:16px; color:#FFFFFF; font-weight:bold; padding-bottom:4px;">{{ $companyInfo->organisation_name }}</td>
                         </tr>
                         <tr>
                           <td align="center" style="font-family:Georgia, 'Times New Roman', serif; font-size:13px; color:#FFFFFF; font-style:italic; padding-bottom:14px;">"Education for All, Opportunity for Every Child"</td>
                         </tr>
                         <tr>
                           <td align="center" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:22px; color:#A9BDB2; padding-bottom:6px;">
-                            <a href="{{website_url}}" style="color:#D4AF37; text-decoration:none;">{{website_url}}</a><br>
-                            <a href="mailto:{{support_email}}" style="color:#D4AF37; text-decoration:none;">{{support_email}}</a><br>
-                            <a href="tel:{{support_phone}}" style="color:#A9BDB2; text-decoration:none;">{{support_phone}}</a><br>
-                            <span style="color:#7E9689;">{{company_address}}</span>
+                            <a href="{{ url('/') }}" style="color:#D4AF37; text-decoration:none;">{{ url('/') }}</a><br>
+                            <a href="mailto:{{ $companyInfo->primary_email }}" style="color:#D4AF37; text-decoration:none;">{{ $companyInfo->primary_email }}</a><br>
+                            <a href="tel:{{ $companyInfo->phone }}" style="color:#A9BDB2; text-decoration:none;">{{ $companyInfo->phone }}</a><br>
+                            <span style="color:#7E9689;">{{ $companyInfo->address }}</span>
                           </td>
                         </tr>
                         <tr>
                           <td align="center" style="padding:14px 0 16px 0;">
-                            <a href="#" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">Facebook</a>
+                            <a href="{{ $social->facebook }}" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">Facebook</a>
                             <span style="color:#3E5B4F;">&bull;</span>
-                            <a href="#" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">Instagram</a>
+                            <a href="{{ $social->instagram }}" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">Instagram</a>
                             <span style="color:#3E5B4F;">&bull;</span>
-                            <a href="#" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">Twitter</a>
+                            <a href="{{ $social->twitter }}" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">Twitter</a>
                             <span style="color:#3E5B4F;">&bull;</span>
-                            <a href="#" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">LinkedIn</a>
+                            <a href="{{ $social->linkedin }}" style="display:inline-block; margin:0 6px; font-family:Arial, sans-serif; font-size:11px; color:#D4AF37; text-decoration:none;">LinkedIn</a>
                           </td>
                         </tr>
                         <tr>
                           <td align="center" style="padding:0 0 6px 0;">
-                            <a href="#" style="font-family:Arial, sans-serif; font-size:10px; color:#7E9689; text-decoration:underline; margin:0 6px;">Privacy Policy</a>
-                            <a href="#" style="font-family:Arial, sans-serif; font-size:10px; color:#7E9689; text-decoration:underline; margin:0 6px;">Terms &amp; Conditions</a>
-                            <a href="#" style="font-family:Arial, sans-serif; font-size:10px; color:#7E9689; text-decoration:underline; margin:0 6px;">Safeguarding Policy</a>
+                            <a href="{{ url('/privacy-policy') }} " style="font-family:Arial, sans-serif; font-size:10px; color:#7E9689; text-decoration:underline; margin:0 6px;">Privacy Policy</a>
+                            <a href="{{ url('/terms-and-conditions') }}" style="font-family:Arial, sans-serif; font-size:10px; color:#7E9689; text-decoration:underline; margin:0 6px;">Terms &amp; Conditions</a>
+                            <a href="{{ url('/safeguarding-policy') }}" style="font-family:Arial, sans-serif; font-size:10px; color:#7E9689; text-decoration:underline; margin:0 6px;">Safeguarding Policy</a>
                           </td>
                         </tr>
                         <tr>
                           <td align="center" style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#5E756A; padding-top:12px;">
-                            &copy; {{current_year}} {{company_name}}. All Rights Reserved.
+                            &copy; {{Carbon\Carbon::now()->year}} {{companyInfo->organisation_name}}. All Rights Reserved.
                           </td>
                         </tr>
                       </table>
@@ -342,7 +335,7 @@
           <table role="presentation" width="600" class="email-container" cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td align="center" style="padding:18px 24px; font-family:Arial, Helvetica, sans-serif; font-size:11px; line-height:16px; color:#9B9C8F;">
-                You're receiving this email because your {{plan_name}} subscription with {{company_name}} was paused.
+                You're receiving this email because your {{ $planName }} subscription with {{companyInfo->organisation_name}} was paused.
               </td>
             </tr>
           </table>

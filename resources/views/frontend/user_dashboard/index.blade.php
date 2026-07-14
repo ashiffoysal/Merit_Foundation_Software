@@ -458,6 +458,7 @@
 @php $status = $subscription->stripe_status; @endphp
             {{-- Status Badge --}}
             <td>
+
                 @if($subscription->onGracePeriod())
                     <span class="badge bg-warning text-dark">Cancels Soon</span>
                 @elseif($subscription->stripe_status === 'paused')
@@ -469,6 +470,8 @@
                 @else
                     <span class="badge bg-light text-dark">{{ $subscription->stripe_status }}</span>
                 @endif
+                 
+
             </td>
 
             {{-- Action Buttons --}}

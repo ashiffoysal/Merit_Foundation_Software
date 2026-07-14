@@ -49,8 +49,11 @@
     </div>
   </section> --}}
   
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600&display=swap');
+
+  * { box-sizing: border-box; }
 
   .mef-hero {
     font-family: 'DM Sans', sans-serif;
@@ -61,95 +64,17 @@
     overflow: hidden;
   }
 
-
   .mef-main {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0;
+    gap: 32px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 145px 32px 48px;
+    padding: 80px 32px 48px;
     align-items: center;
-}
-
-  .mef-top-bar {
-    background: #1a3a2a;
-    color: #d4a84b;
-    font-size: 12px;
-    font-weight: 500;
-    text-align: center;
-    padding: 8px 16px;
-    letter-spacing: 0.5px;
   }
 
-  .mef-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 32px;
-    background: #fff;
-    border-bottom: 1px solid #e8e4db;
-  }
-
-  .mef-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .mef-logo-icon {
-    width: 36px;
-    height: 36px;
-    background: #1a3a2a;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mef-logo-text {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1a3a2a;
-    line-height: 1.2;
-  }
-
-  .mef-logo-sub {
-    font-size: 10px;
-    color: #7a7a6a;
-    font-weight: 400;
-  }
-
-  .mef-nav-links {
-    display: flex;
-    gap: 24px;
-    font-size: 13px;
-    color: #444;
-    font-weight: 500;
-  }
-
-  .mef-nav-cta {
-    background: #d4a84b;
-    color: #fff;
-    border: none;
-    padding: 9px 20px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-  }
-.mef-main {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    max-width: 70%;
-    margin: 0 auto;
-    padding: 145px 32px 48px;
-    align-items: center;
-}
-
-  .mef-left {}
+  .mef-left { min-width: 0; }
 
   .mef-pill {
     display: inline-flex;
@@ -232,9 +157,8 @@
     flex-wrap: wrap;
   }
 
-  .mef-btn-primary {
-    background: #1a3a2a;
-    color: #fff;
+  .mef-btn-primary,
+  .mef-btn-price {
     border: none;
     padding: 13px 24px;
     border-radius: 10px;
@@ -243,24 +167,23 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    flex: 1 1 200px;
+    white-space: nowrap;
+  }
+
+  .mef-btn-primary {
+    background: #1a3a2a;
+    color: #fff;
     transition: background 0.2s;
   }
 
   .mef-btn-price {
     background: #d4a84b;
     color: #fff;
-    border: none;
-    padding: 13px 24px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'DM Sans', sans-serif;
   }
 
   .mef-price-badge {
@@ -273,7 +196,7 @@
   .mef-trust {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 10px 16px;
   }
 
   .mef-trust-item {
@@ -300,7 +223,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding-left: 48px;
+    min-width: 0;
   }
 
   .mef-card-main {
@@ -328,6 +251,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .mef-price-main {
@@ -446,17 +371,56 @@
     letter-spacing: 0.3px;
     margin-top: 2px;
   }
+
+  /* ===== Tablet ===== */
+  @media (max-width: 900px) {
+    .mef-main {
+      grid-template-columns: 1fr;
+      padding: 56px 24px 40px;
+      gap: 40px;
+    }
+    .mef-right { padding-left: 0; }
+    .mef-h1 { font-size: 40px; }
+    .mef-desc { max-width: 100%; }
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 600px) {
+    .mef-main { padding: 40px 16px 32px; }
+    .mef-h1 { font-size: 32px; }
+    .mef-tagline { font-size: 12px; }
+    .mef-desc { font-size: 14px; }
+    .mef-btns { flex-direction: column; }
+    .mef-btn-primary, .mef-btn-price { flex: 1 1 auto; width: 100%; }
+    .mef-pricing-hero { flex-direction: column; align-items: flex-start; }
+    .mef-price-label { text-align: left; }
+    .mef-card-main { padding: 18px; }
+    .mef-stat-bar { padding: 20px 16px; }
+    .mef-stats {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 20px;
+    }
+    .mef-stat-item:nth-child(2) { border-right: none; }
+    .mef-stat-item:nth-child(1),
+    .mef-stat-item:nth-child(2) {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 16px;
+    }
+    .mef-stat-n { font-size: 22px; }
+  }
+
+  @media (max-width: 380px) {
+    .mef-h1 { font-size: 28px; }
+    .mef-trust { gap: 8px 12px; }
+  }
 </style>
 
 <div class="mef-hero">
- 
   <div class="mef-main">
     <div class="mef-left">
       <div class="mef-pill">
         <div class="mef-pill-dot"></div>
-        UK Registered Charity 
-        
-        
+        UK Registered Charity
       </div>
 
       <h1 class="mef-h1">Education<br>for <em>Every</em><br>Child</h1>
@@ -472,11 +436,11 @@
       </p>
 
       <div class="mef-btns">
-        <a href="{{ url('/book-lesson') }}" class="mef-btn-primary">
+        <a href="#" class="mef-btn-primary">
           <i class="ti ti-school" aria-hidden="true" style="font-size:16px"></i>
           Book a Lesson
         </a>
-        <a href="{{ url('/book-lesson') }}"  class="mef-btn-price">
+        <a href="#" class="mef-btn-price">
           <i class="ti ti-star" aria-hidden="true" style="font-size:16px"></i>
           From
           <span class="mef-price-badge">£5</span>
@@ -486,27 +450,19 @@
 
       <div class="mef-trust">
         <div class="mef-trust-item">
-          <div class="mef-trust-icon">
-            <i class="ti ti-shield" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
-          </div>
+          <div class="mef-trust-icon"><i class="ti ti-shield" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i></div>
           UK-Based Organisation
         </div>
         <div class="mef-trust-item">
-          <div class="mef-trust-icon">
-            <i class="ti ti-user-check" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
-          </div>
+          <div class="mef-trust-icon"><i class="ti ti-user-check" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i></div>
           Safeguarding First
         </div>
         <div class="mef-trust-item">
-          <div class="mef-trust-icon">
-            <i class="ti ti-certificate" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
-          </div>
+          <div class="mef-trust-icon"><i class="ti ti-certificate" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i></div>
           Qualified Tutors
         </div>
         <div class="mef-trust-item">
-          <div class="mef-trust-icon">
-            <i class="ti ti-eye" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i>
-          </div>
+          <div class="mef-trust-icon"><i class="ti ti-eye" aria-hidden="true" style="font-size:10px; color:#1a3a2a"></i></div>
           Transparent Funds
         </div>
       </div>
@@ -577,7 +533,6 @@
     </div>
   </div>
 </div>
-
   <!-- About Summary -->
   <section class="section-cream">
     <div class="container">

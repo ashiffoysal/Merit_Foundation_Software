@@ -8,6 +8,8 @@ use Laravel\Cashier\Cashier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionCreateMail;
 
 class MakehubController extends Controller
 {
@@ -16,7 +18,7 @@ class MakehubController extends Controller
 
 public function checkoutSuccess(Request $request)
     {
-        //  return view('frontend.checkout.success');
+        
 
         $sessionId = $request->get('session_id');
 
@@ -33,11 +35,11 @@ public function checkoutSuccess(Request $request)
             return redirect()->route('home')->with('error', 'Payment not completed.');
         }
 
-        // Sync subscription to DB manually (in case webhook is slow)
+   
         $user = Auth::user();
 
         if ($session->subscription && $user) {
-            // Update stripe_id on user if not set
+         
             if (!$user->stripe_id && $session->customer) {
                 $user->stripe_id = is_string($session->customer)
                     ? $session->customer
@@ -45,12 +47,12 @@ public function checkoutSuccess(Request $request)
                 $user->save();
             }
 
-            // Sync the subscription from Stripe to your DB
             $user->updateStripeCustomer();
         }
 
         $planId = $session['metadata']['plan_id'] ?? null;
 
+        Mail::send(new SubscriptionCreateMail($user, $planId));
         return view('frontend.checkout.success', [
             'orderId' => $planId,
             'session' => $session,
