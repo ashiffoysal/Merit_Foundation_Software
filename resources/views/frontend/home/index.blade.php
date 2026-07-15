@@ -48,8 +48,6 @@
       </div></div>
     </div>
   </section> --}}
-  
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600&display=swap');
 
@@ -656,22 +654,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Impact Numbers -->
-  <div class="impact-strip">
-    <div class="container">
-      <div class="row align-items-center justify-content-between g-4 position-relative">
-        <div class="col text-center" data-r="up"><div class="impact-num">5,000+</div><div class="impact-lbl">Students Helped</div></div>
-        <div class="col-auto d-none d-md-block"><div class="impact-sep"></div></div>
-        <div class="col text-center" data-r="up" style="transition-delay:.1s"><div class="impact-num">£250K+</div><div class="impact-lbl">Scholarships Funded</div></div>
-        <div class="col-auto d-none d-md-block"><div class="impact-sep"></div></div>
-        <div class="col text-center" data-r="up" style="transition-delay:.2s"><div class="impact-num">30+</div><div class="impact-lbl">Countries Reached</div></div>
-        <div class="col-auto d-none d-md-block"><div class="impact-sep"></div></div>
-        <div class="col text-center" data-r="up" style="transition-delay:.3s"><div class="impact-num">100%</div><div class="impact-lbl">Donation Transparency</div></div>
-      </div>
-    </div>
-  </div>
-
   <!-- CTA -->
   <div class="cta-block">
     <div class="container"><div class="inner">
@@ -689,28 +671,6 @@
   </div>
 </div><!-- end home -->
 
-<!-- ══════════════════════════════════════
-   ABOUT PAGE
-══════════════════════════════════════ -->
-@include('frontend.include.about')
-
-<!-- ══════════════════════════════════════
-   BOOK LESSON PAGE
-══════════════════════════════════════ -->
-@include('frontend.include.booklesson')
-<!-- ══════════════════════════════════════
-   DONATE PAGE
-══════════════════════════════════════ -->
-@include('frontend.include.donate')
-
-<!-- ══════════════════════════════════════
-   SAFEGUARDING PAGE
-══════════════════════════════════════ -->
-@include('frontend.include.safeguarding')
-<!-- ══════════════════════════════════════
-   CONTACT PAGE
-══════════════════════════════════════ -->
-@include('frontend.include.contact')
 <!-- ══════════════ FOOTER ══════════════ -->
     <script>
         /* ── Loader */

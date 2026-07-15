@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SubscriptionPauseMail;
 use App\Mail\SubscriptionResumeMail;
 use App\Mail\SubscriptionCancelledMail;
+use App\Models\Plan;
+use Carbon\Carbon;
 
 class SubscriptionController extends Controller
 {
@@ -107,7 +109,17 @@ public function pause($id)
         // Update local DB immediately (don't wait for webhook)
         $subscription->stripe_status = 'paused';
         $subscription->save();
-        Mail::send(new SubscriptionPauseMail(Auth::user(), $subscription));
+        $planName= Plan::where('stripe_price_id', $subscription->stripe_price)->first()?->name ?? 'Merit Learning Plan';        
+        $data = [
+            'first_name' => Auth::user()->name,
+            'last_name'  => Auth::user()->last_name,
+            'email'      => Auth::user()->email,
+            'planName'   => $planName,
+            'pauseDate'  => now()->format('d M Y'),
+        ];
+
+        Mail::to(Auth::user()->email)->send(new SubscriptionPauseMail($data));
+
         return back()->with('success', 'Subscription paused successfully.');
 
     } catch (\Exception $e) {
@@ -140,7 +152,17 @@ public function pause($id)
             // Resume from grace period (was cancelled but still in period)
             $subscription->resume();
         }
-         Mail::send(new SubscriptionResumeMail(Auth::user(), $subscription));
+        //  Mail::send(new SubscriptionResumeMail(Auth::user(), $subscription));
+        $planName= Plan::where('stripe_price_id', $subscription->stripe_price)->first()?->name ?? 'Merit Learning Plan';        
+        $data = [
+            'first_name' => Auth::user()->name,
+            'last_name'  => Auth::user()->last_name,
+            'email'      => Auth::user()->email,
+            'planName'   => $planName,
+            'pauseDate'  => now()->format('d M Y'),
+        ];
+
+        Mail::to(Auth::user()->email)->send(new SubscriptionResumeMail($data));
         return back()->with('success', 'Subscription resumed successfully.');
 
     } catch (\Exception $e) {
@@ -160,7 +182,16 @@ public function cancel($id)
 
     try {
         $subscription->cancel(); // Cashier v16 — cancels at period end ✅
-        Mail::send(new SubscriptionCancelledMail(Auth::user(), $subscription));
+           $planName= Plan::where('stripe_price_id', $subscription->stripe_price)->first()?->name ?? 'Merit Learning Plan';        
+        $data = [
+            'first_name' => Auth::user()->name,
+            'last_name'  => Auth::user()->last_name,
+            'email'      => Auth::user()->email,
+            'planName'   => $planName,
+            'cancellation_date'  => now()->format('d M Y'),
+        ];
+
+        Mail::to(Auth::user()->email)->send(new SubscriptionCancelledMail($data));
         return back()->with('success', 'Subscription will cancel at period end.');
 
     } catch (\Exception $e) {
@@ -176,7 +207,16 @@ public function cancelNow($id)
 
     try {
         $subscription->cancelNow(); // Cashier v16 ✅
-        Mail::send(new SubscriptionCancelledMail(Auth::user(), $subscription));
+         $planName= Plan::where('stripe_price_id', $subscription->stripe_price)->first()?->name ?? 'Merit Learning Plan';        
+        $data = [
+            'first_name' => Auth::user()->name,
+            'last_name'  => Auth::user()->last_name,
+            'email'      => Auth::user()->email,
+            'planName'   => $planName,
+            'cancellation_date'  => now()->format('d M Y'),
+        ];
+
+        Mail::to(Auth::user()->email)->send(new SubscriptionCancelledMail($data));
         return back()->with('success', 'Subscription cancelled immediately.');
 
     } catch (\Exception $e) {

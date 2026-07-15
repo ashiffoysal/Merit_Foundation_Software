@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Subscription;
+use App\Models\Plan;
+use App\Models\User;
+use App\Mail\SubscriptionPauseMail;
+use App\Mail\SubscriptionResumeMail;
+use Illuminate\Support\Facades\Mail;
 
 class AdminSubscriptionController extends Controller
 {
@@ -22,7 +27,17 @@ class AdminSubscriptionController extends Controller
  
             $sub->stripe_status = 'paused';
             $sub->save();
- 
+
+   $planName= Plan::where('stripe_price_id', $sub->stripe_price)->first()?->name ?? 'Merit Learning Plan';        
+        $data = [
+            'first_name' => Auth::user()->name,
+            'last_name'  => Auth::user()->last_name,
+            'email'      => Auth::user()->email,
+            'planName'   => $planName,
+            'pauseDate'  => now()->format('d M Y'),
+        ];
+
+        Mail::to(Auth::user()->email)->send(new SubscriptionPauseMail($data));
             return back()->with('success', 'Subscription paused successfully.');
  
         } catch (\Exception $e) {

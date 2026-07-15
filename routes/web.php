@@ -152,7 +152,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
     Route::post('admin/login', [AdminAuthController::class, 'login']);
-    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+    Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard',           [DashboardController::class, 'index'])->name('admin.dashboard.index');

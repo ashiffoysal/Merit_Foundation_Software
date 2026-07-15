@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Cashier;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
+use Carbon\Carbon;
+
 
 class WebhookController extends Controller
 {
@@ -46,6 +48,7 @@ class WebhookController extends Controller
             'invoice.payment_succeeded'      => $this->handleInvoicePaid($data),
             'invoice.payment_failed'         => $this->handleInvoiceFailed($data),
             'payment_method.attached'        => $this->handlePaymentMethodAttached($data),
+            // 'setup_intent.created'           => $this->handleSetupIntentCreated($data),
             default => Log::info('Unhandled event: ' . $type),
         };
 

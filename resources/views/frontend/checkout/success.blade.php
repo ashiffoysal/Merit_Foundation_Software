@@ -394,9 +394,9 @@
       </div>
 
       <!-- CTAs -->
-      <div class="btn-row">
+      <div class="btn-row" style="text-align:center">
         <a href="{{ url('/dashboard') }}" class="btn-gold"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
-        <a href="#" class="btn-outline"><i class="fas fa-download"></i> Download Receipt</a>
+        {{-- <a href="#" class="btn-outline"><i class="fas fa-download"></i> Download Receipt</a> --}}
       </div>
     </div>
   </div>

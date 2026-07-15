@@ -103,7 +103,7 @@
                                     <div class="file-upload-wrap">
                                         @if(!empty($companyInformation->logo))
                                             <div class="file-preview mb-2">
-                                                <img id="logoPreview" src="{{ asset('storage/' . $companyInformation->logo) }}"
+                                                <img id="logoPreview" src="{{ asset('/' . $companyInformation->logo) }}"
                                                     alt="Logo" style="height:48px;object-fit:contain;border-radius:6px;border:1px solid var(--border)">
                                             </div>
                                         @else
@@ -130,7 +130,7 @@
                                     <div class="file-upload-wrap">
                                         @if(!empty($companyInformation->favicon))
                                             <div class="file-preview mb-2">
-                                                <img id="faviconPreview" src="{{ asset('storage/' . $companyInformation->favicon) }}"
+                                                <img id="faviconPreview" src="{{ asset('/' . $companyInformation->favicon) }}"
                                                     alt="Favicon" style="height:48px;object-fit:contain;border-radius:6px;border:1px solid var(--border)">
                                             </div>
                                         @else
@@ -169,7 +169,7 @@
                         <div class="d-flex align-items-center gap-4 mb-4">
                             <div class="av-wrap">
                                 @if($admin->profile_image)
-                                    <img id="adminAvatarImg" src="{{ asset('storage/public/' . $admin->profile_image) }}"
+                                    <img id="adminAvatarImg" src="{{ asset('/' . $admin->profile_image) }}"
                                         alt="Avatar" class="av-img" style="width:64px;height:64px;border-radius:50%;object-fit:cover">
                                 @else
                                     <div class="av av-initials" id="adminAvatarInitials"
@@ -269,10 +269,10 @@
             </div>
 
             <div class="card">
-                <div class="card-header-custom">
+                {{-- <div class="card-header-custom">
                     <div class="card-title"><i class="fas fa-user-shield"></i> Admin Users</div>
                     <button class="btn-gold-sm btn-sm" onclick="openModal('add-admin')"><i class="fas fa-plus"></i> Add</button>
-                </div>
+                </div> --}}
                 <div class="card-body-custom" id="adminUsersList">
                      {{-- 
                     @foreach(\App\Models\User::where('role', 'admin')->orWhere('role', 'super_admin')->orWhere('role', 'manager')->orWhere('role', 'staff')->get() as $u)

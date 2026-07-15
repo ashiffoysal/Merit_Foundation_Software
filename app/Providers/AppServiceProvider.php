@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\CompanyInformation;
 use App\Models\Seo;
 use App\Models\Social;
+// use App\Models\Subscription;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +40,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Cashier::useSubscriptionModel(Subscription::class);
     }
 }

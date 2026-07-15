@@ -106,7 +106,7 @@
             <tr>
               <td align="center" class="fluid-padding" style="padding:16px 48px 0 48px;">
                 <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:15px; line-height:24px; color:#4A4E44; text-align:center;">
-                  Hi  {{ $user->name }}, as requested, we've paused your subscription. Your seat is being held —
+                  Hi  {{ $data['first_name'] }} {{ $data['last_name'] }}, as requested, we've paused your subscription. Your seat is being held —
                   nothing else needs to happen on your end, and you can pick up exactly where you left off
                   whenever you're ready.
                 </p>
@@ -131,7 +131,7 @@
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td class="detail-label" width="140" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#8A8D82; font-weight:bold;">Plan</td>
-                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F; font-weight:bold;">{{ $planName }}</td>
+                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F; font-weight:bold;">{{ $data['planName'] }}</td>
                         </tr>
                       </table>
                     </td>
@@ -143,7 +143,7 @@
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td class="detail-label" width="140" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#8A8D82; font-weight:bold;">Pause Effective</td>
-                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F;">{{ $pauseDate }}</td>
+                          <td class="detail-value" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1B3A2F;">{{ $data['pauseDate'] }}</td>
                         </tr>
                       </table>
                     </td>
@@ -207,41 +207,7 @@
             </tr>
 
             <!-- =============== PRIMARY + SECONDARY CTA =============== -->
-            <tr>
-              <td align="center" style="padding:32px 40px 8px 40px;">
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="cta-stack">
-                  <tr>
-                    <td style="padding:0 6px;">
-                      <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="cta-button">
-                        <tr>
-                          <td align="center" style="border-radius:30px; background-color:#1B3A2F;">
-                            <!--[if mso]>
-                            <a href="{{resume_subscription_url}}" style="v-text-anchor:middle; display:inline-block; padding:15px 32px; background-color:#1B3A2F; color:#FFFFFF; font-family:Arial,sans-serif; font-size:14px; font-weight:bold; text-decoration:none; border-radius:30px;">Resume Subscription</a>
-                            <![endif]-->
-                            <!--[if !mso]><!-->
-                            <a href="{{ route('subscriptions.resume', $subscription->id) }}" target="_blank" style="display:inline-block; padding:15px 32px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#FFFFFF; text-decoration:none; border-radius:30px;">
-                              Resume Subscription
-                            </a>
-                            <!--<![endif]-->
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td style="padding:0 6px;">
-                      <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="cta-button">
-                        <tr>
-                          <td align="center" style="border-radius:30px; border:1.5px solid #1B3A2F;">
-                            <a href="{{ url('/dashboard') }}" target="_blank" style="display:inline-block; padding:13.5px 30px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#1B3A2F; text-decoration:none; border-radius:30px;">
-                              Manage Subscription
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
+            
 
             <!-- Divider -->
             <tr>
@@ -256,7 +222,7 @@
                 <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; color:#4A4E44; text-align:center;">
                   Changed your mind, or have a question about pausing? Our team is happy to help at
                   <a href="mailto:{{$companyInfo->primary_email}}" style="color:#1B6E4F; text-decoration:underline;">{{$companyInfo->primary_email}}</a>
-                  or <a href="tel:{{$companyInfo->phone}}" style="color:#1B6E4F; text-decoration:underline;">{{$companyInfo->	phone}}</a>.
+                  or <a href="tel:{{$companyInfo->phone}}" style="color:#1B6E4F; text-decoration:underline;">{{$companyInfo->phone}}</a>.
                 </p>
               </td>
             </tr>
@@ -320,7 +286,7 @@
                         </tr>
                         <tr>
                           <td align="center" style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#5E756A; padding-top:12px;">
-                            &copy; {{Carbon\Carbon::now()->year}} {{companyInfo->organisation_name}}. All Rights Reserved.
+                            &copy; {{Carbon\Carbon::now()->year}} {{$companyInfo->organisation_name}}. All Rights Reserved.
                           </td>
                         </tr>
                       </table>
@@ -335,7 +301,7 @@
           <table role="presentation" width="600" class="email-container" cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td align="center" style="padding:18px 24px; font-family:Arial, Helvetica, sans-serif; font-size:11px; line-height:16px; color:#9B9C8F;">
-                You're receiving this email because your {{ $planName }} subscription with {{companyInfo->organisation_name}} was paused.
+                You're receiving this email because your {{ $data['planName'] }}  subscription with {{$companyInfo->organisation_name}} was paused.
               </td>
             </tr>
           </table>

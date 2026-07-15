@@ -190,7 +190,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--s50);overflow:hidden}
 
       <div class="login-remember">
         <label><input type="checkbox" id="remember" name="remember" checked> Remember this device</label>
-        <span class="login-forgot">Forgot password?</span>
+        {{-- <span class="login-forgot">Forgot password?</span> --}}
       </div>
 
       <button type="submit" class="btn-login" id="login-btn">

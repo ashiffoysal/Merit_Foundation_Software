@@ -2,114 +2,52 @@
 
 namespace App\Mail;
 
-use App\Models\Subscription;
 use App\Models\User;
+use App\Models\Subscription;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Attachment;
 use Laravel\Cashier\Cashier;
+use Carbon\Carbon;
 
 class SubscriptionCancelledMail extends Mailable
 {
    use Queueable, SerializesModels;
- 
-    public User $user;
-    public Subscription $subscription;
- 
-    // ---- Resolved, ready-to-print values passed straight to the view ----
-    public string $planName;
-    public string $cancelDate;
-    public string $billingStatus;
- 
-    /**
-     * @param User $user The subscriber whose subscription was cancelled.
-     * @param Subscription $subscription The Cashier subscription row
-     *        that was just cancelled (subscription->stripe_status === 'cancelled').
-     */
-    public function __construct(User $user, Subscription $subscription)
+
+    public array $data;
+
+    public function __construct(array $data)
     {
-        $this->user = $user;
-        $this->subscription = $subscription;
- 
-        $this->resolveDisplayData();
+        $this->data = $data;
     }
- 
-    /**
-     * Turns the raw subscription model (+ a Stripe Price lookup) into
-     * plain strings the Blade template can print directly.
-     */
-    protected function resolveDisplayData(): void
-    {
-        $productName = null;
- 
-        // Ask Stripe for the human-readable plan/product name tied to
-        // this subscription's price. Wrapped in a try/catch so a Stripe
-        // API hiccup never blocks the pause confirmation email from
-        // sending.
-        if ($this->subscription->stripe_price) {
-            try {
-                $price = Cashier::stripe()->prices->retrieve(
-                    $this->subscription->stripe_price,
-                    ['expand' => ['product']]
-                );
- 
-                $productName = $price->product->name ?? $price->nickname ?? null;
-            } catch (\Throwable $e) {
-                report($e);
-            }
-        }
- 
-        $this->planName = $productName ?: 'Merit Learning Plan';
- 
-        // The subscription row's updated_at was just touched by the
-        // pause() controller action, so it reflects the moment the
-        // pause took effect.
-        $this->pauseDate = $this->subscription->updated_at
-            ? $this->subscription->updated_at->format('d M Y')
-            : now()->format('d M Y');
- 
-        $this->billingStatus = 'Cancelled ';
-    }
- 
-    /**
-     * Get the message envelope.
-     */
+
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: [new Address($this->user->email, trim($this->user->name . ' ' . $this->user->last_name))],
-            subject: 'Your Subscription Has Been Cancelled',
-        );
-    }
- 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'mails.cancelsubscription',
-            // text: 'emails.subscription.pause-text',
-            with: [
-                'user' => $this->user,
-                'subscription' => $this->subscription,
-                'planName' => $this->planName,
-                'pauseDate' => $this->pauseDate,
-                'billingStatus' => $this->billingStatus,
+            subject: 'Subscription Cancelled',
+            replyTo: [
+                new Address(
+                    $this->data['email'],
+                    $this->data['first_name'].' '.$this->data['last_name']
+                ),
             ],
         );
     }
- 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, Attachment>
-     */
+
+    public function content(): Content
+    {
+        return new Content(
+            view: 'mail.cancelsubscription',
+            with: [
+                'data' => $this->data,
+            ],
+        );
+    }
+
     public function attachments(): array
     {
         return [];

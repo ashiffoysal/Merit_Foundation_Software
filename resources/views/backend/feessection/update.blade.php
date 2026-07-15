@@ -25,8 +25,6 @@
         <div class="col-lg-8">
             <form id="plan-form" method="POST" novalidate>
                 @csrf
-              
-
                 {{-- ① Basic Info --}}
                 <div class="card mb-4">
                     <div class="card-header-custom">

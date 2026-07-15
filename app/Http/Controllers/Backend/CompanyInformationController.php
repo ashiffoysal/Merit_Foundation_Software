@@ -48,25 +48,36 @@ class CompanyInformationController extends Controller
         $logoUrl    = null;
         $faviconUrl = null;
 
-        // Handle Logo upload
-        if ($request->hasFile('logo')) {
-            if ($company->logo && Storage::disk('public')->exists($company->logo)) {
-                Storage::disk('public')->delete($company->logo);
-            }
-            $path = $request->file('logo')->store('company', 'public');
-            $company->logo = $path;
-            $logoUrl = Storage::url($path);
-        }
+    
 
-        // Handle Favicon upload
-        if ($request->hasFile('favicon')) {
-            if ($company->favicon && Storage::disk('public')->exists($company->favicon)) {
-                Storage::disk('public')->delete($company->favicon);
-            }
-            $path = $request->file('favicon')->store('company', 'public');
-            $company->favicon = $path;
-            $faviconUrl = Storage::url($path);
-        }
+ if ($request->hasFile('favicon')) {
+        $image = $request->file('favicon');
+
+        // Generate a unique filename
+        $filename = time() . '_' . $image->getClientOriginalName();
+
+        // Move the file to public/uploads
+        $image->move(('uploads'), $filename);
+
+        // Save the relative path or filename to the database
+         $company->favicon = 'uploads/' . $filename;
+    }
+
+ if ($request->hasFile('logo')) {
+        $image = $request->file('logo');
+
+        // Generate a unique filename
+        $filename = time() . '_' . $image->getClientOriginalName();
+
+        // Move the file to public/uploads
+        $image->move(('uploads'), $filename);
+
+        // Save the relative path or filename to the database
+         $company->logo = 'uploads/' . $filename;
+    }
+
+
+
 
         $company->save();
 
@@ -126,14 +137,23 @@ class CompanyInformationController extends Controller
 
         // Handle profile image upload
         $imageUrl = null;
-        if ($request->hasFile('profile_image')) {
-            if ($admin->profile_image && Storage::disk('public')->exists($admin->profile_image)) {
-                Storage::disk('public')->delete($admin->profile_image);
-            }
-            $path = $request->file('profile_image')->store('avatars', 'public');
-            $admin->profile_image = $path;
-            $imageUrl = Storage::url($path);
-        }
+        
+
+
+     if ($request->hasFile('profile_image')) {
+        $image = $request->file('profile_image');
+
+        // Generate a unique filename
+        $filename = time() . '_' . $image->getClientOriginalName();
+
+        // Move the file to public/uploads
+        $image->move(('uploads'), $filename);
+
+        // Save the relative path or filename to the database
+         $admin->profile_image = 'uploads/' . $filename;
+    }
+
+        
 
         $admin->save();
 

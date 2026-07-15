@@ -128,8 +128,8 @@ a {
     <div class="sidebar-footer">
       <div class="sb-admin-row">
         <div class="sb-admin-av">SA</div>
-        <div><div class="sb-admin-name">Super Admin</div><div class="sb-admin-role">admin@meriteducation.org</div></div>
+        <div><div class="sb-admin-name">Super Admin</div><div class="sb-admin-role">{{ Auth::user()->email }}</div></div>
       </div>
-      <div class="sb-logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i><span class="sb-logout-text">Sign Out</span></div>
+      <a class="sb-logout-btn" href="{{ route('admin.logout') }}"><i class="fas fa-sign-out-alt"></i><span class="sb-logout-text">Sign Out</span></a>
     </div>
   </aside>

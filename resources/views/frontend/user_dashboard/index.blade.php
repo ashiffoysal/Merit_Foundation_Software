@@ -27,22 +27,22 @@
       <div id="dash-overview" class="dash-panel active">
         <!-- Stats -->
         <div class="row g-3 mb-4">
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-graduation-cap" style="color:var(--gold)"></i></div><div class="ds-stat-val">12</div><div class="ds-stat-lbl">Total Lessons</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i>+2 this month</div></div></div>
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(13,107,99,.1)"><i class="fas fa-heart" style="color:var(--teal)"></i></div><div class="ds-stat-val">£185</div><div class="ds-stat-lbl">Total Donated</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i>£20 this month</div></div></div>
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(15,31,92,.07)"><i class="fas fa-child" style="color:var(--navy)"></i></div><div class="ds-stat-val">1</div><div class="ds-stat-lbl">Child Sponsored</div><div class="ds-stat-change change-neu"><i class="fas fa-minus"></i>Active</div></div></div>
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-star" style="color:var(--gold)"></i></div><div class="ds-stat-val">68%</div><div class="ds-stat-lbl">Quran Progress</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i>+8% this week</div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-graduation-cap" style="color:var(--gold)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Total Lessons</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i></div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(13,107,99,.1)"><i class="fas fa-heart" style="color:var(--teal)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Total Donated</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i></div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(15,31,92,.07)"><i class="fas fa-child" style="color:var(--navy)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Child Sponsored</div><div class="ds-stat-change change-neu"><i class="fas fa-minus"></i></div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-star" style="color:var(--gold)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Quran Progress</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i></div></div></div>
         </div>
 
         <div class="row g-4">
-          <div class="col-lg-7">
+          <div class="col-lg-12">
             <!-- Upcoming Lessons -->
-            <div class="profile-section">
+            {{-- <div class="profile-section">
               <div class="profile-section-title"><i class="fas fa-calendar-alt"></i>Upcoming Lessons</div>
               <div class="lesson-card"><div class="lc-day"><div class="lc-day-n">18</div><div class="lc-day-m">NOV</div></div><div class="lc-info"><div class="lc-title">Surah Al-Baqarah — Tajweed Session</div><div class="lc-meta"><span><i class="fas fa-clock"></i> 4:00 PM – 4:45 PM</span><span><i class="fas fa-user"></i> Ustadh Bilal</span><span><i class="fas fa-video"></i> Zoom</span></div></div><div class="lc-status status-upcoming"><i class="fas fa-clock"></i>Upcoming</div></div>
               <div class="lesson-card"><div class="lc-day"><div class="lc-day-n">20</div><div class="lc-day-m">NOV</div></div><div class="lc-info"><div class="lc-title">Qaida Revision &amp; Reading Practice</div><div class="lc-meta"><span><i class="fas fa-clock"></i> 5:00 PM – 5:30 PM</span><span><i class="fas fa-user"></i> Ustadha Fatima</span><span><i class="fas fa-video"></i> Zoom</span></div></div><div class="lc-status status-upcoming"><i class="fas fa-clock"></i>Upcoming</div></div>
               <div class="lesson-card"><div class="lc-day"><div class="lc-day-n">15</div><div class="lc-day-m">NOV</div></div><div class="lc-info"><div class="lc-title">Surah Yasin — Memorisation</div><div class="lc-meta"><span><i class="fas fa-clock"></i> 4:00 PM – 4:45 PM</span><span><i class="fas fa-user"></i> Ustadh Bilal</span></div></div><div class="lc-status status-done"><i class="fas fa-check"></i>Completed</div></div>
               <button class="btn-outline-navy btn-sm mt-2" style="font-size:.72rem" onclick="switchDash('lessons')"><i class="fas fa-list"></i>View All Lessons</button>
-            </div>
+            </div> --}}
             <!-- Progress -->
             <div class="profile-section">
               <div class="profile-section-title"><i class="fas fa-chart-line"></i>Learning Progress</div>
@@ -51,17 +51,7 @@
               <div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:.8rem;font-weight:600;color:var(--navy)">Memorisation (Hifz)</span><span style="font-size:.8rem;color:var(--gold);font-weight:700">25%</span></div><div class="prog-bar-wrap"><div class="prog-bar" style="width:25%"></div></div></div>
             </div>
           </div>
-          <div class="col-lg-5">
-            <!-- Recent Activity -->
-            <div class="profile-section">
-              <div class="profile-section-title"><i class="fas fa-history"></i>Recent Activity</div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(13,107,99,.1)"><i class="fas fa-check" style="color:var(--teal)"></i></div><div><div class="ai-txt"><strong>Lesson Completed</strong> — Surah Yasin memorisation with Ustadh Bilal</div><div class="ai-time">15 Nov · 4:00 PM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(201,168,76,.1)"><i class="fas fa-heart" style="color:var(--gold)"></i></div><div><div class="ai-txt"><strong>Donation Processed</strong> — £20 monthly donation confirmed</div><div class="ai-time">1 Nov · 9:00 AM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(15,31,92,.07)"><i class="fas fa-user" style="color:var(--navy)"></i></div><div><div class="ai-txt"><strong>Profile Updated</strong> — Contact details changed</div><div class="ai-time">28 Oct · 2:30 PM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(201,168,76,.1)"><i class="fas fa-star" style="color:var(--gold)"></i></div><div><div class="ai-txt"><strong>Progress Report</strong> — October report available to download</div><div class="ai-time">25 Oct · 11:00 AM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(13,107,99,.1)"><i class="fas fa-graduation-cap" style="color:var(--teal)"></i></div><div><div class="ai-txt"><strong>Lesson Booked</strong> — 3 sessions for November scheduled</div><div class="ai-time">22 Oct · 6:00 PM</div></div></div>
-            </div>
-          </div>
+         
         </div>
       </div>
         {{-- 
@@ -435,8 +425,11 @@
     <tbody>
         @forelse ($subscriptions as $subscription)
         <tr>
+          @php
+          $planName = App\Models\Plan::where('stripe_price_id', $subscription->stripe_price)->first();
+          @endphp
             {{-- Plan Name --}}
-            <td>{{ $subscription->type ?? $subscription->name ?? 'default' }}</td>
+            <td>{{  $planName->name ?? 'Plan Not Found' }}</td>
 
             {{-- Start Date --}}
             <td>

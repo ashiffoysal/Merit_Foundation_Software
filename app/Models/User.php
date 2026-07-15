@@ -61,10 +61,7 @@ class User extends Authenticatable
     /**
      * A user can have many subscriptions.
      */
-    public function subscriptions()
-    {
-        return $this->hasMany(Subscription::class, 'user_id');
-    }
+
  
     /**
      * The user's most recent subscription (used to infer a "plan"
