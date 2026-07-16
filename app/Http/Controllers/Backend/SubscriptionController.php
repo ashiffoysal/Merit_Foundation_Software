@@ -19,6 +19,7 @@ class SubscriptionController extends Controller
 
     public function getData(Request $request)
     {
+        // Query to fetch subscriptions with user details
         $query = Subscription::query()
             ->select([
                 'subscriptions.id',
