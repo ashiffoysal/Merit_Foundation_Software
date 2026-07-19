@@ -1,13 +1,194 @@
-
 @extends('layouts.frontend')
 @section('title', 'Privacy Policy - Merit Education Foundation')
 @section('content')
 <!-- jQuery (load BEFORE your script) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+{{-- ══════════════════════════════════════════════
+     MOBILE RESPONSIVE STYLES
+     (Add these to your main stylesheet, or keep here.
+      Uses the SAME CSS variables your markup already
+      relies on: --navy, --gold, --teal, --cream,
+      --border, --muted, --red, --amber)
+════════════════════════════════════════════════ --}}
+<style>
+  /* ══════════════════════════════════════════════
+     DASHBOARD MOBILE RESPONSIVE FIX
+     Root cause: .dashboard-layout / .dash-sidebar /
+     .dash-main in style.css have NO media queries —
+     the sidebar is permanently position:fixed;width:270px
+     and .dash-main is permanently margin-left:270px.
+     This patch collapses the sidebar into an off-canvas
+     drawer below 991px (matches your existing site
+     breakpoint used by .nav-toggle) and — critically —
+     resets .dash-main's margin-left, which the last
+     patch missed.
+  ════════════════════════════════════════════════ */
+
+  /* Hamburger toggle button — fixed, top-left, mobile only */
+  .dash-menu-btn {
+    display: none;
+    position: fixed;
+    top: 82px;
+    left: 16px;
+    z-index: 900;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Overlay behind the drawer */
+  .dash-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,20,20,.55);
+    z-index: 799;
+  }
+  .dash-sidebar-overlay.active { display: block; }
+
+  /* ================= TABLET & MOBILE (matches site breakpoint) ================= */
+  @media (max-width: 991px) {
+
+    .dash-menu-btn { display: flex; }
+
+    .dashboard-layout {
+      display: block !important;
+    }
+
+    /* Sidebar becomes an off-canvas drawer, hidden by default */
+    .dash-sidebar {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      height: 100vh !important;
+      width: 270px !important;
+      max-width: 82vw;
+      z-index: 900;
+      transform: translateX(-100%);
+      transition: transform .32s cubic-bezier(.4,0,.2,1);
+      box-shadow: 8px 0 32px rgba(0,0,0,.3);
+    }
+    .dash-sidebar.mobile-open {
+      transform: translateX(0);
+    }
+
+    /* THE FIX: main content must reclaim the 270px the sidebar
+       normally reserves, or everything shifts off-screen */
+    .dash-main {
+      margin-left: 0 !important;
+      width: 100% !important;
+      padding: 76px 18px 32px !important;
+      min-height: auto;
+    }
+
+    /* Header row: stack title/breadcrumb above the action button */
+    .dash-main > div[style*="justify-content:space-between"] {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 14px;
+      margin-bottom: 22px !important;
+    }
+    .dash-main > div[style*="justify-content:space-between"] > div.d-flex.gap-2 {
+      width: 100%;
+    }
+    .dash-main > div[style*="justify-content:space-between"] > div.d-flex.gap-2 a {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .dash-h1 { font-size: 1.45rem !important; }
+    .dash-sub { font-size: .8rem; }
+
+    /* Save bar (sticky) needs room below the hamburger button */
+    .save-bar {
+      top: 68px;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+    .save-bar .d-flex.gap-2 { width: 100%; }
+    .save-bar button { width: 100%; justify-content: center; }
+
+    .profile-section { padding: 22px 18px; }
+
+    /* Subscriptions table: scroll horizontally instead of crushing columns */
+    #dash-documents table.table {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 10px;
+    }
+
+    /* Document/teacher info cards: stack full width */
+    #dash-documents .col-md-6 {
+      max-width: 100%;
+      flex: 0 0 100%;
+      margin-bottom: 12px;
+    }
+  }
+
+  /* ================= SMALL PHONES ================= */
+  @media (max-width: 575px) {
+    .ds-stat { padding: 16px 14px; }
+    .ds-stat-val { font-size: 1.6rem; }
+    .dash-h1 { font-size: 1.25rem !important; }
+    .dash-main { padding: 76px 14px 28px !important; }
+
+    #dash-profile > .d-flex.gap-3.mt-2 { flex-direction: column; }
+    #dash-profile > .d-flex.gap-3.mt-2 > button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .lesson-card, .don-row, .notification-item { flex-wrap: wrap; }
+  }
+</style>
+
 <div>
+  {{-- Hamburger toggle for the sidebar drawer (mobile only) --}}
+  <button class="dash-menu-btn" id="dash-menu-toggle" aria-label="Open menu">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  {{-- Overlay for mobile drawer --}}
+  <div class="dash-sidebar-overlay" id="dash-sidebar-overlay"></div>
+
   <div class="dashboard-layout">
     <!-- Sidebar -->
-   @include('frontend.user_dashboard.include.sidebar')
+    {{-- @include('frontend.user_dashboard.include.sidebar')
+    --}}
+    <aside class="dash-sidebar" id="dash-sidebar">
+      <div class="dash-sidebar-inner">
+        <div class="dash-user-block">
+          <div class="dash-av-wrap">
+            <div class="dash-av" id="dash-av-main">A</div>
+            <div class="dash-av-edit" onclick="switchDash('profile')"><i class="fas fa-pencil-alt"></i></div>
+          </div>
+          <div class="dash-user-name">{{ Auth::user()->name }}</div>
+          <div class="dash-user-email">{{ Auth::user()->email }}</div>
+          {{-- <div class="dash-user-badge"><i class="fas fa-star" style="font-size:.55rem"></i>Active Sponsor</div> --}}
+        </div>
+        <div class="dash-nav-section">Main</div>
+        <div class="dash-nav-item active" onclick="switchDash('overview')"><i class="fas fa-th-large"></i>Dashboard</div>
+        <div class="dash-nav-item" onclick="switchDash('profile')"><i class="fas fa-user"></i>My Profile</div>
+        {{-- <div class="dash-nav-item" onclick="switchDash('settings')"><i class="fas fa-cog"></i>Settings</div> --}}
+        <div class="dash-nav-item" onclick="switchDash('documents')"><i class="fas fa-file-alt"></i>My Plans</div>
+        <div class="dash-logout">
+          <a class="dash-logout-btn" href="{{ url('userlogout') }}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
+        </div>
+      </div>
+    </aside>
 
     <!-- Main Content -->
     <main class="dash-main">
@@ -51,10 +232,10 @@
               <div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:.8rem;font-weight:600;color:var(--navy)">Memorisation (Hifz)</span><span style="font-size:.8rem;color:var(--gold);font-weight:700">25%</span></div><div class="prog-bar-wrap"><div class="prog-bar" style="width:25%"></div></div></div>
             </div>
           </div>
-         
+
         </div>
       </div>
-        {{-- 
+        {{--
       <!-- LESSONS PANEL -->
       <div id="dash-lessons" class="dash-panel">
         <div class="profile-section">
@@ -411,7 +592,7 @@
         <div class="profile-section">
           <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Plans</div>
           <div class="row g-3">
-          
+
 <table class="table table-bordered table-hover">
     <thead class="table-dark">
         <tr>
@@ -433,8 +614,8 @@
 
             {{-- Start Date --}}
             <td>
-                {{ $subscription->created_at 
-                    ? $subscription->created_at->format('d M Y') 
+                {{ $subscription->created_at
+                    ? $subscription->created_at->format('d M Y')
                     : '—' }}
             </td>
 
@@ -463,7 +644,6 @@
                 @else
                     <span class="badge bg-light text-dark">{{ $subscription->stripe_status }}</span>
                 @endif
-                 
 
             </td>
 
@@ -473,7 +653,7 @@
                     {{-- RESUME --}}
                     <form method="POST" action="{{ route('subscriptions.resume', $subscription->id) }}" class="d-inline">
                         @csrf
-                        <button class="btn btn-sm btn-success" 
+                        <button class="btn btn-sm btn-success"
                                 onclick="return confirm('Resume this subscription?')">
                             ▶ Resume
                         </button>
@@ -534,7 +714,7 @@
         @endforelse
     </tbody>
 </table>
-           
+
              <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Class Time and Date</div>
             <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">October Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Oct 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
             {{-- <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">September Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Sep 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
@@ -552,6 +732,45 @@
 
 
 <script>
+// ── Mobile sidebar drawer toggle ────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+    const menuBtn = document.getElementById('dash-menu-toggle');
+    const sidebar = document.getElementById('dash-sidebar');
+    const overlay = document.getElementById('dash-sidebar-overlay');
+
+    function openSidebar() {
+        sidebar.classList.add('mobile-open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('mobile-open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (menuBtn) {
+        menuBtn.addEventListener('click', function () {
+            sidebar.classList.contains('mobile-open') ? closeSidebar() : openSidebar();
+        });
+    }
+    if (overlay) {
+        overlay.addEventListener('click', closeSidebar);
+    }
+
+    // Close the drawer automatically when a nav item is tapped (mobile only)
+    document.querySelectorAll('.dash-nav-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+            if (window.innerWidth <= 991) closeSidebar();
+        });
+    });
+
+    // Close drawer if the viewport is resized back up to desktop
+    window.addEventListener('resize', function () {
+        if (window.innerWidth > 991) closeSidebar();
+    });
+});
+
 function saveProfile() {
     // Clear previous errors
     $('.field-input, .field-select, .field-textarea').removeClass('is-invalid');

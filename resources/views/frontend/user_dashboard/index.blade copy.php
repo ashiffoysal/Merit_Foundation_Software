@@ -2,11 +2,104 @@
 @extends('layouts.frontend')
 @section('title', 'Privacy Policy - Merit Education Foundation')
 @section('content')
+<!-- jQuery (load BEFORE your script) -->
+<style>
+  /* ============ MOBILE RESPONSIVE FIXES ============ */
+@media (max-width: 768px) {
 
+  .dashboard-layout {
+    display: block; /* was flex/grid for desktop */
+  }
+
+  /* Sidebar becomes an off-canvas drawer */
+  .dash-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+  .dash-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  /* Dark overlay behind drawer when open */
+  .dash-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 999;
+  }
+  .dash-sidebar-overlay.active {
+    display: block;
+  }
+
+  .dash-main {
+    width: 100%;
+    padding: 16px;
+  }
+
+  /* Stat cards: 2 per row instead of 4 */
+  .row.g-3.mb-4 { row-gap: 12px; }
+  .ds-stat { padding: 14px; }
+
+  /* Header row wraps instead of squeezing */
+  .dash-main > div[style*="justify-content:space-between"] {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 12px;
+  }
+
+  /* Table becomes horizontally scrollable, not squished */
+  .table-bordered {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .dash-h1 { font-size: 1.4rem; }
+}
+
+@media (max-width: 480px) {
+  .col-6.col-xl-3 { flex: 0 0 100%; max-width: 100%; } /* stat cards stack fully on very small screens */
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <div>
   <div class="dashboard-layout">
     <!-- Sidebar -->
-   @include('frontend.user_dashboard.include.sidebar')
+   {{-- @include('frontend.user_dashboard.include.sidebar')
+    --}}
+     <aside class="dash-sidebar" id="dash-sidebar">
+      <div class="dash-sidebar-inner">
+        <div class="dash-user-block">
+          <div class="dash-av-wrap">
+            <div class="dash-av" id="dash-av-main">A</div>
+            <div class="dash-av-edit" onclick="switchDash('profile')"><i class="fas fa-pencil-alt"></i></div>
+          </div>
+          <div class="dash-user-name">{{ Auth::user()->name }}</div>
+          <div class="dash-user-email">{{ Auth::user()->email }}</div>
+          {{-- <div class="dash-user-badge"><i class="fas fa-star" style="font-size:.55rem"></i>Active Sponsor</div> --}}
+        </div>
+        <div class="dash-nav-section">Main</div>
+        <div class="dash-nav-item active" onclick="switchDash('overview')"><i class="fas fa-th-large"></i>Dashboard</div>
+        <div class="dash-nav-item" onclick="switchDash('profile')"><i class="fas fa-user"></i>My Profile</div>
+        {{-- <div class="dash-nav-item" onclick="switchDash('settings')"><i class="fas fa-cog"></i>Settings</div> --}}
+        <div class="dash-nav-item" onclick="switchDash('documents')"><i class="fas fa-file-alt"></i>My Plans</div>
+        <div class="dash-logout">
+          <a class="dash-logout-btn" href="{{ url('userlogout') }}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
+        </div>
+      </div>
+      <button id="mobile-menu-btn" class="d-md-none" onclick="toggleMobileSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+<div class="dash-sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+    </aside>
 
     <!-- Main Content -->
     <main class="dash-main">
@@ -26,22 +119,22 @@
       <div id="dash-overview" class="dash-panel active">
         <!-- Stats -->
         <div class="row g-3 mb-4">
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-graduation-cap" style="color:var(--gold)"></i></div><div class="ds-stat-val">12</div><div class="ds-stat-lbl">Total Lessons</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i>+2 this month</div></div></div>
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(13,107,99,.1)"><i class="fas fa-heart" style="color:var(--teal)"></i></div><div class="ds-stat-val">£185</div><div class="ds-stat-lbl">Total Donated</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i>£20 this month</div></div></div>
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(15,31,92,.07)"><i class="fas fa-child" style="color:var(--navy)"></i></div><div class="ds-stat-val">1</div><div class="ds-stat-lbl">Child Sponsored</div><div class="ds-stat-change change-neu"><i class="fas fa-minus"></i>Active</div></div></div>
-          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-star" style="color:var(--gold)"></i></div><div class="ds-stat-val">68%</div><div class="ds-stat-lbl">Quran Progress</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i>+8% this week</div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-graduation-cap" style="color:var(--gold)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Total Lessons</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i></div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(13,107,99,.1)"><i class="fas fa-heart" style="color:var(--teal)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Total Donated</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i></div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(15,31,92,.07)"><i class="fas fa-child" style="color:var(--navy)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Child Sponsored</div><div class="ds-stat-change change-neu"><i class="fas fa-minus"></i></div></div></div>
+          <div class="col-6 col-xl-3"><div class="ds-stat"><div class="ds-stat-icon" style="background:rgba(201,168,76,.1)"><i class="fas fa-star" style="color:var(--gold)"></i></div><div class="ds-stat-val"></div><div class="ds-stat-lbl">Quran Progress</div><div class="ds-stat-change change-up"><i class="fas fa-arrow-up"></i></div></div></div>
         </div>
 
         <div class="row g-4">
-          <div class="col-lg-7">
+          <div class="col-lg-12">
             <!-- Upcoming Lessons -->
-            <div class="profile-section">
+            {{-- <div class="profile-section">
               <div class="profile-section-title"><i class="fas fa-calendar-alt"></i>Upcoming Lessons</div>
               <div class="lesson-card"><div class="lc-day"><div class="lc-day-n">18</div><div class="lc-day-m">NOV</div></div><div class="lc-info"><div class="lc-title">Surah Al-Baqarah — Tajweed Session</div><div class="lc-meta"><span><i class="fas fa-clock"></i> 4:00 PM – 4:45 PM</span><span><i class="fas fa-user"></i> Ustadh Bilal</span><span><i class="fas fa-video"></i> Zoom</span></div></div><div class="lc-status status-upcoming"><i class="fas fa-clock"></i>Upcoming</div></div>
               <div class="lesson-card"><div class="lc-day"><div class="lc-day-n">20</div><div class="lc-day-m">NOV</div></div><div class="lc-info"><div class="lc-title">Qaida Revision &amp; Reading Practice</div><div class="lc-meta"><span><i class="fas fa-clock"></i> 5:00 PM – 5:30 PM</span><span><i class="fas fa-user"></i> Ustadha Fatima</span><span><i class="fas fa-video"></i> Zoom</span></div></div><div class="lc-status status-upcoming"><i class="fas fa-clock"></i>Upcoming</div></div>
               <div class="lesson-card"><div class="lc-day"><div class="lc-day-n">15</div><div class="lc-day-m">NOV</div></div><div class="lc-info"><div class="lc-title">Surah Yasin — Memorisation</div><div class="lc-meta"><span><i class="fas fa-clock"></i> 4:00 PM – 4:45 PM</span><span><i class="fas fa-user"></i> Ustadh Bilal</span></div></div><div class="lc-status status-done"><i class="fas fa-check"></i>Completed</div></div>
               <button class="btn-outline-navy btn-sm mt-2" style="font-size:.72rem" onclick="switchDash('lessons')"><i class="fas fa-list"></i>View All Lessons</button>
-            </div>
+            </div> --}}
             <!-- Progress -->
             <div class="profile-section">
               <div class="profile-section-title"><i class="fas fa-chart-line"></i>Learning Progress</div>
@@ -50,20 +143,10 @@
               <div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:.8rem;font-weight:600;color:var(--navy)">Memorisation (Hifz)</span><span style="font-size:.8rem;color:var(--gold);font-weight:700">25%</span></div><div class="prog-bar-wrap"><div class="prog-bar" style="width:25%"></div></div></div>
             </div>
           </div>
-          <div class="col-lg-5">
-            <!-- Recent Activity -->
-            <div class="profile-section">
-              <div class="profile-section-title"><i class="fas fa-history"></i>Recent Activity</div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(13,107,99,.1)"><i class="fas fa-check" style="color:var(--teal)"></i></div><div><div class="ai-txt"><strong>Lesson Completed</strong> — Surah Yasin memorisation with Ustadh Bilal</div><div class="ai-time">15 Nov · 4:00 PM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(201,168,76,.1)"><i class="fas fa-heart" style="color:var(--gold)"></i></div><div><div class="ai-txt"><strong>Donation Processed</strong> — £20 monthly donation confirmed</div><div class="ai-time">1 Nov · 9:00 AM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(15,31,92,.07)"><i class="fas fa-user" style="color:var(--navy)"></i></div><div><div class="ai-txt"><strong>Profile Updated</strong> — Contact details changed</div><div class="ai-time">28 Oct · 2:30 PM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(201,168,76,.1)"><i class="fas fa-star" style="color:var(--gold)"></i></div><div><div class="ai-txt"><strong>Progress Report</strong> — October report available to download</div><div class="ai-time">25 Oct · 11:00 AM</div></div></div>
-              <div class="activity-item"><div class="ai-ic" style="background:rgba(13,107,99,.1)"><i class="fas fa-graduation-cap" style="color:var(--teal)"></i></div><div><div class="ai-txt"><strong>Lesson Booked</strong> — 3 sessions for November scheduled</div><div class="ai-time">22 Oct · 6:00 PM</div></div></div>
-            </div>
-          </div>
+         
         </div>
       </div>
-{{-- 
+        {{-- 
       <!-- LESSONS PANEL -->
       <div id="dash-lessons" class="dash-panel">
         <div class="profile-section">
@@ -116,81 +199,271 @@
           </div>
         </div>
       </div>
- --}}
+       --}}
       <!-- PROFILE PANEL -->
-      <div id="dash-profile" class="dash-panel">
-        <div class="save-bar"><div class="save-bar-msg"><strong>Profile Settings</strong> — Keep your information up to date</div><div class="d-flex gap-2"><button class="btn-outline-navy btn-sm">Cancel</button><button class="btn-gold btn-sm" onclick="saveProfile()"><i class="fas fa-save"></i>Save Changes</button></div></div>
+      {{-- resources/views/dashboard/profile.blade.php --}}
 
-        <!-- Avatar -->
-        <div class="profile-section">
-          <div class="profile-section-title"><i class="fas fa-user-circle"></i>Profile Photo</div>
-          <div class="profile-av-section">
-            <div class="profile-av-lg" id="profile-av-display">A</div>
-            <div class="profile-av-info">
-              <h5>Ayesha Malik</h5>
-              <p>JPG, PNG or GIF · Max 2MB</p>
-              <div class="d-flex gap-2 flex-wrap">
-                <button class="btn-gold btn-sm"><i class="fas fa-upload"></i>Upload Photo</button>
-                <button class="btn-outline-navy btn-sm"><i class="fas fa-trash"></i>Remove</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        @php
-          $user=Auth::user();
-        @endphp
-        <!-- Personal Info -->
-        <div class="profile-section">
-          <div class="profile-section-title"><i class="fas fa-id-card"></i>Personal Information</div>
-          <div class="row g-3">
-            <div class="col-md-6"><div class="field-group"><label class="field-label">First Name *</label><input name="name" type="text" class="field-input" value="{{ $user->name }}" id="prof-fname"><p class="field-hint">Your legal first name as on official documents</p></div></div>
-            <div class="col-md-6"><div class="field-group"><label class="field-label">Last Name *</label><input name="last_name" type="text" class="field-input" value="{{ $user->last_name }}" id="prof-lname"></div></div>
-            <div class="col-md-6"><div class="field-group"><label class="field-label">Email Address *</label><input name="email" type="email" class="field-input" value="{{ $user->email }}" id="prof-email"><p class="field-hint">Used for login and lesson notifications</p></div></div>
-            <div class="col-md-6"><div class="field-group"><label class="field-label">Phone Number</label><input name="phone" type="tel" class="field-input" value="{{ $user->phone }}" id="prof-phone"></div></div>
-              </div>
-        </div>
+@php $user = Auth::user(); @endphp
 
-        <!-- Address -->
-        <div class="profile-section">
-          <div class="profile-section-title"><i class="fas fa-map-marker-alt"></i>Address</div>
-          <div class="row g-3">
-            <div class="col-12"><div class="field-group"><label class="field-label">Address Line 1</label><input name="address_line_1" type="text" class="field-input" value="{{ $user->address_line_1 }}"></div></div>
-            <div class="col-12"><div class="field-group"><label class="field-label">Address Line 2</label><input name="address_line_2" type="text" class="field-input" value="{{ $user->address_line_2 }}"></div></div>
-            <div class="col-md-6"><div class="field-group"><label class="field-label">City</label><input name="city" type="text" class="field-input" value="{{ $user->city }}"></div></div>
-            <div class="col-md-3"><div class="field-group"><label class="field-label">Postcode</label><input name="postcode" type="text" class="field-input" value="{{ $user->postcode }}"></div></div>
-            <div class="col-md-3"><div class="field-group"><label class="field-label">Country</label><select class="field-select" name="country"><option @if($user->country=='United Kingdom') selected @endif>United Kingdom</option><option @if($user->country=='Other') selected @endif>Other</option></select></div></div>
-          </div>
-        </div>
+<div id="dash-profile" class="dash-panel">
 
-        <!-- Student Info -->
-        <div class="profile-section">
-          <div class="profile-section-title"><i class="fas fa-child"></i>Student Information</div>
-          <div class="row g-3">
-            <div class="col-md-6"><div class="field-group"><label class="field-label">Student Name</label><input type="text" name="student_name" class="field-input" value="{{ $user->student_name }}"></div></div>
-            <div class="col-md-3"><div class="field-group"><label class="field-label">Age</label><input type="number" name="age" class="field-input" value="{{ $user->age }}"></div></div>
-            <div class="col-md-3"><div class="field-group"><label class="field-label">Current Level</label><select name="quran_level" class="field-select"><option @if($user->quran_level=='Beginner') selected @endif>Beginner</option><option @if($user->quran_level=='Qaida') selected @endif >Qaida</option><option @if($user->quran_level=='Reading Quran') selected @endif >Reading Quran</option><option @if($user->quran_level=='Tajweed') selected @endif >Tajweed</option></select></div></div>
-            <div class="col-12"><div class="field-group"><label class="field-label">Learning Goals / Notes</label><textarea name="learning_goals" class="field-textarea" rows="3">{{ $user->learning_goals }}</textarea></div></div>
-           <div class="col-md-6"><div class="field-group"><label class="field-label">Date of Birth</label><input type="date" name="date_of_birth" class="field-input" value="{{ $user->date_of_birth }}"></div></div>
-            <div class="col-md-6"><div class="field-group"><label class="field-label">Gender</label><select name="gender" class="field-select"><option @if($user->gender=='Female') selected @endif >Female</option><option @if($user->gender=='Male') selected @endif >Male</option><option @if($user->gender=='Prefer not to say') selected @endif >Prefer not to say</option></select></div></div>
-       
-          </div>
-        </div>
+  {{-- ── Save Bar ── --}}
+  <div class="save-bar">
+    <div class="save-bar-msg">
+      <strong>Profile Settings</strong> — Keep your information up to date
+    </div>
+    <div class="d-flex gap-2">
+      {{-- <button class="btn-outline-navy btn-sm" id="cancel-btn">Cancel</button> --}}
+      <button class="btn-gold btn-sm" id="save-btn-top" onclick="saveProfile()">
+        <i class="fas fa-save"></i> Save Changes
+      </button>
+    </div>
+  </div>
 
-        <!-- Password -->
-        <div class="profile-section">
-          <div class="profile-section-title"><i class="fas fa-lock"></i>Change Password</div>
-          <div class="row g-3">
-            <div class="col-md-4"><div class="field-group"><label class="field-label">Current Password</label><input type="password" class="field-input" placeholder="Current password"></div></div>
-            <div class="col-md-4"><div class="field-group"><label class="field-label">New Password</label><input type="password" class="field-input" placeholder="New password"></div></div>
-            <div class="col-md-4"><div class="field-group"><label class="field-label">Confirm New Password</label><input type="password" class="field-input" placeholder="Confirm"></div></div>
-          </div>
-          <button class="btn-outline-navy btn-sm"><i class="fas fa-key"></i>Update Password</button>
-        </div>
-        <div class="d-flex gap-3 mt-2">
-          <button class="btn-gold" onclick="saveProfile()"><i class="fas fa-save"></i>Save All Changes</button>
-          <button class="btn-outline-navy">Cancel</button>
+  {{-- ── Avatar ── --}}
+  {{-- <div class="profile-section">
+    <div class="profile-section-title"><i class="fas fa-user-circle"></i> Profile Photo</div>
+    <div class="profile-av-section">
+      <div class="profile-av-lg" id="profile-av-display">
+        {{ strtoupper(substr($user->name, 0, 1)) }}
+      </div>
+      <div class="profile-av-info">
+        <h5>{{ $user->name }} {{ $user->last_name }}</h5>
+        <p>JPG, PNG or GIF · Max 2MB</p>
+        <div class="d-flex gap-2 flex-wrap">
+          <button class="btn-gold btn-sm"><i class="fas fa-upload"></i> Upload Photo</button>
+          <button class="btn-outline-navy btn-sm"><i class="fas fa-trash"></i> Remove</button>
         </div>
       </div>
+    </div>
+  </div> --}}
+
+  {{-- ── Personal Information ── --}}
+  <div class="profile-section">
+    <div class="profile-section-title"><i class="fas fa-id-card"></i> Personal Information</div>
+    <div class="row g-3">
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">First Name *</label>
+          <input type="text" class="field-input" id="prof-fname" value="{{ $user->name }}">
+          <p class="field-hint">Your legal first name as on official documents</p>
+          <div class="field-error" id="err-name"></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">Last Name *</label>
+          <input type="text" class="field-input" id="prof-lname" value="{{ $user->last_name }}">
+          <div class="field-error" id="err-last_name"></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">Email Address *</label>
+          <input type="email" class="field-input" id="prof-email" value="{{ $user->email }}">
+          <p class="field-hint">Used for login and lesson notifications</p>
+          <div class="field-error" id="err-email"></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">Phone Number</label>
+          <input type="tel" class="field-input" id="prof-phone" value="{{ $user->phone }}">
+          <div class="field-error" id="err-phone"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {{-- ── Address ── --}}
+  <div class="profile-section">
+    <div class="profile-section-title"><i class="fas fa-map-marker-alt"></i> Address</div>
+    <div class="row g-3">
+
+      <div class="col-12">
+        <div class="field-group">
+          <label class="field-label">Address Line 1</label>
+          <input type="text" name="address_line_1" class="field-input" value="{{ $user->address_line_1 }}">
+          <div class="field-error" id="err-address_line_1"></div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="field-group">
+          <label class="field-label">Address Line 2</label>
+          <input type="text" name="address_line_2" class="field-input" value="{{ $user->address_line_2 }}">
+          <div class="field-error" id="err-address_line_2"></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">City</label>
+          <input type="text" name="city" class="field-input" value="{{ $user->city }}">
+          <div class="field-error" id="err-city"></div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="field-group">
+          <label class="field-label">Postcode</label>
+          <input type="text" name="postcode" class="field-input" value="{{ $user->postcode }}">
+          <div class="field-error" id="err-postcode"></div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="field-group">
+          <label class="field-label">Country</label>
+          <select name="country" class="field-select">
+            <option @selected($user->country == 'United Kingdom')>United Kingdom</option>
+            <option @selected($user->country == 'Other')>Other</option>
+          </select>
+          <div class="field-error" id="err-country"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {{-- ── Student Information ── --}}
+  <div class="profile-section">
+    <div class="profile-section-title"><i class="fas fa-child"></i> Student Information</div>
+    <div class="row g-3">
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">Student Name</label>
+          <input type="text" name="student_name" class="field-input" value="{{ $user->student_name }}">
+          <div class="field-error" id="err-student_name"></div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="field-group">
+          <label class="field-label">Age</label>
+          <input type="number" name="age" class="field-input" value="{{ $user->age }}">
+          <div class="field-error" id="err-age"></div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="field-group">
+          <label class="field-label">Current Level</label>
+          <select name="quran_level" class="field-select">
+            <option @selected($user->quran_level == 'Beginner')>Beginner</option>
+            <option @selected($user->quran_level == 'Qaida')>Qaida</option>
+            <option @selected($user->quran_level == 'Reading Quran')>Reading Quran</option>
+            <option @selected($user->quran_level == 'Tajweed')>Tajweed</option>
+          </select>
+          <div class="field-error" id="err-quran_level"></div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="field-group">
+          <label class="field-label">Learning Goals / Notes</label>
+          <textarea name="learning_goals" class="field-textarea" rows="3">{{ $user->learning_goals }}</textarea>
+          <div class="field-error" id="err-learning_goals"></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">Date of Birth</label>
+          <input type="date" name="date_of_birth" class="field-input" value="{{ $user->date_of_birth }}">
+          <div class="field-error" id="err-date_of_birth"></div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="field-group">
+          <label class="field-label">Gender</label>
+          <select name="gender" class="field-select">
+            <option @selected($user->gender == 'Female')>Female</option>
+            <option @selected($user->gender == 'Male')>Male</option>
+            <option @selected($user->gender == 'Prefer not to say')>Prefer not to say</option>
+          </select>
+          <div class="field-error" id="err-gender"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {{-- ── Change Password ── --}}
+  {{--  <div class="profile-section">
+    <div class="profile-section-title"><i class="fas fa-lock"></i> Change Password</div>
+    <div class="row g-3">
+
+      <div class="col-md-4">
+        <div class="field-group">
+          <label class="field-label">Current Password</label>
+          <input type="password" id="pwd-current" class="field-input" placeholder="Current password">
+          <div class="field-error" id="err-current_password"></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="field-group">
+          <label class="field-label">New Password</label>
+          <input type="password" id="pwd-new" class="field-input" placeholder="New password">
+          <div class="field-error" id="err-new_password"></div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="field-group">
+          <label class="field-label">Confirm New Password</label>
+          <input type="password" id="pwd-confirm" class="field-input" placeholder="Confirm">
+          <div class="field-error" id="err-pwd-confirm"></div>
+        </div>
+      </div>
+
+    </div>
+    <button class="btn-outline-navy btn-sm mt-3" id="update-pwd-btn">
+      <i class="fas fa-key"></i> Update Password
+    </button>
+  </div> --}}
+
+  {{-- ── Bottom Action Bar ── --}}
+  <div class="d-flex gap-3 mt-2">
+    <button class="btn-gold" id="save-btn-bottom" onclick="saveProfile()">
+      <i class="fas fa-save"></i> Save All Changes
+    </button>
+    {{-- <button class="btn-outline-navy" id="cancel-btn-bottom">Cancel</button> --}}
+  </div>
+
+</div>{{-- end #dash-profile --}}
+
+
+{{-- ══════════════════════════════════════════════
+     JQUERY AJAX — Validation & Profile Update
+════════════════════════════════════════════════ --}}
+
+
+{{-- ── Inline styles for error states (add to your main CSS if preferred) ── --}}
+<style>
+  .field-error {
+    color: #c0392b;
+    font-size: .78rem;
+    margin-top: 4px;
+    min-height: 1rem;
+  }
+  .input-error {
+    border-color: #c0392b !important;
+    box-shadow: 0 0 0 2px rgba(192,57,43,.15) !important;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
 
       <!-- NOTIFICATIONS PANEL -->
       <div id="dash-notifications" class="dash-panel">
@@ -228,12 +501,139 @@
       <!-- DOCUMENTS PANEL -->
       <div id="dash-documents" class="dash-panel">
         <div class="profile-section">
-          <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Documents</div>
+          <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Plans</div>
           <div class="row g-3">
+          
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Plan Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($subscriptions as $subscription)
+        <tr>
+          @php
+          $planName = App\Models\Plan::where('stripe_price_id', $subscription->stripe_price)->first();
+          @endphp
+            {{-- Plan Name --}}
+            <td>{{  $planName->name ?? 'Plan Not Found' }}</td>
+
+            {{-- Start Date --}}
+            <td>
+                {{ $subscription->created_at 
+                    ? $subscription->created_at->format('d M Y') 
+                    : '—' }}
+            </td>
+
+            {{-- End Date --}}
+            <td>
+                @if($subscription->ends_at)
+                    {{ $subscription->ends_at->format('d M Y') }}
+                @elseif($subscription->trial_ends_at)
+                    Trial ends {{ $subscription->trial_ends_at->format('d M Y') }}
+                @else
+                    Ongoing
+                @endif
+            </td>
+@php $status = $subscription->stripe_status; @endphp
+            {{-- Status Badge --}}
+            <td>
+
+                @if($subscription->onGracePeriod())
+                    <span class="badge bg-warning text-dark">Cancels Soon</span>
+                @elseif($subscription->stripe_status === 'paused')
+                    <span class="badge bg-secondary">Paused</span>
+                @elseif($subscription->active())
+                    <span class="badge bg-success">Active</span>
+                @elseif($subscription->canceled())
+                    <span class="badge bg-danger">Cancelled</span>
+                @else
+                    <span class="badge bg-light text-dark">{{ $subscription->stripe_status }}</span>
+                @endif
+                 
+
+            </td>
+
+            {{-- Action Buttons --}}
+            <td>
+                @if($subscription->stripe_status === 'paused')
+                    {{-- RESUME --}}
+                    <form method="POST" action="{{ route('subscriptions.resume', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-success" 
+                                onclick="return confirm('Resume this subscription?')">
+                            ▶ Resume
+                        </button>
+                    </form>
+
+                @elseif($subscription->active() && !$subscription->onGracePeriod())
+                    {{-- PAUSE --}}
+                    <form method="POST" action="{{ route('subscriptions.pause', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-warning"
+                                onclick="return confirm('Pause this subscription?')">
+                            ⏸ Pause
+                        </button>
+                    </form>
+
+                    {{-- CANCEL AT END --}}
+                    <form method="POST" action="{{ route('subscriptions.cancel', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-secondary"
+                                onclick="return confirm('Cancel at period end?')">
+                            Cancel
+                        </button>
+                    </form>
+
+                    {{-- CANCEL NOW --}}
+                    <form method="POST" action="{{ route('subscriptions.cancelNow', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-danger"
+                                onclick="return confirm('Cancel IMMEDIATELY? This cannot be undone!')">
+                            Cancel Now
+                        </button>
+                    </form>
+
+                @elseif($subscription->onGracePeriod())
+                    {{-- UNDO CANCEL (resume during grace period) --}}
+                    <form method="POST" action="{{ route('subscriptions.resume', $subscription->id) }}" class="d-inline">
+                        @csrf
+                        <button class="btn btn-sm btn-outline-success"
+                                onclick="return confirm('Undo cancellation and reactivate?')">
+                            ↩ Undo Cancel
+                        </button>
+                    </form>
+                    <span class="text-muted small ms-1">
+                        Ends {{ $subscription->ends_at->format('d M Y') }}
+                    </span>
+
+                @else
+                    <span class="text-muted small">No actions available</span>
+                @endif
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="5" class="text-center text-muted py-4">
+                No subscriptions found. Subscribe above to get started.
+            </td>
+        </tr>
+        @endforelse
+    </tbody>
+</table>
+           
+             <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Class Time and Date</div>
             <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">October Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Oct 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
-            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">September Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Sep 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
+            {{-- <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">September Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Sep 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
             <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(13,107,99,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-invoice" style="color:var(--teal)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">Donation Receipt — Nov 2025</div><div style="font-size:.72rem;color:var(--muted)">PDF · 1 Nov 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
-            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(15,31,92,.07);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-certificate" style="color:var(--navy)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">Gift Aid Declaration</div><div style="font-size:.72rem;color:var(--muted)">PDF · 1 Jan 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
+            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(15,31,92,.07);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-certificate" style="color:var(--navy)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">Gift Aid Declaration</div><div style="font-size:.72rem;color:var(--muted)">PDF · 1 Jan 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div> --}}
+              <div class="profile-section-title"><i class="fas fa-file-alt"></i>My Teacher Name</div>
+            <div class="col-md-6"><div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;transition:.3s;cursor:pointer" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="width:42px;height:42px;background:rgba(201,168,76,.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-file-pdf" style="color:var(--gold)"></i></div><div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">October Progress Report</div><div style="font-size:.72rem;color:var(--muted)">PDF · 25 Oct 2025</div></div><i class="fas fa-download" style="color:var(--muted);margin-left:auto"></i></div></div>
           </div>
         </div>
       </div>
@@ -241,4 +641,197 @@
     </main>
   </div>
 </div><!-- end dashboard -->
+
+
+<script>
+function saveProfile() {
+    // Clear previous errors
+    $('.field-input, .field-select, .field-textarea').removeClass('is-invalid');
+    $('.invalid-feedback').remove();
+
+    // Gather data
+    const data = {
+        _token: '{{ csrf_token() }}',
+        name:           $('#prof-fname').val().trim(),
+        last_name:      $('#prof-lname').val().trim(),
+        email:          $('#prof-email').val().trim(),
+        phone:          $('#prof-phone').val().trim(),
+        address_line_1: $('input[name="address_line_1"]').val().trim(),  // keep name attrs
+        address_line_2: $('input[name="address_line_2"]').val().trim(),
+        city:           $('input[name="city"]').val().trim(),
+        postcode:       $('input[name="postcode"]').val().trim(),
+        country:        $('select[name="country"]').val(),
+        student_name:   $('input[name="student_name"]').val().trim(),
+        age:            $('input[name="age"]').val().trim(),
+        quran_level:    $('select[name="quran_level"]').val(),
+        learning_goals: $('textarea[name="learning_goals"]').val().trim(),
+        date_of_birth:  $('input[name="date_of_birth"]').val(),
+        gender:         $('select[name="gender"]').val(),
+    };
+
+    // Client-side quick checks before hitting server
+    let hasError = false;
+
+    if (!data.name) {
+        showError('#prof-fname', 'First name is required.');
+        hasError = true;
+    }
+    if (!data.last_name) {
+        showError('#prof-lname', 'Last name is required.');
+        hasError = true;
+    }
+    if (!data.email) {
+        showError('#prof-email', 'Email address is required.');
+        hasError = true;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        showError('#prof-email', 'Please enter a valid email address.');
+        hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Disable save buttons during request
+    const $saveBtns = $('button[onclick="saveProfile()"]');
+    $saveBtns.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Saving…');
+
+    $.ajax({
+        url: '{{ route("profile.update") }}',
+        method: 'POST',
+        data: data,
+        success: function (res) {
+            if (res.success) {
+                showToast('success', res.message || 'Profile updated successfully.');
+            } else {
+                showToast('error', res.message || 'Something went wrong.');
+            }
+        },
+        error: function (xhr) {
+            if (xhr.status === 422) {
+                // Laravel validation errors
+                const errors = xhr.responseJSON.errors;
+                $.each(errors, function (field, messages) {
+                    const fieldMap = {
+                        name:           '#prof-fname',
+                        last_name:      '#prof-lname',
+                        email:          '#prof-email',
+                        phone:          '#prof-phone',
+                        address_line_1: 'input[name="address_line_1"]',
+                        address_line_2: 'input[name="address_line_2"]',
+                        city:           'input[name="city"]',
+                        postcode:       'input[name="postcode"]',
+                        country:        'select[name="country"]',
+                        student_name:   'input[name="student_name"]',
+                        age:            'input[name="age"]',
+                        quran_level:    'select[name="quran_level"]',
+                        learning_goals: 'textarea[name="learning_goals"]',
+                        date_of_birth:  'input[name="date_of_birth"]',
+                        gender:         'select[name="gender"]',
+                    };
+                    if (fieldMap[field]) {
+                        showError(fieldMap[field], messages[0]);
+                    }
+                });
+            } else {
+                showToast('error', 'Server error. Please try again.');
+            }
+        },
+        complete: function () {
+            $saveBtns.prop('disabled', false).html('<i class="fas fa-save"></i> Save Changes');
+        }
+    });
+}
+
+// ── Password Update ──────────────────────────────────────────────
+$('.btn-outline-navy:contains("Update Password")').on('click', function () {
+    const current  = $('input[placeholder="Current password"]').val();
+    const newPass  = $('input[placeholder="New password"]').val();
+    const confirm  = $('input[placeholder="Confirm"]').val();
+
+    $('input[type="password"]').removeClass('is-invalid');
+    $('.pwd-error').remove();
+
+    let hasError = false;
+    if (!current) { showPasswordError(0, 'Enter your current password.'); hasError = true; }
+    if (!newPass || newPass.length < 8) { showPasswordError(1, 'Min 8 characters.'); hasError = true; }
+    if (newPass !== confirm) { showPasswordError(2, 'Passwords do not match.'); hasError = true; }
+    if (hasError) return;
+
+    const $btn = $(this);
+    $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Updating…');
+
+    $.ajax({
+        url: '{{ route("profile.password") }}',
+        method: 'POST',
+        data: {
+            _token:                  '{{ csrf_token() }}',
+            current_password:        current,
+            new_password:            newPass,
+            new_password_confirmation: confirm,
+        },
+        success: function (res) {
+            if (res.success) {
+                showToast('success', res.message || 'Password updated.');
+                $('input[type="password"]').val('');
+            } else {
+                showToast('error', res.message || 'Could not update password.');
+            }
+        },
+        error: function (xhr) {
+            if (xhr.status === 422) {
+                const errors = xhr.responseJSON.errors;
+                const pwdInputs = $('input[type="password"]');
+                if (errors.current_password) showPasswordError(0, errors.current_password[0]);
+                if (errors.new_password)     showPasswordError(1, errors.new_password[0]);
+            } else {
+                showToast('error', 'Server error. Please try again.');
+            }
+        },
+        complete: function () {
+            $btn.prop('disabled', false).html('<i class="fas fa-key"></i> Update Password');
+        }
+    });
+});
+
+// ── Helpers ──────────────────────────────────────────────────────
+function showError(selector, message) {
+    const $el = $(selector);
+    $el.addClass('is-invalid');
+    $el.closest('.field-group').append(
+        `<div class="invalid-feedback d-block" style="color:#dc3545;font-size:.8rem;margin-top:4px;">${message}</div>`
+    );
+}
+
+function showPasswordError(index, message) {
+    const $inputs = $('input[type="password"]');
+    $inputs.eq(index).addClass('is-invalid')
+        .closest('.field-group').append(
+            `<div class="invalid-feedback pwd-error d-block" style="color:#dc3545;font-size:.8rem;margin-top:4px;">${message}</div>`
+        );
+}
+
+function showToast(type, message) {
+    const bg    = type === 'success' ? '#28a745' : '#dc3545';
+    const icon  = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+    const toast = $(`
+        <div style="
+            position:fixed;bottom:24px;right:24px;z-index:9999;
+            background:${bg};color:#fff;padding:14px 20px;border-radius:8px;
+            box-shadow:0 4px 12px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px;
+            font-size:.9rem;min-width:260px;max-width:380px;
+        ">
+            <i class="fas ${icon}"></i><span>${message}</span>
+        </div>
+    `);
+    $('body').append(toast);
+    setTimeout(() => toast.fadeOut(400, () => toast.remove()), 3500);
+}
+
+
+
+
+function toggleMobileSidebar() {
+  document.getElementById('dash-sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebar-overlay').classList.toggle('active');
+}
+</script>
 @endsection
