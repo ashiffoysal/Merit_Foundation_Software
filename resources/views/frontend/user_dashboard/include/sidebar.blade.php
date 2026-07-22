@@ -12,8 +12,9 @@
         <div class="dash-nav-section">Main</div>
         <div class="dash-nav-item active" onclick="switchDash('overview')"><i class="fas fa-th-large"></i>Dashboard</div>
         <div class="dash-nav-item" onclick="switchDash('profile')"><i class="fas fa-user"></i>My Profile</div>
-        {{-- <div class="dash-nav-item" onclick="switchDash('settings')"><i class="fas fa-cog"></i>Settings</div> --}}
+        
         <div class="dash-nav-item" onclick="switchDash('documents')"><i class="fas fa-file-alt"></i>My Plans</div>
+        <div class="dash-nav-item" href="{{ url('/invoice') }}"><i class="fas fa-cog"></i>Invoice</div>
         <div class="dash-logout">
           <a class="dash-logout-btn" href="{{ url('userlogout') }}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
         </div>

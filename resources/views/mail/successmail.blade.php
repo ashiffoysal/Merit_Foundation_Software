@@ -7,9 +7,7 @@
 <meta name="color-scheme" content="light">
 <meta name="supported-color-schemes" content="light">
 <title>Welcome! Your Subscription is Now Active</title>
-<!--[if mso]>
-<noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
-<![endif]-->
+
 <style>
   /* ---------- Client resets ---------- */
   body, table, td, a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
@@ -298,12 +296,7 @@
               </td>
             </tr>
 
-            <!-- =============================================================== -->
-            <!-- SECTION: WHAT'S INCLUDED — feature highlights                    -->
-            <!-- Adjusted to Merit Education Foundation's actual offering:        -->
-            <!-- 1-to-1 tutoring, flexible scheduling, vetted/DBS-checked tutors, -->
-            <!-- progress tracking, safeguarding, educational support.           -->
-            <!-- =============================================================== -->
+ 
             <tr>
               <td align="center" class="fluid-padding" style="padding:32px 40px 0 40px;">
                 <p style="margin:0 0 4px 0; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; color:#B8933B; text-transform:uppercase; font-weight:bold;">
@@ -390,7 +383,7 @@
                   <tr>
                     <td align="center" style="border-radius:30px; background-color:#1B3A2F;">
                   
-                      <a href="{{ url('/') }}" target="_blank" style="display:inline-block; padding:16px 40px; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:bold; color:#FFFFFF; text-decoration:none; border-radius:30px;">
+                      <a href="{{ url('/dashboard') }}" target="_blank" style="display:inline-block; padding:16px 40px; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:bold; color:#FFFFFF; text-decoration:none; border-radius:30px;">
                         Start Using Your Account &nbsp;&rarr;
                       </a>
                       <!--<![endif]-->
@@ -407,7 +400,7 @@
                       <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="cta-button">
                         <tr>
                           <td align="center" style="border-radius:30px; border:1.5px solid #1B3A2F;">
-                            <a href="" target="_blank" style="display:inline-block; padding:13.5px 28px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#1B3A2F; text-decoration:none; border-radius:30px;">
+                            <a href="{{ route('dashboard') }}" target="_blank" style="display:inline-block; padding:13.5px 28px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#1B3A2F; text-decoration:none; border-radius:30px;">
                               View Subscription
                             </a>
                           </td>
@@ -418,7 +411,7 @@
                       <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="cta-button">
                         <tr>
                           <td align="center" style="border-radius:30px; border:1.5px solid #1B3A2F;">
-                            <a href="" target="_blank" style="display:inline-block; padding:13.5px 28px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#1B3A2F; text-decoration:none; border-radius:30px;">
+                            <a href="{{ route('invoice.download', ['invoiceId' => $invoice->id]) }}" target="_blank" style="display:inline-block; padding:13.5px 28px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#1B3A2F; text-decoration:none; border-radius:30px;">
                               Download Invoice
                             </a>
                           </td>

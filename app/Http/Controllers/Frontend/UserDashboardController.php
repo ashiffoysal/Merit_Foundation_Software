@@ -103,16 +103,38 @@ class UserDashboardController extends Controller
 
     public function dashboard(){
 
-        $user          = auth()->user();
+
+  $user = auth()->user();
+    //  $user = auth()->user();
+
+        // Only works if the user has a stripe_id (i.e. has subscribed before)
+        $invoices = $user->stripe_id
+            ? $user->invoicesIncludingPending() // includes unpaid/pending invoices too
+            : collect();
+
+      
         $subscriptions = $user->subscriptions()->orderBy('created_at', 'desc')->get();
         $setupIntent   = $user->createSetupIntent();
         if($setupIntent) {
             $setupIntent = $setupIntent->client_secret;
-            return view('frontend.user_dashboard.index', compact('user', 'subscriptions', 'setupIntent'));
+            return view('frontend.user_dashboard.index', compact('user', 'subscriptions', 'setupIntent','invoices'));
         }else{
-            return view('frontend.user_dashboard.index', compact('user', 'subscriptions'));
+            return view('frontend.user_dashboard.index', compact('user', 'subscriptions','invoices'));
         }
 
         // return view('frontend.user_dashboard.index', compact('user', 'subscriptions', 'setupIntent'));
     }
+
+public function downloadInvoice(Request $request, string $invoiceId)
+    {
+        
+        return $request->user()->downloadInvoice($invoiceId, [
+            'vendor'  => 'Merit Education Foundation',
+            'product' => 'Your Product Name',
+            'street'  => 'Merit Education Foundation, London, United Kingdom',
+            'phone'   => '+44 2081630895',
+            'email'   => 'info@meriteducationfoundation.org',
+        ]);
+    }
+
 }

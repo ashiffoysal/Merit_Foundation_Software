@@ -47,6 +47,11 @@ Route::middleware('auth')->group(function () {
       Route::get('/dashboard',          [UserDashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/dashboard/profile',          [UserDashboardController::class, 'index'])->name('profile.index');
     Route::post('/dashboard/profile/update',  [UserDashboardController::class, 'update'])->name('profile.update');
+    Route::post('/dashboard/profile/update',  [UserDashboardController::class, 'update'])->name('profile.update');
+    Route::get('/dashboard/invoice', [UserDashboardController::class, 'invoice'])->name('profile.invoice');
+
+
+    Route::get('/invoice/{invoiceId}/download', [UserDashboardController::class, 'downloadInvoice'])->name('invoice.download');
     Route::post('/dashboard/profile/password',[UserDashboardController::class, 'updatePassword'])->name('profile.password');
 });
 
