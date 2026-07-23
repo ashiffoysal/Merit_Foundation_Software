@@ -48,7 +48,7 @@
       </div></div>
     </div>
   </section> --}}
-<style>
+{{-- <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600&display=swap');
 
   * { box-sizing: border-box; }
@@ -411,9 +411,9 @@
     .mef-h1 { font-size: 28px; }
     .mef-trust { gap: 8px 12px; }
   }
-</style>
+</style> --}}
 
-<div class="mef-hero">
+{{-- <div class="mef-hero">
   <div class="mef-main">
     <div class="mef-left">
       <div class="mef-pill">
@@ -530,20 +530,545 @@
       </div>
     </div>
   </div>
+</div> --}}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600;700&display=swap');
+
+  .mef-hero * { box-sizing: border-box; }
+
+  .mef-hero {
+    --ink: #14261C;
+    --ink-2: #1F3B2A;
+    --paper: #FFFFFF;
+    --panel: #F6F5F0;
+    --gold: #96751F;
+    --gold-tint: #F3EDDC;
+    --line: #E2E0D6;
+    --text: #1C231E;
+    --text-soft: #5B5F55;
+    --plum: #6C4E8E;
+    --plum-tint: #EFE7F5;
+    --leaf: #2F6B45;
+    --leaf-tint: #E7F1E9;
+
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+  }
+
+  .mef-topbar {
+    background: var(--ink);
+    padding: 9px 32px;
+  }
+
+  .mef-topbar-row {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+    color: #B9C7BC;
+    font-weight: 500;
+  }
+
+  .mef-topbar-reg { letter-spacing: 0.2px; }
+
+  .mef-topbar-links { display: flex; gap: 20px; }
+  .mef-topbar-links span { color: #E4E9E2; }
+
+  .mef-main {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: 56px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 32px 64px;
+    align-items: start;
+  }
+
+  .mef-left { min-width: 0; padding-top: 8px; }
+
+  .mef-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--gold-tint);
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    letter-spacing: 0.2px;
+  }
+
+  .mef-h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 46px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.14;
+    letter-spacing: -1.1px;
+    margin: 0 0 16px;
+  }
+  .mef-h1 span { color: var(--gold); }
+
+  .mef-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-soft);
+    max-width: 480px;
+    margin: 0 0 32px;
+  }
+  .mef-desc strong { color: var(--ink); font-weight: 600; }
+
+  .mef-btns { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+
+  .mef-btn-primary, .mef-btn-secondary {
+    border: 1px solid transparent;
+    padding: 13px 22px;
+    border-radius: 6px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .mef-btn-primary { background: var(--ink); color: #fff; }
+  .mef-btn-primary:hover { background: var(--ink-2); }
+  .mef-btn-secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+  .mef-btn-secondary:hover { border-color: var(--ink); }
+  .mef-btn-secondary svg { color: var(--gold); }
+
+  .mef-trust {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    row-gap: 14px;
+    column-gap: 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .mef-trust-item {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 13px; color: var(--text-soft); font-weight: 500;
+  }
+  .mef-trust-item svg { flex-shrink: 0; color: var(--gold); margin-top: 1px; }
+
+  /* ===================== RIGHT SIDE — IMAGE SHOWCASE ===================== */
+
+  .mef-right {
+    min-width: 0;
+    position: relative;
+  }
+
+  .mef-stage {
+    position: relative;
+    padding: 30px;
+    isolation: isolate;
+  }
+
+  /* soft ambient blobs picking up the illustration's palette */
+  .mef-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(2px);
+    z-index: 0;
+    opacity: 0.55;
+    animation: mef-drift 9s ease-in-out infinite;
+  }
+  .mef-blob.b1 {
+    width: 190px; height: 190px;
+    background: radial-gradient(circle at 35% 35%, var(--leaf-tint), transparent 70%);
+    top: -30px; left: -20px;
+    animation-delay: 0s;
+  }
+  .mef-blob.b2 {
+    width: 160px; height: 160px;
+    background: radial-gradient(circle at 60% 40%, var(--plum-tint), transparent 70%);
+    bottom: -20px; right: -10px;
+    animation-delay: 1.4s;
+  }
+  .mef-blob.b3 {
+    width: 90px; height: 90px;
+    background: radial-gradient(circle at 50% 50%, var(--gold-tint), transparent 70%);
+    top: 40%; right: -30px;
+    animation-delay: 2.6s;
+  }
+
+  @keyframes mef-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-8px, 10px) scale(1.05); }
+  }
+
+  /* dotted orbit ring, nods to geometric border-work without literal pattern copying */
+  .mef-orbit {
+    position: absolute;
+    inset: 6px;
+    border: 1.5px dashed rgba(150, 117, 31, 0.35);
+    border-radius: 28px;
+    z-index: 0;
+    animation: mef-rotate 40s linear infinite;
+  }
+  @keyframes mef-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .mef-frame {
+    position: relative;
+    z-index: 1;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 30px 60px -25px rgba(20, 38, 28, 0.28);
+    opacity: 0;
+    transform: translateY(18px);
+    animation: mef-rise 0.7s cubic-bezier(.22,.61,.36,1) 0.05s forwards;
+  }
+
+  @keyframes mef-rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .mef-frame-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .mef-frame-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mef-frame-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: inline-block;
+    animation: mef-blink 2.2s ease-in-out infinite;
+  }
+  @keyframes mef-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  .mef-frame-dots { display: flex; gap: 5px; }
+  .mef-frame-dots span {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--line);
+  }
+  .mef-frame-dots span:nth-child(1) { background: var(--leaf); opacity: 0.5; }
+  .mef-frame-dots span:nth-child(2) { background: var(--plum); opacity: 0.5; }
+  .mef-frame-dots span:nth-child(3) { background: var(--gold); opacity: 0.5; }
+
+  .mef-image-wrap {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    line-height: 0;
+  }
+
+  .mef-image-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    animation: mef-float 6s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes mef-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-9px) scale(1.012); }
+  }
+
+  .mef-image-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 1px rgba(20,38,28,0.06);
+    pointer-events: none;
+  }
+
+  /* floating credential chips */
+  .mef-chip {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 14px 9px 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink);
+    box-shadow: 0 12px 24px -12px rgba(20,38,28,0.35);
+    opacity: 0;
+    animation: mef-chip-in 0.6s cubic-bezier(.22,.61,.36,1) forwards, mef-chip-float 5s ease-in-out infinite;
+  }
+
+  .mef-chip .mef-chip-ic {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mef-chip.c1 {
+    top: 6%;
+    left: -8%;
+    animation-delay: 0.5s, 1s;
+  }
+  .mef-chip.c1 .mef-chip-ic { background: var(--leaf-tint); color: var(--leaf); }
+
+  .mef-chip.c2 {
+    bottom: 8%;
+    right: -9%;
+    animation-delay: 0.75s, 2.2s;
+  }
+  .mef-chip.c2 .mef-chip-ic { background: var(--plum-tint); color: var(--plum); }
+
+  @keyframes mef-chip-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.94); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes mef-chip-float {
+    0%, 100% { margin-top: 0; }
+    50% { margin-top: -6px; }
+  }
+
+  .mef-caption {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--text-soft);
+    font-weight: 500;
+  }
+  .mef-caption strong { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mef-blob, .mef-orbit, .mef-frame, .mef-image-wrap img,
+    .mef-chip, .mef-frame-eyebrow::before {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .mef-main { grid-template-columns: 1fr; padding: 48px 24px 48px; gap: 40px; }
+    .mef-h1 { font-size: 38px; }
+    .mef-desc { max-width: 100%; }
+    .mef-topbar-links { display: none; }
+    .mef-chip.c1 { left: 2%; top: -4%; }
+    .mef-chip.c2 { right: 2%; bottom: -4%; }
+  }
+
+  @media (max-width: 600px) {
+    .mef-main { padding: 36px 16px 36px; }
+    .mef-h1 { font-size: 30px; letter-spacing: -0.6px; }
+    .mef-desc { font-size: 14.5px; }
+    .mef-btns { flex-direction: column; }
+    .mef-btn-primary, .mef-btn-secondary { width: 100%; }
+    .mef-trust { grid-template-columns: 1fr; }
+    .mef-stage { padding: 14px; }
+    .mef-chip { font-size: 11px; padding: 7px 11px 7px 8px; }
+    .mef-chip.c1 { top: -10px; left: 0; }
+    .mef-chip.c2 { bottom: -10px; right: 0; }
+  }
+
+  .mef-stat-bar { background: var(--ink-2); padding: 30px 32px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .mef-stats {
+    max-width: 1180px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); text-align: left;
+  }
+  .mef-stat-item { padding: 0 24px; border-left: 1px solid rgba(255,255,255,0.14); }
+  .mef-stat-item:first-child { border-left: none; }
+  .mef-stat-n { font-family: 'Source Serif 4', serif; font-size: 28px; font-weight: 600; color: #fff; }
+  .mef-stat-l { font-size: 12px; color: #A9BFAF; font-weight: 500; margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    .mef-stat-bar { padding: 24px 16px; }
+    .mef-stats { grid-template-columns: repeat(2, 1fr); row-gap: 22px; }
+    .mef-stat-item:nth-child(1), .mef-stat-item:nth-child(2) { border-left: none; }
+    .mef-stat-n { font-size: 23px; }
+  }
+</style>
+
+<div class="mef-hero" style="padding-top: 50px;">
+  <div class="mef-topbar">
+    <div class="mef-topbar-row">
+      <div class="mef-topbar-reg"></div>
+      <div class="mef-topbar-links"></div>
+    </div>
+  </div>
+
+  <div class="mef-main">
+    <div class="mef-left">
+      <div class="mef-pill">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6l-8-3Z"/></svg>
+        Regulated charity, established 2011
+      </div>
+
+      <h1 class="mef-h1">Quran education, funding a free place for a child in need</h1>
+
+      <p class="mef-desc">
+        One-to-one online Quran lessons from qualified, DBS-checked tutors, starting at <strong>£5 per lesson</strong>. Every fee paid by a student directly funds a place at school for an orphaned or disadvantaged child.
+      </p>
+
+      <div class="mef-btns">
+        <a href="{{ url('/book-lesson') }}" class="mef-btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+          Book a lesson
+        </a>
+        <a href="{{ url('/book-lesson') }}" class="mef-btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 21h20L12 2Z"/><path d="M12 9v5M12 17h.01"/></svg>
+          View pricing
+        </a>
+      </div>
+
+      <div class="mef-trust">
+        <div class="mef-trust-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/><path d="m9 10.5 1.5 1.5L15 8"/></svg>
+          Safeguarding-first policy, all tutors DBS-checked
+        </div>
+        <div class="mef-trust-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="m8.5 12.5-1.5 7 5-2 5 2-1.5-7"/></svg>
+          Qualified tutors, structured curriculum
+        </div>
+        <div class="mef-trust-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5v-18Z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20"/></svg>
+          Independently audited accounts, published annually
+        </div>
+        <div class="mef-trust-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+          Full transparency on where funds go
+        </div>
+      </div>
+    </div>
+
+    <div class="mef-right">
+      <div class="mef-stage">
+        <div class="mef-blob b1"></div>
+        <div class="mef-blob b2"></div>
+        <div class="mef-blob b3"></div>
+        <div class="mef-orbit"></div>
+
+        <div class="mef-frame">
+          <div class="mef-frame-top">
+            <div class="mef-frame-eyebrow">Learning at home</div>
+            <div class="mef-frame-dots"><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="mef-image-wrap">
+            <img src="{{ asset('frontend/images/banner.jpg') }}">
+              <div class="mef-chip-ic">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              {{-- DBS-checked tutors --}}
+            </div>
+
+            <div class="mef-chip c2">
+              <div class="mef-chip-ic">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V7a2 2 0 0 1 4 0"/><path d="M12 13V6a2 2 0 0 1 4 0v7"/><path d="M16 13V8a2 2 0 0 1 4 0v6c0 4-3 7-7 7h-1c-4 0-7-2-7-5v-3a1.5 1.5 0 0 1 3 0"/></svg>
+              </div>
+              5,000+ students helped
+            </div>
+          </div>
+
+          <div class="mef-caption">Ages 3+ · <strong>Qaida to Tajweed</strong> · fun, guided family learning</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mef-stat-bar">
+    <div class="mef-stats">
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">5,000+</div>
+        <div class="mef-stat-l">Students helped</div>
+      </div>
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">120+</div>
+        <div class="mef-stat-l">Schools supported</div>
+      </div>
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">30+</div>
+        <div class="mef-stat-l">Countries</div>
+      </div>
+      <div class="mef-stat-item">
+        <div class="mef-stat-n">15+</div>
+        <div class="mef-stat-l">Years of impact</div>
+      </div>
+    </div>
+  </div>
 </div>
   <!-- About Summary -->
   <section class="section-cream">
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-lg-5" data-r="left">
+          {{--  --}}
+
+      <div class="mef-stage">
+        <div class="mef-blob b1"></div>
+        <div class="mef-blob b2"></div>
+        <div class="mef-blob b3"></div>
+        <div class="mef-orbit"></div>
+
+        <div class="mef-frame">
+          <div class="mef-frame-top">
+            <div class="mef-frame-eyebrow">100% Online</div>
+            <div class="mef-frame-dots"><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="mef-image-wrap">
+            <img src="{{ asset('frontend/images/banner2.jpg') }}">
+              <div class="mef-chip-ic">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              {{-- DBS-checked tutors --}}
+            </div>
+
+            <div class="mef-chip c2">
+              <div class="mef-chip-ic">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V7a2 2 0 0 1 4 0"/><path d="M12 13V6a2 2 0 0 1 4 0v7"/><path d="M16 13V8a2 2 0 0 1 4 0v6c0 4-3 7-7 7h-1c-4 0-7-2-7-5v-3a1.5 1.5 0 0 1 3 0"/></svg>
+              </div>
+              any one can join
+            </div>
+          </div>
+
+          <div class="mef-caption">Ages 3+ · <strong>Qaida to Tajweed</strong> · fun, guided family learning</div>
+        </div>
+     
+          {{--  --}}
+        </div>
+        <div class="col-lg-7" data-r="right">
           <div class="eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-txt">Who We Are</span></div>
           <h2 class="sec-h">Education &<br><em>Charity Combined</em></h2>
           <div class="divider-gold"></div>
           <p class="sec-p mb-4">Merit Education Foundation is a UK-based non-profit combining premium online Quran teaching with a charitable mission. Lesson fees directly fund free education for children who cannot afford it — creating a self-sustaining cycle of impact.</p>
-          <button class="btn-navy" onclick="showPage('about')">Learn More <i class="fas fa-arrow-right ms-1"></i></button>
-        </div>
-        <div class="col-lg-7" data-r="right">
-          <div class="row g-3">
+          <button class="btn-navy" href="{{ url('/about') }}">Learn More <i class="fas fa-arrow-right ms-1"></i></button>
+          <div class="row g-3 mt-2">
             <div class="col-6">
               <div class="about-sum-badge"><div class="about-sum-badge-ic" style="background:rgba(201,168,76,.12)"><i class="fas fa-quran" style="color:var(--gold)"></i></div><div><h6>Quran Teaching</h6><p>Expert 1-to-1 online lessons</p></div></div>
               <div class="about-sum-badge"><div class="about-sum-badge-ic" style="background:rgba(15,31,92,.07)"><i class="fas fa-heart" style="color:var(--navy)"></i></div><div><h6>Charity Mission</h6><p>Funding disadvantaged students</p></div></div>
@@ -825,4 +1350,31 @@
             document.getElementById('book-success').style.display = 'block';
         }
     </script>
+    @if(url()->current() == url('/'))
+    @include('frontend.partials.trial-modal')
+@endif
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (!localStorage.getItem("trial_popup_shown")) {
+
+        setTimeout(function () {
+            document.getElementById("trialModal").style.display = "flex";
+            localStorage.setItem("trial_popup_shown", "yes");
+        }, 1000);
+
+    }
+
+    document.getElementById("closeTrialModal").onclick = function () {
+        document.getElementById("trialModal").style.display = "none";
+    };
+
+    document.getElementById("trialModal").onclick = function (e) {
+        if (e.target === this) {
+            this.style.display = "none";
+        }
+    };
+
+});
+</script>
 @endsection

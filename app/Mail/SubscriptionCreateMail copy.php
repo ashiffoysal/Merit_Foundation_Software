@@ -2,29 +2,32 @@
 
 namespace App\Mail;
 
+
 use App\Models\User;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Laravel\Cashier\Cashier;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class SubscriptionCreateMail extends Mailable
 {
+    
     use Queueable, SerializesModels;
-
+ 
     public User $user;
     public ?string $planId;
     public ?Subscription $subscription;
     public ?Transaction $transaction;
-
-    // Stripe Checkout Session object (source of truth right after payment,
-    // used as a fallback while webhooks catch up)
-    public $session;
-
+ 
+    // ---- Resolved, ready-to-print values passed straight to the view ----
     public string $planName;
     public string $billingCycle;
     public string $subscriptionStatus;
@@ -37,95 +40,88 @@ class SubscriptionCreateMail extends Mailable
     public string $purchaseDate;
     public string $startDate;
     public string $renewalDate;
-
-    public function __construct(User $user, ?string $planId = null, $session = null)
+ 
+    /**
+     * @param User $user The newly subscribed customer.
+     * @param string|null $planId The internal plan identifier passed
+     *        through Stripe Checkout session metadata (metadata.plan_id).
+     *        Kept for reference/logging; display data is resolved from
+     *        the user's latest subscription + transaction instead, since
+     *        those rows are guaranteed to reflect what Stripe actually
+     *        charged.
+     */
+    public function __construct(User $user, ?string $planId = null)
     {
         $this->user = $user;
         $this->planId = $planId;
-        $this->session = $session;
-
+ 
+        // Most recently created subscription row for this user.
         $this->subscription = Subscription::where('user_id', $user->id)
             ->latest('created_at')
             ->first();
-
+ 
+        // Most recent Stripe invoice/transaction for this user.
         $this->transaction = Transaction::where('user_id', $user->id)
             ->latest('created_at')
             ->first();
-
+ 
         $this->resolveDisplayData();
     }
-
+ 
+    /**
+     * Turns the raw model data (+ a Stripe Price lookup) into plain
+     * strings the Blade template can print directly.
+     */
     protected function resolveDisplayData(): void
     {
         $interval = 'month';
         $productName = null;
-        $stripeSub = $this->session->subscription ?? null; // expanded object, if passed in
-
-        // --- Plan name / interval: DB price lookup, else the session's expanded subscription ---
+ 
         if ($this->subscription && $this->subscription->stripe_price) {
             try {
                 $price = Cashier::stripe()->prices->retrieve(
                     $this->subscription->stripe_price,
                     ['expand' => ['product']]
                 );
+ 
                 $productName = $price->product->name ?? $price->nickname ?? null;
                 $interval = $price->recurring->interval ?? 'month';
             } catch (\Throwable $e) {
                 report($e);
             }
-        } elseif ($stripeSub) {
-            $item = $stripeSub->items->data[0] ?? null;
-            $productName = $item->plan->product->name ?? $item->price->nickname ?? null;
-            $interval = $item->plan->interval ?? 'month';
         }
-
+ 
         $this->planName = $productName ?: 'Merit Learning Plan';
         $this->billingCycle = $interval === 'year' ? 'Yearly' : 'Monthly';
-
+ 
         $this->subscriptionStatus = $this->subscription
             ? ucfirst($this->subscription->stripe_status)
-            : ($stripeSub ? ucfirst($stripeSub->status) : 'Active');
-
-        // --- Amount / currency: DB transaction, else the session totals ---
-        if ($this->transaction) {
-            $this->amount = number_format((float) $this->transaction->amount, 2);
-            $currencyCode = strtoupper($this->transaction->currency);
-        } elseif ($this->session && isset($this->session->amount_total)) {
-            $this->amount = number_format($this->session->amount_total / 100, 2);
-            $currencyCode = strtoupper($this->session->currency ?? 'USD');
-        } else {
-            $this->amount = '0.00';
-            $currencyCode = 'USD';
-        }
-
+            : 'Active';
+ 
+        // --- Amount / currency, from the transactions table ---
+        $this->amount = $this->transaction
+            ? number_format((float) $this->transaction->amount, 2)
+            : '0.00';
+ 
+        $currencyCode = $this->transaction ? strtoupper($this->transaction->currency) : 'USD';
         $this->currencyCode = $currencyCode;
         $this->currencySymbol = $this->currencySymbolFor($currencyCode);
-
-        // --- Payment method ---
+ 
+        // --- Payment method, from the users table (Cashier pm_type/pm_last_four) ---
         $this->paymentMethod = $this->user->pm_type
             ? (ucfirst($this->user->pm_type) . ' •••• ' . $this->user->pm_last_four)
             : 'Card on file';
-
-        // --- IDs: DB row, else pull straight from the session/subscription ---
-        $latestInvoice = $stripeSub->latest_invoice ?? null;
-
-        $this->transactionId = $this->transaction->stripe_invoice_id
-            ?? ($this->subscription->stripe_id ?? null)
-            ?? ($latestInvoice->id ?? null)
-            ?? ($stripeSub->id ?? 'N/A');
-
+ 
+        // --- IDs ---
+        $this->transactionId = $this->transaction->stripe_invoice_id ?? ($this->subscription->stripe_id ?? 'N/A');
         $this->invoiceNumber = $this->transaction
             ? ('INV-' . str_pad((string) $this->transaction->id, 6, '0', STR_PAD_LEFT))
-            : ($latestInvoice->number ?? 'N/A');
-
+            : 'N/A';
+ 
         // --- Dates ---
-        $purchasedAt = $this->transaction?->created_at
-            ?? $this->subscription?->created_at
-            ?? ($stripeSub ? Carbon::createFromTimestamp($stripeSub->created) : now());
-
-        $startedAt = $this->subscription?->created_at
-            ?? ($stripeSub ? Carbon::createFromTimestamp($stripeSub->created) : now());
-
+        $purchasedAt = $this->transaction?->created_at ?? $this->subscription?->created_at ?? now();
+        $startedAt = $this->subscription?->created_at ?? now();
+ 
         $this->purchaseDate = Carbon::parse($purchasedAt)->format('d M Y');
         $this->startDate = Carbon::parse($startedAt)->format('d M Y');
         $this->renewalDate = Carbon::parse($startedAt)
@@ -133,7 +129,7 @@ class SubscriptionCreateMail extends Mailable
             ->addMonths($interval === 'year' ? 12 : 1)
             ->format('d M Y');
     }
-
+ 
     protected function currencySymbolFor(string $code): string
     {
         return match ($code) {
@@ -143,13 +139,17 @@ class SubscriptionCreateMail extends Mailable
             default => $code . ' ',
         };
     }
-
+ 
+    /**
+     * Build the message.
+     */
     public function build(): self
     {
         return $this
             ->to($this->user->email, trim($this->user->name . ' ' . $this->user->last_name))
             ->subject("Welcome! Your Subscription is Now Active 🎉")
             ->view('mail.successmail')
+            // ->text('emails.subscription.create-text')
             ->with([
                 'user' => $this->user,
                 'subscription' => $this->subscription,

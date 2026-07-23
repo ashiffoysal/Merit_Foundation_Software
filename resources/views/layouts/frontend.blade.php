@@ -11,7 +11,6 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('frontend/assets/style.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     {{-- meta tags --}}
     <meta name="description" content="{{ $seoData ? $seoData->meta_description : 'Merit Education Foundation is a UK-based education charity dedicated to providing quality education to disadvantaged children around the world.' }}" />
     <meta name="keywords" content="{{ $seoData ? $seoData->meta_keywords : 'education, charity, disadvantaged children, Quran teaching' }}" />
@@ -46,19 +45,12 @@
 </head>
 
 <body>
-   
     @include('frontend.include.header')
-
     @yield('content')
-
     @include('frontend.include.footer')
-
-
     <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i
             class="fas fa-chevron-up"></i></button>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('frontend/assets/custom.js') }}"></script>
 </body>
-
 </html>

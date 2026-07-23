@@ -22,14 +22,14 @@
         <a href="{{ route('about') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>About Us</a>
         <a href="{{ route('book.lesson') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Book Lesson</a>
         {{-- <a href="{{ route('donate') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Donate</a> --}}
-        <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding</a>
+        <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding Policy</a>
    
       </div>
       <div class="col-lg-2 col-6">
         <div class="footer-col-title">Legal</div>
         <a href="{{ route('privacy.policy') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Privacy Policy</a>
         <a href="{{ route('terms.and.conditions') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Terms & Conditions</a>
-        <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding Policy</a>
+        {{-- <a href="{{ route('safeguard') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Safeguarding Policy</a> --}}
         {{-- <a href="{{ route('cookie.policy') }}" class="footer-link"><i class="fas fa-chevron-right"></i>Cookie Policy</a> --}}
         {{-- <div class="footer-link"><i class="fas fa-chevron-right"></i>Gift Aid Declaration</div> --}}
              <a href="{{ route('contact') }}" class="footer-link" ><i class="fas fa-chevron-right"></i>Contact</a>

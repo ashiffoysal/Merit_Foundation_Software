@@ -14,19 +14,12 @@ class ContactMessageMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
+
     public function __construct($data)
     {
         $this->data = $data;
-    
-        //
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -34,9 +27,7 @@ class ContactMessageMail extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
+
     public function content(): Content
     {
         return new Content(
@@ -45,15 +36,11 @@ class ContactMessageMail extends Mailable
                 'data' => $this->data,
             ],
         ); 
-        // reply to email
+
         $this->replyTo($this->data->email, $this->data->first_name . ' ' . $this->data->last_name);
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, Attachment>
-     */
+
     public function attachments(): array
     {
         return [];

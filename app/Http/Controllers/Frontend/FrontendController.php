@@ -15,14 +15,13 @@ use App\Models\BookLesson;
 use Stevebauman\Location\Facades\Location;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMessageMail;
+use App\Models\FreeTrial;
 
 class FrontendController extends Controller
 {
     // home page
     public function index()
     {
-        
-
         $position = Location::get(request()->ip());
 
         return view('frontend.home.index',compact('position'));
@@ -195,5 +194,64 @@ class FrontendController extends Controller
             'message' => 'Message sent successfully'
         ]);
     }
-    
+    // book free trial page
+    public function bookFreeTrial()
+    {
+       
+        return view('frontend.bookfreetrial.index');
+    }
+
+
+    // 
+    public function bookFreeTrialsubmit(Request $request)
+{
+
+    $validated = $request->validate([
+
+        'parent_name'=>'required|max:100',
+
+        'child_name'=>'required|max:100',
+
+        'child_age'=>'required',
+
+        'current_level'=>'required',
+
+        'tutor_gender'=>'required',
+
+        'country'=>'required|max:100',
+
+        'email'=>'required|email',
+
+        'whatsapp'=>'required|max:20',
+
+        'time'=>'required',
+
+
+    ]);
+
+    // Save Data
+
+     FreeTrial::insert([
+        'parent_name'=>$request->parent_name,
+        'child_name'=>$request->child_name,
+        'child_age'=>$request->child_age,
+        'current_level'=>$request->current_level,
+        'tutor_gender'=>$request->tutor_gender,
+        'country'=>$request->country,
+        'email'=>$request->email,
+        'whatsapp'=>$request->whatsapp,
+        'time'=>$request->time,
+        'created_at'=>Carbon::now()->toDateTimeString(),
+
+     ]);
+
+    return response()->json([
+
+        'status'=>true,
+
+        'message'=>'Your free trial request has been submitted successfully! We will contact you shortly.'
+
+    ]);
+
+}
 }

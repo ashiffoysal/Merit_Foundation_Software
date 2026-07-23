@@ -10,14 +10,16 @@
     <div class="nav-links-wrap">
      <a href="{{ url('/') }}" > <span class="nav-link-item">Home</span></a>
       <a href="{{ url('/about') }}" ><span class="nav-link-item">About Us</span></a>
+      <a href="" ><span class="nav-link-item">Services</span></a>
+      <a href="{{ url('/book-lesson') }}" ><span class="nav-link-item">Prices</span></a>
+      <a href=""><span class="nav-link-item">Admission</span></a>
       <a href="{{ url('/news') }}" ><span class="nav-link-item">News</span></a>
-      <a href="{{ url('/book-lesson') }}" ><span class="nav-link-item">Book Lesson</span></a>
-      {{-- <a href="{{ url('/donate') }}" ><span class="nav-link-item">Donate</span></a> --}}
-      <a href="{{ url('/safeguarding-policy') }}" ><span class="nav-link-item">Safeguarding</span></a>
+      
+      {{-- <a href="{{ url('/safeguarding-policy') }}" ><span class="nav-link-item">Safeguarding</span></a> --}}
       <a href="{{ url('/contact') }}" ><span class="nav-link-item">Contact</span></a>
     </div>
     <div class="nav-cta-wrap">
-      <a class="btn-outline-white" href="{{ url('/book-lesson') }}" style="padding:9px 20px;font-size:.72rem;">Book Lesson</a>
+      <a class="btn-outline-white" href="{{ url('/book-free-trial') }}" style="padding:9px 20px;font-size:.72rem;">Book Free Trial</a>
          @auth
           <a class="btn-gold" href="{{ url('/dashboard') }}" style="padding:9px 20px;font-size:.72rem;"><i class="fas fa-heart"></i>Dashboard</a>
         @else
@@ -32,10 +34,12 @@
   <div class="mobile-menu">
     <a href="{{ url('/') }}" ><span class="mobile-link">Home</span></a>
     <a href="{{ url('/about') }}" ><span class="mobile-link">About Us</span></a>
+    <a href="" ><span class="mobile-link">Services</span></a>
+    <a href="" ><span class="mobile-link">Admission</span></a>
     <a href="{{ url('/news') }}" ><span class="mobile-link">News</span></a>
-    <a href="{{ url('/book-lesson') }}" ><span class="mobile-link">Book Lesson</span></a>
-    {{-- <a href="{{ url('/donate') }}" ><span class="mobile-link">Donate</span></a> --}}
-    <a href="{{ url('/safeguarding-policy') }}" ><span class="mobile-link">Safeguarding</span></a>
+    <a href="{{ url('/book-lesson') }}" ><span class="mobile-link">Package</span></a>
+   
+    {{-- <a href="{{ url('/safeguarding-policy') }}" ><span class="mobile-link">Safeguarding</span></a> --}}
     <a href="{{ url('/contact') }}" ><span class="mobile-link">Contact</span></a>
     <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)">
       <a href="{{ url('/book-lesson') }}" class="btn-gold"  style="flex:1;justify-content:center;">Book Lesson</a>
