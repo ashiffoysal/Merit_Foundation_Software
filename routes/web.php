@@ -25,6 +25,7 @@ use App\Http\Controllers\Frontend\MakehubController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\SubscriptionController as BackendSubscriptionController;
 use App\Http\Controllers\Backend\BookLessonController;
+use App\Http\Controllers\Frontend\TrialBookingController;
 
 
 // Inside your admin middleware group:
@@ -83,8 +84,8 @@ Route::get('/about', [FrontendController::class, 'about'])->name('about');
  Route::get('/book-free-trial', [FrontendController::class, 'bookFreeTrial'])->name('book.free.trial');
  Route::post('/book-free-trial', [FrontendController::class, 'bookFreeTrialsubmit'])->name('book.free.trial');
 
-
-Route::get('/book-lesson', [FrontendController::class, 'bookLesson'])->name('book.lesson');
+Route::get('/admission-procedure', [FrontendController::class, 'admissionProcedure'])->name('admissionProcedure.index');
+Route::get('/prices', [FrontendController::class, 'bookLesson'])->name('prices.lesson');
 Route::get('/contact', [FrontendController::class, 'contactUs'])->name('contact');
 Route::post('/contact', [FrontendController::class, 'contactSubmt'])->name('contact.submit');
 Route::get('/safeguarding-policy', [FrontendController::class, 'safeguard'])->name('safeguard');
@@ -98,7 +99,8 @@ Route::get('/terms-and-conditions', [FrontendController::class, 'termsAndConditi
 Route::get('/news', [FrontendController::class, 'news'])->name('news');
 // news details
 Route::get('/news/{slug}', [FrontendController::class, 'newsDetails'])->name('news.details');
-// Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
+
+ Route::post('/free-trial-submit', [TrialBookingController::class, 'freemodalTrialSubmit']);
 
 
 Route::middleware('auth')->group(function () {

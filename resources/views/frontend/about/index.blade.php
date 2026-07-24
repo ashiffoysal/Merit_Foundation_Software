@@ -74,8 +74,8 @@
     <div class="row align-items-center g-4">
       <div class="col-lg-7"><h2 class="display-h" style="font-size:clamp(1.7rem,3.5vw,2.5rem);color:var(--navy)">Ready to Make a Difference?</h2><p style="color:rgba(15,31,92,.6);margin-top:10px;font-size:.92rem">Book a lesson or donate today and become part of something bigger.</p></div>
       <div class="col-lg-5 d-flex flex-wrap gap-3 justify-content-lg-end">
-        <button class="btn-navy" onclick="showPage('book')"><i class="fas fa-graduation-cap"></i>Book a Lesson</button>
-        <button class="btn-outline-gold" onclick="showPage('donate')"><i class="fas fa-heart"></i>Donate</button>
+        <button class="btn-navy" ><i class="fas fa-graduation-cap"></i>Book a Lesson</button>
+      
       </div>
     </div>
   </div></div></div>

@@ -205,7 +205,7 @@ class FrontendController extends Controller
     // 
     public function bookFreeTrialsubmit(Request $request)
 {
-
+    
     $validated = $request->validate([
 
         'parent_name'=>'required|max:100',
@@ -254,4 +254,9 @@ class FrontendController extends Controller
     ]);
 
 }
+
+// admission procedure
+    public function admissionProcedure(){
+        return view('frontend.admission.index');
+    }
 }

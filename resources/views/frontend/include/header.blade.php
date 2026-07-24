@@ -11,8 +11,8 @@
      <a href="{{ url('/') }}" > <span class="nav-link-item">Home</span></a>
       <a href="{{ url('/about') }}" ><span class="nav-link-item">About Us</span></a>
       <a href="" ><span class="nav-link-item">Services</span></a>
-      <a href="{{ url('/book-lesson') }}" ><span class="nav-link-item">Prices</span></a>
-      <a href=""><span class="nav-link-item">Admission</span></a>
+      <a href="{{ route('prices.lesson') }}" ><span class="nav-link-item">Prices</span></a>
+      <a href="{{ route('admissionProcedure.index') }}"><span class="nav-link-item">Admission</span></a>
       <a href="{{ url('/news') }}" ><span class="nav-link-item">News</span></a>
       
       {{-- <a href="{{ url('/safeguarding-policy') }}" ><span class="nav-link-item">Safeguarding</span></a> --}}
@@ -37,7 +37,7 @@
     <a href="" ><span class="mobile-link">Services</span></a>
     <a href="" ><span class="mobile-link">Admission</span></a>
     <a href="{{ url('/news') }}" ><span class="mobile-link">News</span></a>
-    <a href="{{ url('/book-lesson') }}" ><span class="mobile-link">Package</span></a>
+    <a href="{{ route('prices.lesson') }}" ><span class="mobile-link">Prices</span></a>
    
     {{-- <a href="{{ url('/safeguarding-policy') }}" ><span class="mobile-link">Safeguarding</span></a> --}}
     <a href="{{ url('/contact') }}" ><span class="mobile-link">Contact</span></a>
