@@ -20,6 +20,13 @@ a {
       <div class="sb-section">People</div>
       {{-- <div class="sb-item" onclick="showView('students',this)"><i class="fas fa-user-graduate"></i><span>Students</span><span class="sb-badge">124</span></div>
       <div class="sb-item" onclick="showView('tutors',this)"><i class="fas fa-chalkboard-teacher"></i><span>Tutors</span></div> --}}
+
+       <a href="{{ route('admin.free.index') }}">
+        <div class="sb-item">
+          <i class="fas fa-envelope"></i>
+          <span>All Trial</span>
+        </div>
+      </a>
       <a href="{{ route('contact-messages.index') }}">
         <div class="sb-item">
           <i class="fas fa-envelope"></i>

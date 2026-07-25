@@ -26,6 +26,7 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\SubscriptionController as BackendSubscriptionController;
 use App\Http\Controllers\Backend\BookLessonController;
 use App\Http\Controllers\Frontend\TrialBookingController;
+use App\Http\Controllers\Backend\FreeTrialController; 
 
 
 // Inside your admin middleware group:
@@ -59,9 +60,43 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth:admin')->group(function () {
-      Route::get('admin/social-update', [SocialController::class, 'index'])->name('admin.social.update');
+    Route::get('admin/social-update', [SocialController::class, 'index'])->name('admin.social.update');
     Route::post('admin/settings-social-update', [SocialController::class, 'update'])->name('admin.settings.social.update');
       
+});
+
+// free Trial
+
+Route::middleware('auth:admin')->group(function () {
+    Route::get('admin/free-trial', [FreeTrialController::class, 'index'])->name('admin.free.index');
+    // Route::get('admin/free-trial-get', [FreeTrialController::class, 'getIndex'])->name('admin.free.getindex');
+      
+});
+
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+
+    // Table data (search/filter/sort/paginate/stats)
+    Route::get('free-trials', [FreeTrialController::class, 'getIndex'])
+        ->name('admin.free.getindex');
+
+    // View single record
+    Route::get('contact-messages/view/{id}', [FreeTrialController::class, 'view']);
+
+    // Update status
+    Route::patch('contact-messages/{id}/status', [FreeTrialController::class, 'updateStatus']);
+
+    // Delete single record
+    Route::delete('contact-messages/{id}', [FreeTrialController::class, 'destroy']);
+
+    // Bulk action (mark read/pending/delete)
+    Route::post('contact-messages/bulk', [FreeTrialController::class, 'bulkAction'])
+        ->name('contact-messages.bulk');
+
+    // Export CSV/Excel
+    Route::get('contact-messages/export', [FreeTrialController::class, 'export'])
+        ->name('contact-messages.export');
+
 });
 
 
