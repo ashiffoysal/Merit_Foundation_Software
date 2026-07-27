@@ -114,7 +114,7 @@ Route::get('/userlogout', [UserDashboardController::class, 'logout'])->name('log
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
-// Route::get('/donate', [FrontendController::class, 'donate'])->name('donate');
+ Route::get('/services', [FrontendController::class, 'services'])->name('services');
 
  Route::get('/book-free-trial', [FrontendController::class, 'bookFreeTrial'])->name('book.free.trial');
  Route::post('/book-free-trial', [FrontendController::class, 'bookFreeTrialsubmit'])->name('book.free.trial');

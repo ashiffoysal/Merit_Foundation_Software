@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title> @yield('title') | {{ $companyInfo ? $companyInfo->organisation_name : 'Merit Education Foundation' }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -41,7 +42,28 @@
     {{-- twitter_card --}}
     <meta name="twitter:card" content="{{ $seoData ? $seoData->twitter_card : 'summary_large_image' }}" />
 
-
+    <style>
+        /* ═══ MOBILE OVERFLOW SAFETY NET ═══ */
+html{
+  max-width:100%;
+  overflow-x:hidden;
+}
+body{
+  max-width:100%;
+  overflow-x:hidden; /* already present, kept for clarity */
+  width:100%;
+}
+*,*::before,*::after{
+  box-sizing:border-box;
+}
+img,svg,video{
+  max-width:100%;
+  height:auto;
+}
+.container,.container-fluid,.row{
+  max-width:100%;
+}
+    </style>
 </head>
 
 <body>

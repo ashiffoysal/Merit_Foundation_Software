@@ -259,4 +259,9 @@ class FrontendController extends Controller
     public function admissionProcedure(){
         return view('frontend.admission.index');
     }
+
+    // services
+    public function services(){
+        return view('frontend.services.index');
+    }
 }
