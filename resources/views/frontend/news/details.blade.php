@@ -86,7 +86,7 @@
                 <h5 class="serif" style="font-size:1.2rem;color:var(--white);margin-bottom:10px">Support Quran Education</h5>
                 <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:18px;line-height:1.65">Your generous donation helps provide quality Quran lessons, Islamic education, and learning resources for students of all ages.</p>
                 {{-- <a href="{{ url('donate') }}" class="btn-gold" style="width:100%;justify-content:center"><i class="fas fa-heart"></i>Book Lesson Now</a> --}}
-                <a href="{{ url('book-lesson') }}" class="btn-outline-white" style="width:100%;justify-content:center;margin-top:10px;font-size:.72rem;padding:10px">Book a Lesson</a>
+                <a href="{{ url('prices') }}" class="btn-outline-white" style="width:100%;justify-content:center;margin-top:10px;font-size:.72rem;padding:10px">Book a Lesson</a>
               </div>
             </div>
           </div>

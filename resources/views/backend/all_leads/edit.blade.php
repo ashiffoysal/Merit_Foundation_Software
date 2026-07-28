@@ -3,7 +3,7 @@
 @section('title', 'Edit Lead Status')
 
 @section('content')
-<div class="container py-4">
+<div class="container py-4 py-12" >
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-semibold mb-1">Edit Lead Status</h3>

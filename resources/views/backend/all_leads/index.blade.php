@@ -1,7 +1,6 @@
 @extends('layouts.backend')
-
 @section('title', 'All Book Lesson Leads')
-
+@section('content')
 
 <style>
     .badge-pink {
@@ -33,9 +32,7 @@
     }
 </style>
 
-
-@section('content')
-<div class="container py-4">
+<div class="container py-4 py-12">
 
     {{-- Flash Messages --}}
     @if(session('success'))
