@@ -6,8 +6,8 @@
           <div style="width:42px;height:42px;background:rgba(201,168,76,.1);border:1.5px solid rgba(201,168,76,.28);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-book-open" style="color:var(--gold);font-size:.9rem"></i></div>
           <div><div class="footer-brand-n">MERIT</div><div class="footer-brand-s">Education Foundation</div></div>
         </div>
-        <p class="footer-tagline">"Education for All, Opportunity for Every Child"</p>
-        <p class="footer-desc">A UK-based education charity combining expert online Quran teaching with a global mission to fund education for disadvantaged children.</p>
+        <p class="footer-tagline" style="color:#fff;">"Education for All, Opportunity for Every Child"</p>
+        <p class="footer-desc" style="color:#fff;">A UK-based education charity combining expert online Quran teaching with a global mission to fund education for disadvantaged children.</p>
         <div class="footer-soc">
           <div class="footer-soc-btn"><a href="{{ $social->facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a></div>
           <div class="footer-soc-btn"><a href="{{ $social->instagram }}" target="_blank"><i class="fab fa-instagram"></i></a></div>
@@ -36,22 +36,22 @@
       </div>
       <div class="col-lg-4">
         <div class="footer-col-title">Contact & Newsletter</div>
-        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->primary_email : '' }}</span></div>
-        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-phone" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->phone : '' }}</span></div>
-        <div style="font-size:.8rem;color:rgba(255,255,255,.35);display:flex;align-items:flex-start;gap:10px;margin-bottom:20px"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->address : '' }}</span></div>
+        <div style="font-size:.8rem;color:#fff;display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-envelope" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->primary_email : '' }}</span></div>
+        <div style="font-size:.8rem;color:#fff;display:flex;align-items:flex-start;gap:10px;margin-bottom:10px"><i class="fas fa-phone" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->phone : '' }}</span></div>
+        <div style="font-size:.8rem;color:#fff;display:flex;align-items:flex-start;gap:10px;margin-bottom:20px"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-top:3px;font-size:.75rem"></i><span>{{ $companyInfo ? $companyInfo->address : '' }}</span></div>
       
       </div>
     </div>
     <!-- Key disclaimer -->
     <div style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:14px 20px;margin-top:40px;display:flex;align-items:flex-start;gap:12px">
       <i class="fas fa-info-circle" style="color:var(--gold);margin-top:2px;font-size:.9rem;flex-shrink:0"></i>
-      <p style="font-size:.75rem;color:rgba(255,255,255,.4);margin:0;line-height:1.65"><strong style="color:rgba(255,255,255,.6)">Important:</strong> Lesson fees are charged as a service and are not donations. Donations are separate, voluntary and Gift Aid eligible for UK taxpayers. Merit Education Foundation operates transparently and in accordance with UK charity law.</p>
+      <p style="font-size:.75rem;color:#fff;margin:0;line-height:1.65"><strong style="color:#fff">Important:</strong> Lesson fees are charged as a service and are not donations. Donations are separate, voluntary and Gift Aid eligible for UK taxpayers. Merit Education Foundation operates transparently and in accordance with UK charity law.</p>
     </div>
   </div>
   <div class="footer-bottom">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-md-6"><p class="footer-bot-txt">© {{ \Carbon\Carbon::now()->year }} Merit Education Foundation. Registered Charity. All Rights Reserved.</p></div>
+        <div class="col-md-6"><p class="footer-bot-txt" style="color:#fff;">© {{ \Carbon\Carbon::now()->year }} Merit Education Foundation. Registered Charity. All Rights Reserved.</p></div>
         {{-- <div class="col-md-6"><div class="footer-bot-links"><span><a href="{{ route('privacy.policy') }}" class="text-decoration-underline">Privacy Policy</a></span><span><a href="{{ route('terms.and.conditions') }}" class="text-decoration-underline">Terms</a></span><span><a href="{{ route('safeguard') }}" class="text-decoration-underline">Safeguarding</a></span><span><a href="{{ route('cookie.policy') }}" class="text-decoration-underline">Cookies</a></span></div></div> --}}
       </div>
     </div>

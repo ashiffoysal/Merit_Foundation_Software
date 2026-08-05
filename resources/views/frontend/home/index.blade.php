@@ -864,7 +864,10 @@
     font-weight: 500;
   }
   .mef-caption strong { color: var(--ink); }
-
+.mef-stat-bar {
+    background: #0f0f0f !important;
+    
+}
   @media (prefers-reduced-motion: reduce) {
     .mef-blob, .mef-orbit, .mef-frame, .mef-image-wrap img,
     .mef-chip, .mef-frame-eyebrow::before {
@@ -1067,7 +1070,7 @@
           <h2 class="sec-h">Education &<br><em>Charity Combined</em></h2>
           <div class="divider-gold"></div>
           <p class="sec-p mb-4">Merit Education Foundation is a UK-based non-profit combining premium online Quran teaching with a charitable mission. Lesson fees directly fund free education for children who cannot afford it — creating a self-sustaining cycle of impact.</p>
-          <button class="btn-navy" href="{{ url('/about') }}">Learn More <i class="fas fa-arrow-right ms-1"></i></button>
+          <a class="btn-navy" href="{{ url('/about') }}">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
           <div class="row g-3 mt-2">
             <div class="col-6">
               <div class="about-sum-badge"><div class="about-sum-badge-ic" style="background:rgba(201,168,76,.12)"><i class="fas fa-quran" style="color:var(--gold)"></i></div><div><h6>Quran Teaching</h6><p>Expert 1-to-1 online lessons</p></div></div>
@@ -1180,7 +1183,7 @@
     </div>
   </section>
   <!-- CTA -->
-  <div class="cta-block">
+  {{-- <div class="cta-block">
     <div class="container"><div class="inner">
       <div class="row align-items-center g-4">
         <div class="col-lg-7" data-r="left">
@@ -1193,7 +1196,7 @@
         </div>
       </div>
     </div></div>
-  </div>
+  </div> --}}
 </div><!-- end home -->
 
 <!-- ══════════════ FOOTER ══════════════ -->

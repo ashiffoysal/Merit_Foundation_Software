@@ -353,7 +353,7 @@ section{padding:100px 0}
 .footer-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.3);font-size:.9rem;margin:12px 0 18px}
 .footer-desc{font-size:.8rem;color:rgba(255,255,255,.32);line-height:1.75;max-width:290px}
 .footer-col-title{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
-.footer-link{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.38);font-size:.8rem;margin-bottom:11px;cursor:pointer;transition:.3s}
+.footer-link{display:flex;align-items:center;gap:9px;color: #fff !important ;);font-size:.8rem;margin-bottom:11px;cursor:pointer;transition:.3s}
 .footer-link i{font-size:.52rem;color:rgba(201,168,76,.45)}
 .footer-link:hover{color:var(--gold);padding-left:4px}
 .footer-link:hover i{color:var(--gold)}
