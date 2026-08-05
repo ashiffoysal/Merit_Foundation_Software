@@ -1355,7 +1355,7 @@
 @endif
     <script>
 document.addEventListener("DOMContentLoaded", function () {
-
+//  
     if (!localStorage.getItem("trial_popup_shown")) {
 
         setTimeout(function () {
