@@ -309,7 +309,7 @@ function renderTable(rows) {
             <td><span style="font-size:.72rem;color:var(--muted)">${formatDate(r.created_at)}</span></td>
             <td>
                 <div class="d-flex gap-1">
-                    <button class="btn-outline-sm" style="padding:4px 10px;font-size:.68rem" onclick="viewMessage(${r.id})" title="View"><i class="fas fa-eye"></i></button>
+                    <a class="btn-outline-sm" style="padding:4px 10px;font-size:.68rem" href="{{ url('admin/free-trial/view') }}/${r.id}" title="View"><i class="fas fa-eye"></i></a>
                     <button class="btn-danger-sm" style="padding:4px 10px;font-size:.68rem" onclick="deleteMessage(${r.id})" title="Delete"><i class="fas fa-trash"></i></button>
                 </div>
             </td>

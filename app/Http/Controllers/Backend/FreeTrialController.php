@@ -75,11 +75,11 @@ class FreeTrialController extends Controller
     /**
      * GET admin/contact-messages/view/{id}
      */
-    public function view($id)
+    public function getDetails($id)
     {
-        $item = FreeTrial::findOrFail($id);
- 
-        return response()->json(['message' => $item]);
+        $lead = FreeTrial::findOrFail($id);
+        return view('backend.freetrial.view', compact('lead'));
+        // return response()->json(['message' => $item]);
     }
  
     /**

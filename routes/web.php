@@ -69,7 +69,7 @@ Route::middleware('auth:admin')->group(function () {
 
 Route::middleware('auth:admin')->group(function () {
     Route::get('admin/free-trial', [FreeTrialController::class, 'index'])->name('admin.free.index');
-    // Route::get('admin/free-trial-get', [FreeTrialController::class, 'getIndex'])->name('admin.free.getindex');
+     Route::get('admin/free-trial/view/{id}', [FreeTrialController::class, 'getDetails'])->name('admin.free.getDetails');
       
 });
 
