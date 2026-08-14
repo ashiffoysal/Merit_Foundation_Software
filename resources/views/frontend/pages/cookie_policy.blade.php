@@ -484,9 +484,9 @@ background:#1a3a2a;
             </div>
             <div class="switch-doc-card">
               <div class="sdc-title">Other Legal Pages</div>
-              <div class="sdc-link" onclick="showPage('terms')"><i class="fas fa-chevron-right"></i>Terms & Conditions</div>
-              <div class="sdc-link" onclick="showPage('refund')"><i class="fas fa-chevron-right"></i>Refund Policy</div>
-              <div class="sdc-link"><i class="fas fa-chevron-right"></i>Privacy Policy</div>
+              <a class="sdc-link" href="{{ url('/terms-and-conditions') }}"><i class="fas fa-chevron-right"></i>Terms & Conditions</a>
+              <a class="sdc-link" href="{{ url('/refund-policy') }}"><i class="fas fa-chevron-right"></i>Refund Policy</a>
+              <a class="sdc-link" href="{{ url('/privacy-policy') }}"><i class="fas fa-chevron-right"></i>Privacy Policy</a>
             </div>
           </div>
         </div>
@@ -598,7 +598,7 @@ background:#1a3a2a;
             </div>
 
             <!-- C5 -->
-            <div class="legal-section" id="c5" data-r="up">
+            {{-- <div class="legal-section" id="c5" data-r="up">
               <div class="ls-header">
                 <div class="ls-num">05</div>
                 <div class="ls-icon"><i class="fas fa-sliders-h"></i></div>
@@ -650,12 +650,12 @@ background:#1a3a2a;
                   <div class="hl-text"><p><strong>Preferences Saved!</strong> Your cookie settings have been updated. Changes take effect immediately.</p></div>
                 </div>
               </div>
-            </div>
+            </div> --}}
 
             <!-- C6 -->
             <div class="legal-section" id="c6" data-r="up">
               <div class="ls-header">
-                <div class="ls-num">06</div>
+                <div class="ls-num">05</div>
                 <div class="ls-icon"><i class="fas fa-share-alt"></i></div>
                 <h2 class="ls-title">Third-Party Cookies</h2>
               </div>
@@ -676,7 +676,7 @@ background:#1a3a2a;
             <!-- C7 -->
             <div class="legal-section" id="c7" data-r="up">
               <div class="ls-header">
-                <div class="ls-num">07</div>
+                <div class="ls-num">06</div>
                 <div class="ls-icon"><i class="fas fa-browser"></i></div>
                 <h2 class="ls-title">Managing Cookies Through Your Browser</h2>
               </div>
@@ -699,7 +699,7 @@ background:#1a3a2a;
             <!-- C8 -->
             <div class="legal-section" id="c8" data-r="up">
               <div class="ls-header">
-                <div class="ls-num">08</div>
+                <div class="ls-num">07</div>
                 <div class="ls-icon"><i class="fas fa-sync"></i></div>
                 <h2 class="ls-title">Updates to This Policy</h2>
               </div>
@@ -717,7 +717,7 @@ background:#1a3a2a;
             <!-- C9 -->
             <div class="legal-section" id="c9" data-r="up">
               <div class="ls-header">
-                <div class="ls-num">09</div>
+                <div class="ls-num">08</div>
                 <div class="ls-icon"><i class="fas fa-envelope"></i></div>
                 <h2 class="ls-title">Contact & Further Information</h2>
               </div>
@@ -725,7 +725,7 @@ background:#1a3a2a;
                 <p>If you have any questions about our use of cookies or wish to exercise your rights under UK GDPR, please contact our Data Protection Officer:</p>
                 <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:16px">
                   <div class="row g-3">
-                    <div class="col-md-6"><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:36px;height:36px;border-radius:9px;background:rgba(13,107,99,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-user-shield" style="color:var(--teal);font-size:.8rem"></i></div><div><div style="font-size:.7rem;color:var(--muted);letter-spacing:1px;margin-bottom:3px">Data Protection Officer</div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">dpo@meriteducation.org</div></div></div></div>
+                    <div class="col-md-6"><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:36px;height:36px;border-radius:9px;background:rgba(13,107,99,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-user-shield" style="color:var(--teal);font-size:.8rem"></i></div><div><div style="font-size:.7rem;color:var(--muted);letter-spacing:1px;margin-bottom:3px">Data Protection Officer</div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">info@meriteducation.org</div></div></div></div>
                     <div class="col-md-6"><div style="display:flex;gap:12px;align-items:flex-start"><div style="width:36px;height:36px;border-radius:9px;background:rgba(13,107,99,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-globe" style="color:var(--teal);font-size:.8rem"></i></div><div><div style="font-size:.7rem;color:var(--muted);letter-spacing:1px;margin-bottom:3px">Regulator</div><div style="font-size:.85rem;font-weight:600;color:var(--navy)">ICO — ico.org.uk</div></div></div></div>
                   </div>
                 </div>
@@ -738,13 +738,13 @@ background:#1a3a2a;
     </div>
   </section>
 
-  <div class="cta-strip"><div class="container"><div class="inner"><div class="row align-items-center g-4">
+  {{-- <div class="cta-strip"><div class="container"><div class="inner"><div class="row align-items-center g-4">
     <div class="col-lg-7"><h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:700;color:var(--navy)">Questions About Our Cookies?</h2><p style="color:rgba(15,31,92,.6);margin-top:8px;font-size:.92rem">Contact our Data Protection Officer for any privacy or cookie-related concerns.</p></div>
     <div class="col-lg-5 d-flex flex-wrap gap-3 justify-content-lg-end">
-      <button class="btn-gold-nav" style="background:var(--navy);color:#fff"><i class="fas fa-envelope"></i>Contact DPO</button>
-      <button class="btn-ghost-nav" style="border-color:rgba(15,31,92,.3);color:var(--navy)">Privacy Policy</button>
+      <a class="btn-gold-nav" style="background:var(--navy);color:#fff" href="{{ route('contact') }}"><i class="fas fa-envelope"></i>Contact</a>
+      <a class="btn-ghost-nav" style="border-color:rgba(15,31,92,.3);color:var(--navy)" href="{{ route('privacy.policy') }}">Privacy Policy</a>
     </div>
-  </div></div></div></div>
+  </div></div></div></div> --}}
 
 </div><!-- end cookie -->
 

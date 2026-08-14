@@ -587,7 +587,7 @@
 </section>
 
 <!-- CTA BAND -->
-<section class="cta-band">
+{{-- <section class="cta-band">
   <div class="wrap cta-inner">
     <div>
       <h2>Ready to begin the journey?</h2>
@@ -595,5 +595,5 @@
     </div>
     <a class="btn btn-outline" href="{{ url('/book-free-trial') }}">Book A Free Trial</a>
   </div>
-</section>
+</section> --}}
 @endsection

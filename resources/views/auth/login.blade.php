@@ -1,8 +1,25 @@
 @extends('layouts.frontend')
+@section('title', 'Login - Merit Education Foundation')
 @section('content')
+<style>
+    .fa-brands, .fab {
+    font-weight: 400;
+    color: #fff;
+}
+</style>
+<style>
+  .login-left {
+   
+    padding: 200px 70px;
+    
+}
+.login-right {
 
+    padding: 160px 70px;
+    
+}
+</style>
 <div class="login-page">
-
   {{-- ── Left Panel ────────────────────────────────────────────────────────── --}}
   <div class="login-left">
     <div class="ll-brand" onclick="showPage('news')">

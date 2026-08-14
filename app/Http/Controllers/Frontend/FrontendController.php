@@ -264,4 +264,8 @@ class FrontendController extends Controller
     public function services(){
         return view('frontend.services.index');
     }
+    // cookie policy page
+    public function cookiePolicyPage(){
+        return view('frontend.pages.cookie_policy');
+    }
 }

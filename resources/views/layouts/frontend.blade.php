@@ -90,6 +90,7 @@
     @include('frontend.include.header')
     @yield('content')
     @include('frontend.include.footer')
+    @include('frontend.include.cookige')
     <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i
             class="fas fa-chevron-up"></i></button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>

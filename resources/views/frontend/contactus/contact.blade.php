@@ -1,6 +1,12 @@
 @extends('layouts.frontend')
 @section('title', 'Contact Us - Merit Education Foundation')
 @section('content')
+<style>
+    .fa-brands, .fab {
+    font-weight: 400;
+    color: #fff;
+}
+</style>
     <div class="contact-hero">
         <div class="container position-relative" style="z-index:2">
             <div class="page-hero-badge"><span>Contact</span></div>

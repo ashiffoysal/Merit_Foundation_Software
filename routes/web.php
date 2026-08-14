@@ -126,6 +126,9 @@ Route::post('/contact', [FrontendController::class, 'contactSubmt'])->name('cont
 Route::get('/safeguarding-policy', [FrontendController::class, 'safeguard'])->name('safeguard');
 // privacy policy
 Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy.policy');
+
+// cookie policy
+Route::get('/cookie-policy', [FrontendController::class, 'cookiePolicy'])->name('cookie.policy');
 // refund policy
 Route::get('/refund-policy', [FrontendController::class, 'refundPolicy'])->name('refund.policy');
 // terms and conditions

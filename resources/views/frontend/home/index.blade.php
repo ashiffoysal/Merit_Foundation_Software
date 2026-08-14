@@ -864,10 +864,10 @@
     font-weight: 500;
   }
   .mef-caption strong { color: var(--ink); }
-.mef-stat-bar {
+/* .mef-stat-bar {
     background: #0f0f0f !important;
     
-}
+} */
   @media (prefers-reduced-motion: reduce) {
     .mef-blob, .mef-orbit, .mef-frame, .mef-image-wrap img,
     .mef-chip, .mef-frame-eyebrow::before {
@@ -1004,7 +1004,7 @@
     </div>
   </div>
 
-  <div class="mef-stat-bar">
+  <div class="mef-stat-bar" style="background: linear-gradient(135deg, var(--navy), var(--navy2));">
     <div class="mef-stats">
       <div class="mef-stat-item">
         <div class="mef-stat-n">5,000+</div>
@@ -1182,6 +1182,9 @@
       </div>
     </div>
   </section>
+
+  
+
   <!-- CTA -->
   {{-- <div class="cta-block">
     <div class="container"><div class="inner">
