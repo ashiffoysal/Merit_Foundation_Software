@@ -279,5 +279,75 @@ class ContactMessageController extends Controller
 
         return redirect()->back()->with(['success' => true, 'message' => 'Notes updated successfully.']);
     }
+
+
+     public function freetrialindex(){
+
+        return view('backend.freetrial.index');
+     }
+    public function getIndexfreetrial(Request $request)
+    {
+        $search   = $request->input('search');
+        $status   = $request->input('status');
+        $perPage  = (int) $request->input('per_page', 10);
+        $sort     = $request->input('sort', 'created_at');
+        $dir      = $request->input('dir', 'desc');
+ 
+        // Only allow sorting on real, safe columns
+        $sortable = ['parent_name', 'email', 'current_level', 'status', 'created_at'];
+        if (!in_array($sort, $sortable)) {
+            $sort = 'created_at';
+        }
+        $dir = strtolower($dir) === 'asc' ? 'asc' : 'desc';
+ 
+        $query = FreeTrial::query();
+ 
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('parent_name', 'like', "%{$search}%")
+                  ->orWhere('child_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('whatsapp', 'like', "%{$search}%")
+                  ->orWhere('country', 'like', "%{$search}%");
+            });
+        }
+ 
+        if ($status) {
+            $query->where('status', $status);
+        }
+ 
+        $paginated = $query->orderBy($sort, $dir)->paginate($perPage)->withQueryString();
+ 
+        // Stats are computed independently of the current filter/search
+        $stats = [
+            'total'   => FreeTrial::count(),
+            'new'     => FreeTrial::where('status', 'new')->count(),
+            'pending' => FreeTrial::where('status', 'pending')->count(),
+            'read'    => FreeTrial::where('status', 'read')->count(),
+        ];
+ 
+        return response()->json([
+            'data' => $paginated->items(),
+            'meta' => [
+                'current_page' => $paginated->currentPage(),
+                'last_page'    => $paginated->lastPage(),
+                'from'         => $paginated->firstItem(),
+                'to'           => $paginated->lastItem(),
+                'total'        => $paginated->total(),
+            ],
+            'stats' => $stats,
+        ]);
+    }
+ 
+    /**
+     * GET admin/contact-messages/view/{id}
+     */
+    public function freetrialgetDetails($id)
+    {
+        $lead = FreeTrial::findOrFail($id);
+        return view('backend.freetrial.view', compact('lead'));
+        // return response()->json(['message' => $item]);
+    }
+ 
         
 }

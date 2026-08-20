@@ -32,6 +32,7 @@ use App\Http\Controllers\Backend\FreeTrialController;
 // Inside your admin middleware group:
 Route::middleware(['auth', 'admin.auth'])->prefix('admin')->name('admin.')->group(function () {
  
+
     // ... your existing user routes ...
  
     // Subscription management routes
@@ -67,14 +68,14 @@ Route::middleware('auth:admin')->group(function () {
 
 // free Trial
 
-Route::middleware('auth:admin')->group(function () {
-    Route::get('admin/free-trial', [FreeTrialController::class, 'index'])->name('admin.free.index');
-     Route::get('admin/free-trial/view/{id}', [FreeTrialController::class, 'getDetails'])->name('admin.free.getDetails');
+// Route::middleware('auth:admin')->group(function () {
+//     Route::get('admin/free-trial', [FreeTrialController::class, 'index'])->name('admin.free.index');
+//     Route::get('admin/free-trial/view/{id}', [FreeTrialController::class, 'getDetails'])->name('admin.free.getDetails');
       
-});
+// });
 
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
 
     // Table data (search/filter/sort/paginate/stats)
     Route::get('free-trials', [FreeTrialController::class, 'getIndex'])
@@ -242,6 +243,11 @@ Route::prefix('admin')->group(function () {
     Route::patch('/contact-messages/{contactMessage}/status',[ContactMessageController::class, 'updateStatus']);
     Route::delete('/contact-messages/{contactMessage}',      [ContactMessageController::class, 'destroy']);
     Route::post('/settings/admin-profile', [CompanyInformationController::class, 'saveAdminProfile'])->name('settings.admin.save');
+
+     Route::get('free-trial', [ContactMessageController::class, 'freetrialindex'])->name('admin.free.index');
+    Route::get('free-trial/view/{id}', [ContactMessageController::class, 'freetrialgetDetails'])->name('admin.free.getDetails');
+
+
     });
 
 });
