@@ -30,10 +30,7 @@ use App\Http\Controllers\Backend\FreeTrialController;
 
 
 // Inside your admin middleware group:
-Route::middleware(['auth', 'admin.auth'])->prefix('admin')->name('admin.')->group(function () {
- 
-
-    // ... your existing user routes ...
+Route::middleware(['admin.auth'])->prefix('admin')->name('admin.')->group(function () {
  
     // Subscription management routes
     Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
@@ -211,8 +208,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
         Route::get('/transactions/data', [TransactionController::class, 'getData'])->name('transactions.data');
         
-        Route::get('/subscriptions', [BackendSubscriptionController::class, 'index'])->name('subscriptions.index');
-        Route::get('/subscriptions/data', [BackendSubscriptionController::class, 'getData'])->name('subscriptions.data');
+        Route::get('/subscriptions', [App\Http\Controllers\Backend\SubscriptionController::class, 'index'])->name('subscriptions.index');
+        Route::get('/subscriptions/data', [App\Http\Controllers\Backend\SubscriptionController::class, 'getData'])->name('subscriptions.data');
 
 
         Route::get('/company-information', [CompanyInformationController::class, 'index'])->name('admin.company-information.index');
@@ -325,9 +322,8 @@ Route::prefix('admin')->group(function () {
 });
 
 
-
 Route::prefix('admin/users')->name('admin.users.')->group(function () {
- 
+   Route::middleware('auth:admin')->group(function () {
     Route::get('/',                        [UserController::class, 'index'])->name('index');
     Route::get('/data',                    [UserController::class, 'data'])->name('data');     // AJAX
     Route::get('/{id}',                    [UserController::class, 'show'])->name('show');     // AJAX modal
@@ -336,7 +332,7 @@ Route::prefix('admin/users')->name('admin.users.')->group(function () {
     Route::delete('/{id}',                 [UserController::class, 'destroy'])->name('destroy');
     Route::patch('/{id}/restore',          [UserController::class, 'restore'])->name('restore');
     Route::get('/{id}/subscriptions',      [UserController::class, 'subscriptions'])->name('subscriptions');
- 
+ });
 });
 
 
