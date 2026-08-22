@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 @section('content')
-    <main class="main-content">
+
     <div class="main-inner">
       <!-- ═══════ DASHBOARD ═══════ -->
       <div id="" class="">
@@ -415,5 +415,4 @@
       <div id="view-admins" class="view"><div class="page-header"><h1>Admin Users</h1><p>Manage admin accounts and role permissions</p></div><div class="alert-custom alert-gold"><i class="fas fa-info-circle" style="color:var(--gold)"></i><p>Requires an admin roles/permissions table — not present in the current schema.</p></div></div>
 
     </div><!-- main-inner -->
-  </main>
 @endsection
