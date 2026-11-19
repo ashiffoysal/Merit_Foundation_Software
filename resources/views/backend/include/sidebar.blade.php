@@ -66,6 +66,66 @@
         </a>
 
 
+        {{-- ================= ACADEMIC MANAGEMENT ================= --}}
+        <div class="sb-section">Academic</div>
+
+        <a href="{{ route('admin.teachers.index') }}">
+            <div class="sb-item {{ request()->routeIs('admin.teachers.*') ? 'active' : '' }}">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Teachers</span>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.parents.index') }}">
+            <div class="sb-item {{ request()->routeIs('admin.parents.*') ? 'active' : '' }}">
+                <i class="fas fa-user-friends"></i>
+                <span>Parents</span>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.students.index') }}">
+            <div class="sb-item {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
+                <i class="fas fa-user-graduate"></i>
+                <span>Students</span>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.lessons.index') }}">
+            <div class="sb-item {{ request()->routeIs('admin.lessons.*') && ! request()->routeIs('admin.lessons.timetable') ? 'active' : '' }}">
+                <i class="fas fa-book-open"></i>
+                <span>Lessons</span>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.lessons.timetable') }}">
+            <div class="sb-item {{ request()->routeIs('admin.lessons.timetable') ? 'active' : '' }}">
+                <i class="fas fa-calendar-week"></i>
+                <span>Timetable</span>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.progress.index') }}">
+            <div class="sb-item {{ request()->routeIs('admin.progress.*', 'admin.lessons.report') ? 'active' : '' }}">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress Reports</span>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.resources.index') }}">
+            <div class="sb-item {{ request()->routeIs('admin.resources.*') ? 'active' : '' }}">
+                <i class="fas fa-folder-open"></i>
+                <span>Learning Resources</span>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.lookups.index', 'branches') }}">
+            <div class="sb-item {{ request()->routeIs('admin.lookups.*') ? 'active' : '' }}">
+                <i class="fas fa-sliders-h"></i>
+                <span>Academic Settings</span>
+            </div>
+        </a>
+
+
         {{-- ================= OPERATIONS ================= --}}
         <div class="sb-section">Operations</div>
 

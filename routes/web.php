@@ -341,3 +341,110 @@ Route::post('/ajax-login', [UserLoginController::class, 'login'])->name('ajax.lo
 Route::post('/ajax-register', [UserLoginController::class, 'register'])->name('ajax.register');
 Route::post('/ajax-resend-verification', [UserLoginController::class, 'resendVerification'])->name('ajax.resend-verification');
 require __DIR__.'/auth.php';
+// ─────────── Teacher / Parent / Student / Lesson management (Admin) ───────────
+use App\Http\Controllers\Backend\Academic\DocumentController as AcademicDocumentController;
+use App\Http\Controllers\Backend\Academic\LessonController as AcademicLessonController;
+use App\Http\Controllers\Backend\Academic\LookupController as AcademicLookupController;
+use App\Http\Controllers\Backend\Academic\ParentController as AcademicParentController;
+use App\Http\Controllers\Backend\Academic\SearchController as AcademicSearchController;
+use App\Http\Controllers\Backend\Academic\StudentController as AcademicStudentController;
+use App\Http\Controllers\Backend\Academic\TeacherController as AcademicTeacherController;
+
+Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
+    // Teachers
+    Route::get('teachers/{teacher}/photo', [AcademicTeacherController::class, 'photo'])->name('teachers.photo');
+    Route::resource('teachers', AcademicTeacherController::class);
+
+    // Parents (model: Guardian, table: parents)
+    Route::resource('parents', AcademicParentController::class)->parameters(['parents' => 'parent']);
+    Route::bind('parent', fn ($v) => \App\Models\Guardian::findOrFail($v));
+
+    // Students
+    Route::get('students/{student}/photo', [AcademicStudentController::class, 'photo'])->name('students.photo');
+    Route::resource('students', AcademicStudentController::class);
+
+    // Lessons
+    Route::get('lessons/timetable', [AcademicLessonController::class, 'timetable'])->name('lessons.timetable');
+    Route::get('lessons/availability', [AcademicLessonController::class, 'availability'])->name('lessons.availability');
+    Route::post('lessons/{lesson}/students', [AcademicLessonController::class, 'enroll'])->name('lessons.enroll');
+    Route::delete('lessons/{lesson}/students/{student}', [AcademicLessonController::class, 'unenroll'])->name('lessons.unenroll');
+    Route::resource('lessons', AcademicLessonController::class);
+
+    // Private documents (teachers / parents)
+    Route::post('{owner}/{id}/documents', [AcademicDocumentController::class, 'store'])
+        ->whereIn('owner', ['teachers', 'parents'])->whereNumber('id')->name('documents.store');
+    Route::get('documents/{owner}/{document}', [AcademicDocumentController::class, 'download'])
+        ->whereIn('owner', ['teachers', 'parents'])->whereNumber('document')->name('documents.download');
+    Route::delete('documents/{owner}/{document}', [AcademicDocumentController::class, 'destroy'])
+        ->whereIn('owner', ['teachers', 'parents'])->whereNumber('document')->name('documents.destroy');
+
+    // AJAX searchable dropdowns
+    Route::get('academic-search/{type}', AcademicSearchController::class)
+        ->whereIn('type', ['parents', 'students', 'teachers', 'classrooms'])->name('academic.search');
+
+    // Settings: branches, subjects, levels, classrooms, schools, year groups, statuses
+    Route::prefix('academic-settings/{type}')->name('lookups.')->group(function () {
+        Route::get('/', [AcademicLookupController::class, 'index'])->name('index');
+        Route::post('/', [AcademicLookupController::class, 'store'])->name('store');
+        Route::put('{id}', [AcademicLookupController::class, 'update'])->whereNumber('id')->name('update');
+        Route::delete('{id}', [AcademicLookupController::class, 'destroy'])->whereNumber('id')->name('destroy');
+    });
+});
+
+
+// ─────────── Teacher panel ───────────
+use App\Http\Controllers\Teacher\AuthController as TeacherAuthController;
+use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
+use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
+use App\Http\Controllers\Teacher\ProfileController as TeacherProfileController;
+use App\Http\Controllers\Teacher\ReportController as TeacherReportController;
+
+Route::prefix('teacher')->name('teacher.')->group(function () {
+    Route::get('login', [TeacherAuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [TeacherAuthController::class, 'login'])->name('login.submit');
+    Route::post('logout', [TeacherAuthController::class, 'logout'])->name('logout');
+
+    Route::middleware('teacher.auth')->group(function () {
+        Route::redirect('/', '/teacher/dashboard');
+        Route::get('dashboard', TeacherDashboardController::class)->name('dashboard');
+
+        Route::get('lessons', [TeacherLessonController::class, 'index'])->name('lessons.index');
+        Route::get('lessons/{lesson}', [TeacherLessonController::class, 'show'])->name('lessons.show');
+
+        Route::get('reports', [TeacherReportController::class, 'index'])->name('reports.index');
+        Route::get('reports/{session}', [TeacherReportController::class, 'show'])->whereNumber('session')->name('reports.show');
+        Route::get('lessons/{lesson}/report/{date}', [TeacherReportController::class, 'edit'])->where('date', '\d{4}-\d{2}-\d{2}')->name('reports.edit');
+        Route::put('lessons/{lesson}/report/{date}', [TeacherReportController::class, 'update'])->where('date', '\d{4}-\d{2}-\d{2}')->name('reports.update');
+
+        Route::get('profile', [TeacherProfileController::class, 'show'])->name('profile');
+        Route::put('profile/password', [TeacherProfileController::class, 'updatePassword'])->name('password.update');
+    });
+});
+
+// Admin: view a submitted class report
+Route::get('admin/class-reports/{session}', [AcademicLessonController::class, 'report'])
+    ->middleware('auth:admin')->whereNumber('session')->name('admin.lessons.report');
+
+
+
+    // ─────────── Learning resources + progress reports ───────────
+use App\Http\Controllers\Backend\Academic\ProgressReportController as AcademicProgressReportController;
+use App\Http\Controllers\Backend\Academic\ReportSettingsController as AcademicReportSettingsController;
+use App\Http\Controllers\Backend\Academic\ResourceController as AcademicResourceController;
+use App\Http\Controllers\Teacher\ResourceController as TeacherResourceController;
+
+Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
+    Route::get('resources/{resource}/download', [AcademicResourceController::class, 'download'])->name('resources.download');
+    Route::resource('resources', AcademicResourceController::class)->except('show');
+
+    Route::get('progress-reports', [AcademicProgressReportController::class, 'index'])->name('progress.index');
+    Route::patch('class-reports/{session}/edit-access', [AcademicProgressReportController::class, 'editAccess'])->whereNumber('session')->name('progress.edit-access');
+
+    Route::get('report-settings', [AcademicReportSettingsController::class, 'edit'])->name('report-settings.edit');
+    Route::put('report-settings', [AcademicReportSettingsController::class, 'update'])->name('report-settings.update');
+});
+
+Route::prefix('teacher')->name('teacher.')->middleware('teacher.auth')->group(function () {
+    Route::get('resources', [TeacherResourceController::class, 'index'])->name('resources.index');
+    Route::get('resources/{resource}/download', [TeacherResourceController::class, 'download'])->name('resources.download');
+});

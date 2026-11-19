@@ -1,0 +1,28 @@
+/* Teacher panel */
+.tp-body{background:var(--bg);min-height:100vh}
+.tp-nav{background:var(--s100);padding:10px 0;box-shadow:0 2px 12px rgba(7,16,42,.25)}
+.tp-brand{color:#fff!important;font-family:'Syne',sans-serif;font-weight:800;letter-spacing:2px;display:flex;align-items:center;gap:10px}
+.tp-brand small{font-family:'DM Sans',sans-serif;font-weight:600;letter-spacing:1px;font-size:.7rem;color:var(--gold);text-transform:uppercase}
+.tp-logo{width:34px;height:34px;border-radius:9px;background:var(--gold);color:var(--s50);display:inline-flex;align-items:center;justify-content:center;font-size:1rem}
+.tp-nav .nav-link{color:rgba(255,255,255,.65);font-size:.85rem;font-weight:600;padding:8px 14px!important;border-radius:8px}
+.tp-nav .nav-link:hover{color:#fff}
+.tp-nav .nav-link.active{color:#fff;background:rgba(255,255,255,.08)}
+.tp-nav .ac-avatar{width:32px;height:32px;font-size:.7rem}
+.tp-hello h1{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin:0}
+.tp-live{background:linear-gradient(135deg,var(--s100),var(--s300));color:#fff;border:none}
+.tp-live .ac-muted{color:rgba(255,255,255,.65)}
+.tp-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#2ecc71;box-shadow:0 0 0 0 rgba(46,204,113,.7);animation:tp-pulse 1.6s infinite;margin-right:6px}
+@keyframes tp-pulse{70%{box-shadow:0 0 0 10px rgba(46,204,113,0)}100%{box-shadow:0 0 0 0 rgba(46,204,113,0)}}
+.tp-next{border-left:4px solid var(--gold)}
+.tp-countdown{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--gold)}
+.tp-list{list-style:none;margin:0;padding:0}
+.tp-list li{display:flex;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--border)}
+.tp-list li:first-child{border-top:none}
+.tp-time{min-width:96px;font-weight:700;font-size:.82rem}
+.tp-time small{display:block;font-weight:500;color:var(--muted);font-size:.72rem}
+.tp-att .btn{font-size:.72rem;padding:4px 8px}
+.tp-att .btn-check:checked+.btn-outline-success{background:#2E7D32;color:#fff}
+.tp-student-row td{vertical-align:top!important}
+.tp-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 20% 20%,var(--s300),var(--s50))}
+.tp-login .card{width:100%;max-width:420px;padding:34px}
+@media (max-width:767px){.tp-list li{flex-wrap:wrap}.tp-time{min-width:auto}}
